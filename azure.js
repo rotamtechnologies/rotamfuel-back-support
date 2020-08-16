@@ -6,7 +6,7 @@ const eventHubName = process.env.HUBNAME;
 const consumerGroup = process.env.CONSUMERGROUP;
 
 let app = require('express')();
-let server = require('https').createServer({rejectUnauthorized:false},app);
+let server = require('https').createServer({key:fs.readFileSync(path.resolve(`./${process.env.KEYNODE}`),'utf8'),cert:fs.readFileSync(path.resolve(`./${process.env.CERTNODE}`),'utf8'),passphrase:fs.readFileSync(path.resolve(`./${process.env.PASSPHRASE}`),'utf8'),rejectUnauthorized:false},app);
 let io = require('socket.io')(server);
 const fs = require('fs');
 let elHttp = require('express')
