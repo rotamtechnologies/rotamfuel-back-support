@@ -6,7 +6,7 @@ const eventHubName = process.env.HUBNAME;
 const consumerGroup = process.env.CONSUMERGROUP;
 
 let app = require('express')();
-let server = require('http').createServer(app);
+let server = require('https').createServer({rejectUnauthorized:false},app);
 let io = require('socket.io')(server);
 const fs = require('fs');
 let elHttp = require('express')
