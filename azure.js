@@ -7,9 +7,9 @@ const fs = require('fs');
 
 let app = require('express')();
 
-let laKey = fs.readFileSync(`~/${process.env.KEYNODE}`, 'utf8')
+let laKey = fs.readFileSync(`${process.env.KEYNODE}`, 'utf8')
 let laPassPhrase = `${process.env.PASSPHRASE}`
-let laCert = fs.readFileSync(`~/${process.env.CERTNODE}`, 'utf8')
+let laCert = fs.readFileSync(`${process.env.CERTNODE}`, 'utf8')
 
 let server = require('https').createServer({
     key: laKey ,
