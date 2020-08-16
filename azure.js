@@ -65,6 +65,9 @@ function leer(dataArray, c) {
 
 var port = process.env.PORT || 3001;
 
+server.listen(port, function () {
+    console.log('listening in http://localhost:' + port);
+});
 
 /*httpApp.listen(3000, function () {
     console.log('Example app listening on port 3000!');
