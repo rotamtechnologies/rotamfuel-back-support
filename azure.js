@@ -6,7 +6,7 @@ const consumerGroup = process.env.CONSUMERGROUP;
 const fs = require('fs');
 
 let app = require('express')();
-
+console.log(path.resolve(`./rootCA.crt`))
 let laKey = fs.readFileSync(`./rootCA.key`, 'utf8')
 let laPassPhrase = fs.readFileSync(`r0t4m`, 'utf8')
 let laCert = fs.readFileSync(`./rootCA.crt`, 'utf8')
