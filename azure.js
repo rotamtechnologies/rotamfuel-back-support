@@ -15,7 +15,6 @@ let server = require('https').createServer({
     key: laKey ,
     cert: laCert,
     passphrase: laPassPhrase,
-    rejectUnauthorized: false
 }, app);
 let io = require('socket.io')(server);
 let elHttp = require('express')
