@@ -6,10 +6,15 @@ const consumerGroup = process.env.CONSUMERGROUP;
 const fs = require('fs');
 
 let app = require('express')();
+
+let laKey = fs.readFileSync(path.resolve(`./${process.env.KEYNODE}`), 'utf8')
+let laPassPhrase = fs.readFileSync(path.resolve(`./${process.env.PASSPHRASE}`), 'utf8')
+let laCert = fs.readFileSync(path.resolve(`./${process.env.CERTNODE}`), 'utf8')
+
 let server = require('https').createServer({
-    key: fs.readFileSync(path.resolve(`./${process.env.KEYNODE}`), 'utf8'),
-    cert: fs.readFileSync(path.resolve(`./${process.env.CERTNODE}`), 'utf8'),
-    passphrase: fs.readFileSync(path.resolve(`./${process.env.PASSPHRASE}`), 'utf8'),
+    key: laKey ,
+    cert: laCert,
+    passphrase: laPassPhrase,
     rejectUnauthorized: false
 }, app);
 let io = require('socket.io')(server);
