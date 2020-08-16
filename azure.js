@@ -1,19 +1,21 @@
-
-const { EventHubConsumerClient } = require("@azure/event-hubs");
+const {EventHubConsumerClient} = require("@azure/event-hubs");
 
 const connectionString = process.env.CONNECTIONSTRING
 const eventHubName = process.env.HUBNAME;
 const consumerGroup = process.env.CONSUMERGROUP;
+const fs = require('fs');
 
 let app = require('express')();
-let server = require('https').createServer({key:fs.readFileSync(path.resolve(`./${process.env.KEYNODE}`),'utf8'),cert:fs.readFileSync(path.resolve(`./${process.env.CERTNODE}`),'utf8'),passphrase:fs.readFileSync(path.resolve(`./${process.env.PASSPHRASE}`),'utf8'),rejectUnauthorized:false},app);
+let server = require('https').createServer({
+    key: fs.readFileSync(path.resolve(`./${process.env.KEYNODE}`), 'utf8'),
+    cert: fs.readFileSync(path.resolve(`./${process.env.CERTNODE}`), 'utf8'),
+    passphrase: fs.readFileSync(path.resolve(`./${process.env.PASSPHRASE}`), 'utf8'),
+    rejectUnauthorized: false
+}, app);
 let io = require('socket.io')(server);
-const fs = require('fs');
 let elHttp = require('express')
 
 var httpApp = elHttp();
-
-
 
 
 httpApp.get('/', function (req, res) {
@@ -62,6 +64,7 @@ var port = process.env.PORT || 3001;
 server.listen(port, function () {
     console.log('listening in http://localhost:' + port);
 });
+
 /*httpApp.listen(3000, function () {
     console.log('Example app listening on port 3000!');
 });*/
@@ -75,7 +78,7 @@ async function main() {
     const subscription = consumerClient.subscribe({
             processEvents: async (events, context) => {
                 for (const event of events) {
-			//console.log(".")
+                    //console.log(".")
                     console.log(`Received event: '${JSON.stringify(event)}' from partition: '${context.partitionId}' and consumer group: '${context.consumerGroup}'`);
                     io.emit('message', event)
                 }
@@ -90,13 +93,13 @@ async function main() {
     );
 
     // After 30 seconds, stop processing.
-   /* await new Promise((resolve) => {
-        setTimeout(async () => {
-            await subscription.close();
-            await consumerClient.close();
-            resolve();
-        }, 30000);
-    });*/
+    /* await new Promise((resolve) => {
+         setTimeout(async () => {
+             await subscription.close();
+             await consumerClient.close();
+             resolve();
+         }, 30000);
+     });*/
 }
 
 main().catch((err) => {
