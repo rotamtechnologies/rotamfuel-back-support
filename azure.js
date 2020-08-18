@@ -1,4 +1,4 @@
-//process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
+process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
 const {EventHubConsumerClient} = require("@azure/event-hubs");
 var k = require( 'keycloak-admin');
@@ -37,7 +37,6 @@ httpApp.get('/', function (req, res) {
 
     res.send('Hello World!');
 });
-
 kcAdminClient.auth({})
 
 
