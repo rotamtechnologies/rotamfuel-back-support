@@ -40,14 +40,17 @@ httpApp.get('/', function (req, res) {
 
 kcAdminClient.auth({
     username: process.env.nodeKEYCLOAK_user,
-    password: process.env.nodeKEYCLOAK_password,
+    password: process.  env.nodeKEYCLOAK_password,
     grantType: 'password',
     clientId: 'admin-cli',
+}).then(dd=>{
+    console.log(dd)
+    kcAdminClient.users.find().then(d=>{
+        console.log(d)
+    })
+
 });
 
-kcAdminClient.users.find().then(d=>{
-    console.log(d)
-})
 
 
 var port = process.env.PORT || 3001;
