@@ -9,7 +9,7 @@ const fs = require('fs');
 
 const kcAdminClient = new k.default({
     baseUrl:'https://app.rotamfuel.com/auth',
-    realmName:'master',
+    realmName:'rotamrealm',
     requestConfig:{
     }
 
