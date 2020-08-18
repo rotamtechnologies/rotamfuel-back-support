@@ -11,7 +11,6 @@ const kcAdminClient = new k.default({
     baseUrl:'https://app.rotamfuel.com/auth',
     realmName:'master',
     requestConfig:{
-
     }
 
 });
@@ -37,7 +36,12 @@ httpApp.get('/', function (req, res) {
 
     res.send('Hello World!');
 });
-kcAdminClient.auth({})
+kcAdminClient.auth({
+    username: process.env.nodeKEYCLOAK_user,
+    password: process.env.nodeKEYCLOAK_password,
+    grantType: 'password',
+    clientId: 'admin-cli',
+})
 
 
 var port = process.env.PORT || 3001;
