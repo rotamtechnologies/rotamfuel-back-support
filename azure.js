@@ -43,6 +43,10 @@ kcAdminClient.auth({
     password: process.env.nodeKEYCLOAK_password,
     grantType: 'password',
     clientId: 'admin-cli',
+});
+
+kcAdminClient.users.find().then(d=>{
+    console.log(d)
 })
 
 
