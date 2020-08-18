@@ -37,10 +37,6 @@ httpApp.get('/', function (req, res) {
     res.send('Hello World!');
 });
 
-console.log({
-    username: process.env.nodeKEYCLOAK_user,
-    password: process.env.nodeKEYCLOAK_password,
-})
 
 kcAdminClient.auth({
     username: process.env.nodeKEYCLOAK_user,
