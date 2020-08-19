@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="71a54924-264d-42b1-8ba9-03c76f52320a" name="rotam" url="http://app.rotamfuel.com">
+        <fileTransfer host="app.rotamfuel.com" port="22" privateKey="C:\Users\Francisco\Downloads\RotamKey.ppk" rootFolder="/home/rotam/rotamfuel-back" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
