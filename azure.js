@@ -21,47 +21,11 @@ let elHttp = require('express')
 
 var httpApp = elHttp();
 
-
 httpApp.get('/', function (req, res) {
     io.emit('message', req.query.vel)
 
     res.send('Hello World!');
 });
-
-httpApp.get('/a', function (req, res) {
-    fs.readFile('data.csv', 'utf8', function (err, data) {
-        var dataArray = data.split(/\r?\n/);
-        let c = 0;
-
-        if (c < dataArray.length) {
-            leer(dataArray, c)
-        }
-
-
-        res.send("exit");
-
-        /*  dataArray.forEach(da=>{
-          })*/
-
-    });
-});
-
-function leer(dataArray, c) {
-    if (c < dataArray.length) {
-        setTimeout(() => {
-            io.emit('message', {
-                uno: dataArray[c].split(",")[5],
-                dos: dataArray[c].split(",")[0],
-                tre: dataArray[c].split(",")[2]
-            })
-            console.log(dataArray[c]);
-            c++;
-            leer(dataArray, c);
-        }, 1)
-    }
-
-}
-
 
 var port = process.env.PORT || 3001;
 
@@ -72,7 +36,6 @@ server.listen(port, function () {
 /*httpApp.listen(3000, function () {
     console.log('Example app listening on port 3000!');
 });*/
-
 
 async function main() {
 
@@ -96,14 +59,6 @@ async function main() {
         }
     );
 
-    // After 30 seconds, stop processing.
-    /* await new Promise((resolve) => {
-         setTimeout(async () => {
-             await subscription.close();
-             await consumerClient.close();
-             resolve();
-         }, 30000);
-     });*/
 }
 
 main().catch((err) => {
