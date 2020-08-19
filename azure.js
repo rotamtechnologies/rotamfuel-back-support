@@ -1,9 +1,20 @@
-const {EventHubConsumerClient} = require("@azure/event-hubs");
+//process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
+const {EventHubConsumerClient} = require("@azure/event-hubs");
+var k = require( 'keycloak-admin');
 const connectionString = process.env.CONNECTIONSTRING
 const eventHubName = process.env.HUBNAME;
 const consumerGroup = process.env.CONSUMERGROUP;
 const fs = require('fs');
+
+const kcAdminClient = new k.default({
+    baseUrl:'https://app.rotamfuel.com/auth',
+    realmName:'master',
+    requestConfig:{
+
+    }
+
+});
 
 let app = require('express')();
 
@@ -26,6 +37,9 @@ httpApp.get('/', function (req, res) {
 
     res.send('Hello World!');
 });
+
+kcAdminClient.auth({})
+
 
 var port = process.env.PORT || 3001;
 
