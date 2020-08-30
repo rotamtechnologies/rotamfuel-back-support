@@ -62,7 +62,6 @@ server.listen(port, function () {
 /*httpApp.listen(3000, function () {
     console.log('Example app listening on port 3000!');
 });*/
-
 async function main() {
 
     const consumerClient = new EventHubConsumerClient(consumerGroup, connectionString, eventHubName);
@@ -90,3 +89,4 @@ async function main() {
 main().catch((err) => {
     console.log("Error occurred: ", err);
 });
+
