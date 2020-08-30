@@ -11,7 +11,7 @@ class Middleware{
     iniciar(){
         this.agregarParserJSON();
         this.agregarCors();
-        this.servirArchivos()
+      //  this.servirArchivos()
         return this.ExpressApp;
     }
 

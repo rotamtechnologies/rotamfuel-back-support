@@ -4,6 +4,9 @@ const path = require("path")
 require('../util/JSONResponse')
 var Cookies = require('cookies')
 
+
+router.use(express.static('public'));
+
 router.post("/token", (req, res) => {
     var cookies = new Cookies(req, res)
 
