@@ -1,6 +1,7 @@
-const bodyParser = require("body-parser")
+const bodyParser = require("body-parser");
+const express = require("express");
 require('../models/KeyCloakCliente');
-var Cookies = require('cookies')
+const Cookies = require('cookies');
 
 class Middleware{
     ExpressApp = {}
@@ -8,9 +9,14 @@ class Middleware{
         this.ExpressApp = ExpressApp()
     }
     iniciar(){
-        this.agregarParserJSON()
-        this.agregarCors()
+        this.agregarParserJSON();
+        this.agregarCors();
+        this.servirArchivos()
         return this.ExpressApp;
+    }
+
+    servirArchivos(){
+        this.ExpressApp.use(express.static('public'));
     }
 
     agregarParserJSON(){
