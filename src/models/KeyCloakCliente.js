@@ -49,7 +49,7 @@ class KeyCloakCliente {
 
 
     obtenerToken(username, pass) {
-        let url = CONFIG.KCTOKENRUL;
+        let url = CONFIG.KCTOKENURL;
         let data = {
             form: {
                 username: username,

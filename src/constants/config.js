@@ -12,7 +12,7 @@ global.CONFIG = {
     KCCLIENTID:process.env.nodeKEYCLOAK_clientId,
     KCREALMURL:process.env.KCREALMURL,
     KCINTROSPECTURL:process.env.KCINTROSPECTURL,
-    KCTOKENRUL:process.env.KCTOKENRUL,
+    KCTOKENURL:process.env.KCTOKENURL,
     DB:{
         DATABASE:process.env.COSMOSDB_db,
         CONTAINER:process.env.COSMOSDB_container,
