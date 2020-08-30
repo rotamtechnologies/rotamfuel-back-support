@@ -35,7 +35,7 @@ class Middleware{
     agregarOAuth(){
         this.ExpressApp.use((req, res, next) => {
             var cookies = new Cookies(req, res)
-            let token = cookies.get("RTM_FL-tkn");
+            let token = req.headers.authorization ? req.headers.authorization:cookies.get("RTM_FL-tkn");
             console.log(token)
             if (token) {
                 console.log(token);
