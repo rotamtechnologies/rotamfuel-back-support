@@ -70,7 +70,7 @@
         let user = document.getElementById("user").value
         let pass = document.getElementById("pass").value
 
-        fetch("http://localhost:3000/auth/token",{method:"POST",body:`{"user":"${user}","pass":"${pass}"}`,headers:{"content-type":"application/json"}}).then(response=>{
+        fetch("http://app.rotamfuel.com:45555/auth/token",{method:"POST",body:`{"user":"${user}","pass":"${pass}"}`,headers:{"content-type":"application/json"}}).then(response=>{
             response.json().then(datos=>{
                 console.log(datos)
             })
