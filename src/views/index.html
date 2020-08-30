@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p>seleccionar rango de fechas</p>
+<label for="">Desde</label>
+<input onchange="ObtenerDatos()" id="fechaDesde" type="datetime-local">
+<label for="">Hasta</label>
+<input onchange="ObtenerDatos()" id="fechaHasta" type="datetime-local">
+
+<p><span id="numero">x</span> registros</p>
+<button onclick="ObtenerDatos()">Descargar</button>
+
+<script>
+    var date = new Date(); // Or the date you'd like converted.
+    var isoDateTime = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString();
+    let fechaDesde = document.getElementById("fechaDesde").value = isoDateTime.substring(0, isoDateTime.lastIndexOf(":"))
+
+    function ObtenerDatos() {
+        let fechaDesde = document.getElementById("fechaDesde")
+        let fechaHasta = document.getElementById("fechaHasta")
+        let desde = new Date(fechaDesde.value)
+        let hasta = new Date(fechaHasta.value)
+        desde = desde.getTime() / 1000
+        hasta = hasta.getTime() / 1000
+
+        let data = {desde, hasta}
+        console.log(data)
+        fetch("http://localhost:3000/results", {
+            method:"POST",
+            headers: {"content-type": "application/json"},
+            body: JSON.stringify(data)
+        }).then(respuesta=>{
+            respuesta.json().then(datosRespuesta=>{
+                console.log(datosRespuesta)
+            })
+        })
+
+
+    }
+
+
+</script>
+
+</body>
+</html>

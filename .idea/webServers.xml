@@ -10,6 +10,14 @@
           <option name="port" value="22" />
         </fileTransfer>
       </webServer>
+      <webServer id="8bb5b2b2-19ba-4453-8eaa-ac977f2cda1f" name="rotamiot" url="http://23.98.131.148">
+        <fileTransfer host="23.98.131.148" port="22" privateKey="C:\Users\Francisco\Downloads\rotamiott.ppk" rootFolder="/home/rotamiot/" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
     </option>
   </component>
 </project>

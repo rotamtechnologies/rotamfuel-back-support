@@ -1,3 +1,4 @@
+/*
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 const k = require('keycloak-admin');
 const fs = require('fs');
@@ -32,3 +33,4 @@ kcAdminClient.auth({
 server.listen(port, function () {
     console.log('listening in http://localhost:' + port);
 });
+*/

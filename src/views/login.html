@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .formulario{
+            width: 85vw;
+            margin: auto;
+        }
+
+        .banner{
+            width: fit-content;
+            margin: auto;
+        }
+        img{
+            width: 60vw;
+            margin: auto;
+        }
+        .contenidoForm{
+
+        }
+        .content{
+            display: flex;
+            align-items: center;
+            height: 60vh;
+            justify-content: center;
+        }
+        .botones{
+            text-align: center;
+        }
+
+        div.item{
+            width: fit-content;
+            margin:auto;
+        }
+
+
+    </style>
+</head>
+<body>
+<div class="content">
+    <div class="contenidoForm">
+        <div class="banner">
+            <img src="../../assets/img/logoTexto.png" alt="">
+        </div>
+        <div class="formulario">
+
+            <div class="item">
+                <label position="floating">Usuario</label>
+                <input type="text" id="user" >
+            </div>
+            <div class="item">
+
+                <label position="floating">Clave</label>
+                <input type="password" id="pass" >
+            </div>
+            <div class="botones">
+                <button onclick="iniciarSesion()" >Iniciar sesion</button>
+                <button onclick="registrarse()" >Registrarse</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function iniciarSesion(){
+
+        let user = document.getElementById("user").value
+        let pass = document.getElementById("pass").value
+
+        fetch("http://localhost:3000/auth/token",{method:"POST",body:`{"user":"${user}","pass":"${pass}"}`,headers:{"content-type":"application/json"}}).then(response=>{
+            response.json().then(datos=>{
+                console.log(datos)
+            })
+        })
+    }
+</script>
+</body>
+</html>
