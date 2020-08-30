@@ -1,4 +1,4 @@
-process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
+//process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
 const {EventHubConsumerClient} = require("@azure/event-hubs");
 var k = require( 'keycloak-admin');
@@ -26,7 +26,6 @@ let server = require('https').createServer({
     cert: laCert,
     passphrase: laPassPhrase,
 }, app);
-let io = require('socket.io')(server);
 let elHttp = require('express')
 
 var httpApp = elHttp();
@@ -40,9 +39,9 @@ httpApp.get('/', function (req, res) {
 
 kcAdminClient.auth({
     username: process.env.nodeKEYCLOAK_user,
-    password: process.  env.nodeKEYCLOAK_password,
-    grantType: 'password',
-    clientId: 'admin-cli',
+    password: process.env.nodeKEYCLOAK_password,
+    grantType: process.env.nodeKEYCLOAK_grantType,
+    clientId: process.env.nodeKEYCLOAK_clientId,
 }).then(dd=>{
     console.log(dd)
     kcAdminClient.users.find().then(d=>{
@@ -55,9 +54,9 @@ kcAdminClient.auth({
 
 var port = process.env.PORT || 3001;
 
-server.listen(port, function () {
+/*server.listen(port, function () {
     console.log('listening in http://localhost:' + port);
-});
+});*/
 
 /*httpApp.listen(3000, function () {
     console.log('Example app listening on port 3000!');
