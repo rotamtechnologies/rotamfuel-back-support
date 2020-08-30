@@ -18,7 +18,7 @@ router.post("/token", (req, res) => {
              /*res.set("set-cookie","RTM_FL-tkn="+tokens.access_token+";")*/
              //let fecha = new Date();
              //fecha.setMonth(10);
-             cookies.set('RTM_FL-tkn', tokens.access_token,{path:"/"} )
+             cookies.set('m', tokens.access_token,{path:"/"} )
 
          }
          JSONResponse.OK(res,tokens)
