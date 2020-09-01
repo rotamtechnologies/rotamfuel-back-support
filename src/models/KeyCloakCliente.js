@@ -63,12 +63,7 @@ class KeyCloakCliente {
 
 
     async crearUsuario(usuario, pass, email, firstName, lastName) {
-        await kcAdminClient.auth({
-            username: this.username,
-            password: this.password,
-            grantType: this.grantType,
-            clientId: this.kcClientId,
-        })
+        await this.iniciar();
         return kcAdminClient.users.create({
             username: usuario,
             enabled: true,
