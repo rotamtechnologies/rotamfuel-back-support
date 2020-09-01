@@ -26,8 +26,9 @@ router.post("/token", (req, res) => {
             }).catch(e=>{
                 res.send(e)
             })
+        }else{
+            JSONResponse.OK(res,tokens)
         }
-        JSONResponse.OK(res,tokens)
     })
 });
 router.post("/register", (req, res) => {
