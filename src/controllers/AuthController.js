@@ -4,6 +4,7 @@ require('../models/KeyCloakCliente');
 const path = require("path")
 require('../util/JSONResponse')
 var Cookies = require('cookies')
+const btoa = require('btoa');
 
 
 router.use(express.static('public'));
@@ -19,9 +20,11 @@ router.post("/token", (req, res) => {
              //let fecha = new Date();
              //fecha.setMonth(10);
              cookies.set('RTM_FL-tkn', tokens.access_token,{path:"/"} )
-
+             console.log(JSON.parse(atob(tokens.access_token.split(".")[1])))
+             console.log(JSON.parse(atob(tokens.access_token.split(".")[1])).sub)
          }
          keyCloakClient.usuario('fcisternas').then(d=>{
+
              res.send(d);
          })
          //JSONResponse.OK(res,tokens)
