@@ -4,7 +4,7 @@ require('../models/KeyCloakCliente');
 const path = require("path")
 require('../util/JSONResponse')
 var Cookies = require('cookies')
-const btoa = require('btoa');
+const atob = require('atob');
 
 
 router.use(express.static('public'));
