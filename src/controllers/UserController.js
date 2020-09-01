@@ -9,10 +9,13 @@ router.get('/descargar/datos', function (req, res) {
 
 router.post("/actualizar",(req,res)=>{
 
-    console.log(req.body)
-    delete req.body.id
-    console.log(req.body)
-    res.send("ok")
+    console.log(req.body);
+    let id = req.body.id;
+    delete req.body.id;
+    console.log(req.body);
+    keyCloakClient.updateUser(id,req.body).then(d=>{
+        res.send(d);
+    })
 });
 
 
