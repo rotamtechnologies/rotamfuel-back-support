@@ -13,21 +13,22 @@ router.post("/token", (req, res) => {
     var cookies = new Cookies(req, res)
 
     console.log(req.body)
-     keyCloakClient.obtenerToken(req.body.user, req.body.pass).then(tokens => {
-         tokens = JSON.parse(tokens)
-         if(tokens.access_token){
-             /*res.set("set-cookie","RTM_FL-tkn="+tokens.access_token+";")*/
-             //let fecha = new Date();
-             //fecha.setMonth(10);
-             cookies.set('RTM_FL-tkn', tokens.access_token,{path:"/"} )
-             console.log(JSON.parse(atob(tokens.access_token.split(".")[1])))
-             console.log(JSON.parse(atob(tokens.access_token.split(".")[1])).sub)
-         }
-         keyCloakClient.usuario('fcisternas').then(d=>{
+    keyCloakClient.obtenerToken(req.body.user, req.body.pass).then(tokens => {
+        tokens = JSON.parse(tokens)
+        if (tokens.access_token) {
+            /*res.set("set-cookie","RTM_FL-tkn="+tokens.access_token+";")*/
+            //let fecha = new Date();
+            //fecha.setMonth(10);
+            cookies.set('RTM_FL-tkn', tokens.access_token, {path: "/"});
+            let idUser = JSON.parse(atob(tokens.access_token.split(".")[1])).sub;
+            keyCloakClient.usuario(idUser).then(d => {
+                res.send(d);
+            }).catch(e=>{
+                res.send(e)
+            })
+        }
 
-             res.send(d);
-         })
-         //JSONResponse.OK(res,tokens)
+        //JSONResponse.OK(res,tokens)
     })
 });
 router.post("/register", (req, res) => {
