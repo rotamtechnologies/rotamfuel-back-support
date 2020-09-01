@@ -10,6 +10,8 @@ router.get('/descargar/datos', function (req, res) {
 router.post("/actualizar",(req,res)=>{
 
     console.log(req.body)
+    delete req.body.id
+    console.log(req.body)
     res.send("ok")
 });
 
