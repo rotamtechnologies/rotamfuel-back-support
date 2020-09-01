@@ -57,12 +57,18 @@ class KeyCloakCliente {
                 grant_type: this.grantType,
                 client_id: this.kcClientId
             }
-        }
+        };
         return HttpRequester.makePOST(url, data)
     }
 
 
-    crearUsuario(usuario, pass, email, firstName, lastName) {
+    async crearUsuario(usuario, pass, email, firstName, lastName) {
+        await kcAdminClient.auth({
+            username: this.username,
+            password: this.password,
+            grantType: this.grantType,
+            clientId: this.kcClientId,
+        })
         return kcAdminClient.users.create({
             username: usuario,
             enabled: true,
