@@ -20,6 +20,7 @@ router.post("/token", (req, res) => {
             //let fecha = new Date();
             //fecha.setMonth(10);
             let idUser = JSON.parse(atob(tokens.access_token.split(".")[1])).sub;
+            console.log(idUser)
             keyCloakClient.usuario(idUser).then(d => {
                 cookies.set('RTM_FL-tkn', tokens.access_token, {path: "/"});
                 cookies.set('RTM_FL-usr', d, {path: "/"});
