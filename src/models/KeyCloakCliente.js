@@ -80,6 +80,19 @@ class KeyCloakCliente {
         return kcAdminClient.users.findOne({id})
     }
 
+    updateUser(id,user) {
+        return kcAdminClient.users.update(
+            {id},
+            {
+                ...user
+               /* firstName: 'william',
+                lastName: 'chang',
+                requiredActions: [RequiredActionAlias.UPDATE_PASSWORD],
+                emailVerified: true,*/
+            },
+        );
+    }
+
 
 }
 
