@@ -21,7 +21,10 @@ router.post("/token", (req, res) => {
              cookies.set('RTM_FL-tkn', tokens.access_token,{path:"/"} )
 
          }
-         JSONResponse.OK(res,tokens)
+         keyCloakClient.usuario('fcisternas').then(d=>{
+             res.send(d);
+         })
+         //JSONResponse.OK(res,tokens)
     })
 });
 router.post("/register", (req, res) => {
