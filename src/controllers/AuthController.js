@@ -22,13 +22,12 @@ router.post("/token", (req, res) => {
             cookies.set('RTM_FL-tkn', tokens.access_token, {path: "/"});
             let idUser = JSON.parse(atob(tokens.access_token.split(".")[1])).sub;
             keyCloakClient.usuario(idUser).then(d => {
-                res.send(d);
+                JSONResponse.OK(res,d)
             }).catch(e=>{
                 res.send(e)
             })
         }
-
-        //JSONResponse.OK(res,tokens)
+        JSONResponse.OK(res,tokens)
     })
 });
 router.post("/register", (req, res) => {
