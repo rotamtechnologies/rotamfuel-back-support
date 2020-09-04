@@ -27,8 +27,6 @@ class Middleware{
         this.ExpressApp.use((req, res, next) => {
             res.set("Access-Control-Allow-Origin", "*")
             res.set("Access-Control-Allow-Headers", "content-type")
-
-
             next()
         })
     }
