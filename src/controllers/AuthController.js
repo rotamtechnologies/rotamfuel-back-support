@@ -22,6 +22,7 @@ router.post("/token", (req, res) => {
                 cookies.set('RTM_FL-tkn', tokens.access_token, {path: "/"});
                 cookies.set('RTM_FL-usr', userInfo, {path: "/"});
                 console.log(userInfo);
+                res.set("Content-type","application/json");
                 res.status(200).send(JSON.stringify(userInfo))
             }).catch(e=>{
                 res.send(e)

@@ -3,27 +3,29 @@ const express = require("express");
 require('../models/KeyCloakCliente');
 const Cookies = require('cookies');
 
-class Middleware{
-    ExpressApp = {}
+class Middleware {
+    ExpressApp = {};
+
     constructor(ExpressApp) {
-        this.ExpressApp = ExpressApp()
+        this.ExpressApp = ExpressApp();
     }
-    iniciar(){
+
+    iniciar() {
         this.agregarParserJSON();
         this.agregarCors();
-      //  this.servirArchivos()
+        // this.servirArchivos()
         return this.ExpressApp;
     }
 
-    servirArchivos(){
+    servirArchivos() {
         this.ExpressApp.use(express.static('public'));
     }
 
-    agregarParserJSON(){
-        this.ExpressApp.use(bodyParser.json())
-
+    agregarParserJSON() {
+        this.ExpressApp.use(bodyParser.json());
     }
-    agregarCors(){
+
+    agregarCors() {
         this.ExpressApp.use((req, res, next) => {
             res.set("Access-Control-Allow-Origin", "*");
             res.set("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS");
@@ -31,10 +33,11 @@ class Middleware{
             next()
         })
     }
-    agregarOAuth(){
+
+    agregarOAuth() {
         this.ExpressApp.use((req, res, next) => {
             var cookies = new Cookies(req, res)
-            let token = req.headers.authorization ? req.headers.authorization:cookies.get("RTM_FL-tkn");
+            let token = req.headers.authorization ? req.headers.authorization : cookies.get("RTM_FL-tkn");
             console.log(token)
             if (token) {
                 console.log(token);
@@ -50,4 +53,5 @@ class Middleware{
         return this.ExpressApp
     }
 }
+
 global.Midleware = Middleware
