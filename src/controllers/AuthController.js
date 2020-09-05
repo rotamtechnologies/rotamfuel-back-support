@@ -18,11 +18,11 @@ router.post("/token", (req, res) => {
             console.log(atob(tokens.access_token.split(".")[1]))
             let idUser = JSON.parse(atob(tokens.access_token.split(".")[1])).sub;
             console.log(idUser);
-            keyCloakClient.usuario(idUser).then(d => {
+            keyCloakClient.usuario(idUser).then(userInfo => {
                 cookies.set('RTM_FL-tkn', tokens.access_token, {path: "/"});
-                cookies.set('RTM_FL-usr', d, {path: "/"});
-                console.log(d);
-                JSONResponse.OK(res,d)
+                cookies.set('RTM_FL-usr', userInfo, {path: "/"});
+                console.log(userInfo);
+                res.send("OKSSSS")
             }).catch(e=>{
                 res.send(e)
             })
