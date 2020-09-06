@@ -93,7 +93,8 @@ class KeyCloakCliente {
 
         try{
             let infoUser = await kcAdminClient.users.findOne({id});
-            let autos = infoUser.attributes
+            let autos = infoUser.attributes;
+            return autos;
         }
         catch (e) {
             console.log("error en cliente: "+JSON.stringify(e))

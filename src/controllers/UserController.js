@@ -12,7 +12,6 @@ router.get("/", (req, res) => {
     let tokenPeticion = tokenByReq(req,res);
     if(tokenPeticion){
         let idUser = idByToken(tokenPeticion);
-        console.log(idUser)
         keyCloakClient.usuario(idUser).then(info=>{
             res.json({id:idUser,datos:info});
         })
