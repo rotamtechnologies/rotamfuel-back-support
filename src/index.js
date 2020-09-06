@@ -28,5 +28,5 @@ async function main(){
 }
 
 main().catch(e=>{
-    console.log(e)
+    console.log("errora: "+e)
 });
