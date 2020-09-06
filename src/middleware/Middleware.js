@@ -43,13 +43,12 @@ class Middleware {
                     if (JSON.parse(datosToken).active) {
                         next()
                     } else {
-                        res.send("error de auth br0")
-
+                        res.status(401).send("Unauthorized")
                     }
                 });
 
             } else {
-                res.send("error de auth br0")
+                res.status(401).send("Unauthorized")
             }
         });
         return this.ExpressApp
