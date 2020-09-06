@@ -9,27 +9,12 @@ const atob = require('atob');
 
 router.use(express.static('public'));
 
+
+//Obtencion de token
 router.post("/token", (req, res) => {
     var cookies = new Cookies(req, res);
-    console.log(req.body);
     keyCloakClient.obtenerToken(req.body.user, req.body.pass).then(tokens => {
-        tokens = JSON.parse(tokens);
-        if (tokens.access_token) {
-            console.log(atob(tokens.access_token.split(".")[1]));
-            let idUser = JSON.parse(atob(tokens.access_token.split(".")[1])).sub;
-            console.log(idUser);
-            keyCloakClient.usuario(idUser).then(userInfo => {
-                cookies.set('RTM_FL-tkn', tokens.access_token, {path: "/"});
-                cookies.set('RTM_FL-usr', userInfo, {path: "/"});
-                console.log(userInfo);
-                res.set("Content-type","application/json");
-                res.status(200).send(JSON.stringify(userInfo))
-            }).catch(e=>{
-                res.send(e)
-            })
-        }else{
-            JSONResponse.OK(res,tokens)
-        }
+        console.log(token)
     })
 });
 router.post("/register", (req, res) => {
