@@ -3,7 +3,6 @@ const express = require("express")
 require('../models/KeyCloakCliente');
 const path = require("path")
 require('../util/JSONResponse')
-var Cookies = require('cookies')
 const atob = require('atob');
 require("../services/AuthService")
 

@@ -1,3 +1,6 @@
+var Cookies = require('cookies')
+
+
 global.idByToken = (tkn) => {
     console.log(atob(tkn.split(".")[1]));
     let idUser = JSON.parse(atob(tkn.split(".")[1])).sub;
