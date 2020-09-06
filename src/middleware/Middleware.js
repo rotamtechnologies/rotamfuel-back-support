@@ -36,22 +36,23 @@ class Middleware {
 
     agregarOAuth() {
         this.ExpressApp.use((req, res, next) => {
-            if(req.url==="/user/"){
+            if (req.url === "/user/") {
                 next()
-            }
-            var cookies = new Cookies(req, res);
-            let token = req.headers.authorization ? req.headers.authorization.substring("Bearer ".length, req.headers.authorization.length) : cookies.get("RTM_FL-tkn");
-            if (token) {
-                keyCloakClient.introspectToken(token).then(datosToken => {
-                    if (JSON.parse(datosToken).active) {
-                        next()
-                    } else {
-                        res.status(401).send("Unauthorized")
-                    }
-                });
-
             } else {
-                res.status(401).send("Unauthorized")
+                var cookies = new Cookies(req, res);
+                let token = req.headers.authorization ? req.headers.authorization.substring("Bearer ".length, req.headers.authorization.length) : cookies.get("RTM_FL-tkn");
+                if (token) {
+                    keyCloakClient.introspectToken(token).then(datosToken => {
+                        if (JSON.parse(datosToken).active) {
+                            next()
+                        } else {
+                            res.status(401).send("Unauthorized")
+                        }
+                    });
+
+                } else {
+                    res.status(401).send("Unauthorized")
+                }
             }
         });
         return this.ExpressApp
