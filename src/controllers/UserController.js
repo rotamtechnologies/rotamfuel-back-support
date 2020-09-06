@@ -8,6 +8,7 @@ router.get('/descargar/datos', function (req, res) {
 });
 
 router.get("/", (req, res) => {
+    console.log("INFO")
     let tokenPeticion = tokenByReq(req,res);
     console.log(tokenPeticion);
     let idUser = idByToken(tokenPeticion);
