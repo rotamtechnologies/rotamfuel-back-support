@@ -49,7 +49,7 @@ class Middleware {
 
             } else {
                 res.status(401).send("Unauthorized")
-x            }
+            }
         });
         return this.ExpressApp
     }
