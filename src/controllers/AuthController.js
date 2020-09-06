@@ -14,7 +14,8 @@ router.use(express.static('public'));
 router.post("/token", (req, res) => {
     var cookies = new Cookies(req, res);
     keyCloakClient.obtenerToken(req.body.user, req.body.pass).then(tokens => {
-        console.log(token)
+        console.log(tokens)
+        send.response(tokens)
     })
 });
 router.post("/register", (req, res) => {
