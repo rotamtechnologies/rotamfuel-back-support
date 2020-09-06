@@ -11,6 +11,7 @@ router.options("/",(req,res)=>{
     res.set("Access-Control-Allow-Origin", "*");
     res.set("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS");
     res.set("Access-Control-Allow-Headers", "content-type,authorization");
+    console.log("prevuelo")
     res.json({ok:"ok"})
 });
 
