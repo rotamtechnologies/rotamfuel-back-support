@@ -11,8 +11,8 @@ class Middleware {
     }
 
     iniciar() {
-        this.agregarParserJSON();
         this.agregarCors();
+        this.agregarParserJSON();
         // this.servirArchivos()
         return this.ExpressApp;
     }
@@ -49,7 +49,7 @@ class Middleware {
 
             } else {
                 res.status(401).send("Unauthorized")
-            }
+x            }
         });
         return this.ExpressApp
     }
