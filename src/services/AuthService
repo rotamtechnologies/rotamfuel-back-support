@@ -7,7 +7,7 @@ global.obtenerToken = (req, res) => {
         keyCloakClient.obtenerToken(user, pass).then(tokens => {
             tokens = JSON.parse(tokens);
             if (tokens.access_token) {
-                JSONResponse.OK(res, tokens)
+                JSONResponse.OK(res, {tkn:tokens.access_token,rsh:tokens.refresh_token})
             } else {
                 JSONResponse.ERROR(res, tokens)
             }
