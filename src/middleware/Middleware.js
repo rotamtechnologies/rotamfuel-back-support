@@ -36,13 +36,9 @@ class Middleware {
 
     agregarOAuth() {
         this.ExpressApp.use((req, res, next) => {
-            console.log("Oauth")
             var cookies = new Cookies(req, res);
-            console.log(req.headers);
             let token = req.headers.authorization ? req.headers.authorization : cookies.get("RTM_FL-tkn");
-            console.log(token);
             if (token) {
-                console.log(token);
                 keyCloakClient.introspectToken(token).then(datosToken => {
                     console.log(datosToken);
                     next()

@@ -7,20 +7,20 @@ router.get('/descargar/datos', function (req, res) {
 
 });
 
-router.get("/",(req,res)=>{
-    console.log("ola")
-   res.send("datos")
+router.get("/", (req, res) => {
+    console.log("ola");
+    res.send("datos");
 });
 
 
-router.post("/actualizar",(req,res)=>{
+router.post("/actualizar", (req, res) => {
     console.log(req.body);
     let id = req.body.id;
     delete req.body.id;
     console.log(req.body);
-   /* keyCloakClient.updateUser(id,req.body).then(d=>{
-        res.send(d);
-    })*/
+    /* keyCloakClient.updateUser(id,req.body).then(d=>{
+         res.send(d);
+     })*/
 });
 
 
