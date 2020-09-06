@@ -19,12 +19,8 @@ global.obtenerToken = (req, res) => {
 
 };
 global.refrescarToken = (req, res) => {
-    console.log("REFRESEE")
     try {
-        console.log(req.headers)
         let token = tokenByReq(req,res);
-        console.log(req.headers)
-
         keyCloakClient.refrescarToken(token).then(tokens => {
             tokens = JSON.parse(tokens);
             if (tokens.access_token) {
