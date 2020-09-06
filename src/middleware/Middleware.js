@@ -35,8 +35,9 @@ class Middleware {
     }
 
     agregarOAuth() {
-        console.log("Oauth")
         this.ExpressApp.use((req, res, next) => {
+            console.log("Oauth")
+
             var cookies = new Cookies(req, res)
             let token = req.headers.authorization ? req.headers.authorization : cookies.get("RTM_FL-tkn");
             console.log(token);
