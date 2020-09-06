@@ -13,7 +13,7 @@ router.get("/", (req, res) => {
     if(tokenPeticion){
         let idUser = idByToken(tokenPeticion);
         keyCloakClient.usuario(idUser).then(info=>{
-            res.json({id:idUser,datos:info});
+            JSONResponse.OK(res,{id:idUser,datos:info});
         })
     }else{
         JSONResponse.ERROR(res,"error token")
