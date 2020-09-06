@@ -7,21 +7,13 @@ router.get('/descargar/datos', function (req, res) {
 
 });
 
-router.options("/",(req,res)=>{
-    res.set("Access-Control-Allow-Origin", "*");
-    res.set("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS");
-    res.set("Access-Control-Allow-Headers", "content-type,authorization");
-    console.log("prevuelo")
-    res.json({ok:"ok"})
-});
-
 router.get("/", (req, res) => {
     console.log("INFO")
     let tokenPeticion = tokenByReq(req,res);
     console.log(tokenPeticion);
     let idUser = idByToken(tokenPeticion);
     console.log(idUser)
-    res.json({datos:idUser});
+    res.json({id:idUser});
 });
 
 
