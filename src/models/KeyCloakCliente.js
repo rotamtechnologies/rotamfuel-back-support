@@ -1,5 +1,6 @@
 const k = require('keycloak-admin');
 require("../util/httpRequester");
+require("../util/Utils")
 const btoa = require('btoa');
 const kcAdminClient = new k.default({
     baseUrl: 'https://app.rotamfuel.com/auth',
@@ -88,8 +89,18 @@ class KeyCloakCliente {
         })
     }
 
-    usuario(id) {
-        return kcAdminClient.users.findOne({id})
+    async usuario(id) {
+
+        try{
+            let infoUser = await kcAdminClient.users.findOne({id});
+            let autos = infoUser.attributes
+        }
+        catch (e) {
+            console.log("error en cliente: "+JSON.stringify(e))
+            await this.iniciar();
+            this.usuario(id)
+        }
+
     }
 
     updateUser(id, user) {

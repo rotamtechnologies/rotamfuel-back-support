@@ -1,14 +1,14 @@
 const router = require("express").Router()
 const path = require("path");
 require('../models/KeyCloakCliente');
-require("../util/Utils")
+require("../util/Utils");
+require("../util/JSONResponse");
 router.get('/descargar/datos', function (req, res) {
     res.sendFile(path.join(__dirname + '/../views/index.html'));
 
 });
 
 router.get("/", (req, res) => {
-    console.log("INFO")
     let tokenPeticion = tokenByReq(req,res);
     if(tokenPeticion){
         let idUser = idByToken(tokenPeticion);
@@ -17,9 +17,8 @@ router.get("/", (req, res) => {
             res.json({id:idUser,datos:info});
         })
     }else{
-        res.json({error:"error token"})
+        JSONResponse.ERROR(res,"error token")
     }
-
 });
 
 
