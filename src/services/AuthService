@@ -18,6 +18,7 @@ global.obtenerToken = (req, res) => {
 
 };
 global.refrescarToken = (req, res) => {
+    console.log("REFRESEE")
     try {
         let token = tokenByReq(req,res)
         console.log(token)
