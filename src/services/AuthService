@@ -2,8 +2,8 @@ require('../models/KeyCloakCliente');
 
 global.obtenerToken = (req, res) => {
     try {
-        let user = req.body.user
-        let pass = req.body.pass
+        let user = req.body.user;
+        let pass = req.body.pass;
         keyCloakClient.obtenerToken(user, pass).then(tokens => {
             tokens = JSON.parse(tokens);
             if (tokens.access_token) {
