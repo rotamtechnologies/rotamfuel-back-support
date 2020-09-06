@@ -25,6 +25,7 @@ global.refrescarToken = (req, res) => {
         keyCloakClient.refrescarToken(token).then(tokens => {
             tokens = JSON.parse(tokens);
             if (tokens.access_token) {
+                console.log(tokens)
                 JSONResponse.OK(res, {tkn: tokens.access_token, rsh: tokens.refresh_token})
             } else {
                 JSONResponse.ERROR(res, tokens)
