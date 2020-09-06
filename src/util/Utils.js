@@ -3,9 +3,9 @@ const atob = require("atob");
 
 
 global.idByToken = (tkn) => {
-    let idUser = JSON.parse(atob(tkn.split(".")[1])).sub;
-    console.log(idUser)
-    return idUser;
+    let tknInfo = JSON.parse(atob(tkn.split(".")[1]));
+    console.log(tknInfo)
+    return tknInfo.sub;
 };
 global.tokenByReq =(req,res)=>{
     var cookies = new Cookies(req, res);
