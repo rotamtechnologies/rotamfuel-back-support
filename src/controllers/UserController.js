@@ -11,6 +11,7 @@ router.get('/descargar/datos', function (req, res) {
 router.get("/", (req, res) => {
     let tokenPeticion = tokenByReq(req,res);
     if(tokenPeticion){
+
         let idUser = idByToken(tokenPeticion);
         keyCloakClient.usuario(idUser).then(info=>{
             JSONResponse.OK(res,{id:idUser,datos:info});

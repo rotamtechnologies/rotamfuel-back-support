@@ -4,6 +4,7 @@ const atob = require("atob");
 
 global.idByToken = (tkn) => {
     let idUser = JSON.parse(atob(tkn.split(".")[1])).sub;
+    console.log(idUser)
     return idUser;
 };
 global.tokenByReq =(req,res)=>{
