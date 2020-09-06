@@ -4,7 +4,9 @@ global.idByToken = (tkn) => {
     return idUser;
 }
 global.tokenByReq =(req,res)=>{
+    console.log("...")
     var cookies = new Cookies(req, res);
     let token = req.headers.authorization ? req.headers.authorization.substring("Bearer ".length, req.headers.authorization.length) : cookies.get("RTM_FL-tkn");
+    console.log("->"+token)
     return token
 }
