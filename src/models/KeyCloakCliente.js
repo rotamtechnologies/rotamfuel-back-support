@@ -61,6 +61,18 @@ class KeyCloakCliente {
         return HttpRequester.makePOST(url, data)
     }
 
+    refrescarToken(token) {
+        let url = CONFIG.KCTOKENURL;
+        let data = {
+            form: {
+                refresh_token: token,
+                grant_type: "refresh_token",
+                client_id: this.kcClientId
+            }
+        };
+        return HttpRequester.makePOST(url, data)
+    }
+
 
     async crearUsuario(usuario, pass, email, firstName, lastName) {
         await this.iniciar();
@@ -80,15 +92,15 @@ class KeyCloakCliente {
         return kcAdminClient.users.findOne({id})
     }
 
-    updateUser(id,user) {
+    updateUser(id, user) {
         return kcAdminClient.users.update(
             {id},
             {
                 ...user
-               /* firstName: 'william',
-                lastName: 'chang',
-                requiredActions: [RequiredActionAlias.UPDATE_PASSWORD],
-                emailVerified: true,*/
+                /* firstName: 'william',
+                 lastName: 'chang',
+                 requiredActions: [RequiredActionAlias.UPDATE_PASSWORD],
+                 emailVerified: true,*/
             },
         );
     }

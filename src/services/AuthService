@@ -1,5 +1,4 @@
 require('../models/KeyCloakCliente');
-
 global.obtenerToken = (req, res) => {
     try {
         let user = req.body.user;
@@ -7,7 +6,7 @@ global.obtenerToken = (req, res) => {
         keyCloakClient.obtenerToken(user, pass).then(tokens => {
             tokens = JSON.parse(tokens);
             if (tokens.access_token) {
-                JSONResponse.OK(res, {tkn:tokens.access_token,rsh:tokens.refresh_token})
+                JSONResponse.OK(res, {tkn: tokens.access_token, rsh: tokens.refresh_token})
             } else {
                 JSONResponse.ERROR(res, tokens)
             }
@@ -17,4 +16,21 @@ global.obtenerToken = (req, res) => {
 
     }
 
+};
+global.refrescarToken = (req, res) => {
+    try {
+        let token = tokenByReq(req,res)
+        console.log(token)
+        keyCloakClient.refrescarToken(token).then(tokens => {
+            tokens = JSON.parse(tokens);
+            if (tokens.access_token) {
+                JSONResponse.OK(res, {tkn: tokens.access_token, rsh: tokens.refresh_token})
+            } else {
+                JSONResponse.ERROR(res, tokens)
+            }
+        })
+    } catch (e) {
+        JSONResponse.ERROR(res)
+
+    }
 }

@@ -14,6 +14,11 @@ router.use(express.static('public'));
 router.post("/token", (req, res) => {
     obtenerToken(req,res);
 });
+//Rrefrescar Token
+router.get("/token", (req, res) => {
+    refrescarToken(req,res);
+});
+
 //Registrar Usuario
 router.post("/register", (req, res) => {
     console.log(req.body)
