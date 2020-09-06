@@ -13,7 +13,9 @@ router.get("/", (req, res) => {
     if(tokenPeticion){
         let idUser = idByToken(tokenPeticion);
         console.log(idUser)
-        res.json({id:idUser});
+        keyCloakClient.usuario(idUser).then(info=>{
+            res.json({id:idUser,datos:info});
+        })
     }else{
         res.json({error:"error token"})
     }
