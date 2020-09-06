@@ -15,7 +15,7 @@ router.post("/token", (req, res) => {
     var cookies = new Cookies(req, res);
     keyCloakClient.obtenerToken(req.body.user, req.body.pass).then(tokens => {
         console.log(tokens)
-        send.response(tokens)
+        res.send(tokens)
     })
 });
 router.post("/register", (req, res) => {
