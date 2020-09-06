@@ -20,6 +20,7 @@ global.obtenerToken = (req, res) => {
 };
 global.refrescarToken = (req, res) => {
     try {
+
         let token = tokenByReq(req,res);
         keyCloakClient.refrescarToken(token).then(tokens => {
             tokens = JSON.parse(tokens);
