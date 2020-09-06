@@ -8,14 +8,12 @@ router.get('/descargar/datos', function (req, res) {
 });
 
 router.get("/", (req, res) => {
-    console.log("asdss")
-    res.send("ola")
-/*    console.log("INFO")
+    console.log("INFO")
     let tokenPeticion = tokenByReq(req,res);
     console.log(tokenPeticion);
     let idUser = idByToken(tokenPeticion);
     console.log(idUser)
-    res.json({datos:idUser});*/
+    res.json({datos:idUser});
 });
 
 
