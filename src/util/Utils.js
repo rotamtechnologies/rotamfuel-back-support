@@ -1,4 +1,5 @@
 var Cookies = require('cookies')
+const atob = require("atob");
 
 
 global.idByToken = (tkn) => {
