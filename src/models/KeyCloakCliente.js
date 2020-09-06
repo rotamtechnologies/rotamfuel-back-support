@@ -44,7 +44,7 @@ class KeyCloakCliente {
             password: this.password,
             grantType: this.grantType,
             clientId: this.kcClientId,
-        }).then(d => console.log(d))
+        }).catch(e => console.log(e))
     }
 
 
