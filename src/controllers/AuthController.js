@@ -15,7 +15,7 @@ router.post("/token", (req, res) => {
     keyCloakClient.obtenerToken(req.body.user, req.body.pass).then(tokens => {
         tokens = JSON.parse(tokens);
         if (tokens.access_token) {
-            console.log(atob(tokens.access_token.split(".")[1]))
+            console.log(atob(tokens.access_token.split(".")[1]));
             let idUser = JSON.parse(atob(tokens.access_token.split(".")[1])).sub;
             console.log(idUser);
             keyCloakClient.usuario(idUser).then(userInfo => {
