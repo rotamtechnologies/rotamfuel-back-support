@@ -8,6 +8,7 @@ router.get('/descargar/datos', function (req, res) {
 });
 
 router.get("/",(req,res)=>{
+    console.log("ola")
    res.send("datos")
 });
 
