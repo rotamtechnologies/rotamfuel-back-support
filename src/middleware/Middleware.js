@@ -38,9 +38,10 @@ class Middleware {
         this.ExpressApp.use((req, res, next) => {
             var cookies = new Cookies(req, res);
             let token = req.headers.authorization ? req.headers.authorization.substring("Bearer ".length, req.headers.authorization.length) : cookies.get("RTM_FL-tkn");
-            console.log(token)
             if (token) {
                 keyCloakClient.introspectToken(token).then(datosToken => {
+                    console.log(datosToken.active)
+
                     if (datosToken.active) {
                         next()
                     } else {
