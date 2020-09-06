@@ -12,7 +12,7 @@ router.get("/", (req, res) => {
     console.log(tokenPeticion);
     let idUser = idByToken(tokenPeticion);
     console.log(idUser)
-    res.send("datos");
+    res.json({datos:idUser});
 });
 
 
