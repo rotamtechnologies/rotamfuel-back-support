@@ -5,7 +5,8 @@ router.post("/",(req,res)=>{
    let tokenPeticion = tokenByReq(req,res);
    if(tokenPeticion){
       let idUser = idByToken(tokenPeticion);
-      keyCloakClient.createCar().then(ok=>{
+      let car = {};
+      keyCloakClient.createCar(idUser,car).then(ok=>{
          JSONResponse.OK(res,ok)
       })
 
