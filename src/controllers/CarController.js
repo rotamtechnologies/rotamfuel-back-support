@@ -15,6 +15,10 @@ router.post("/",(req,res)=>{
    }
 
 });
+router.patch("/",(req,res)=>{
+   console.log(req.body)
+});
+
 router.get("/",(req,res)=>{
    let tokenPeticion = tokenByReq(req,res);
    if(tokenPeticion){
