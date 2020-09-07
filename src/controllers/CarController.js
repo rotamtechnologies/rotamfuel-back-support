@@ -16,9 +16,17 @@ router.post("/",(req,res)=>{
 
 });
 router.patch("/",(req,res)=>{
-   console.log(req.headers)
-   console.log(req.body)
-   console.log("asd")
+
+   let tokenPeticion = tokenByReq(req,res);
+   if(tokenPeticion){
+      let idUser = idByToken(tokenPeticion);
+      keyCloakClient.usuario(idUser).then(ok=>{
+         console.log(ok.attributes[req.body.name]);
+      })
+
+   }else{
+      JSONResponse.ERROR(res,"error token")
+   }
 
 });
 
