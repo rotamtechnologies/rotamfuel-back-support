@@ -22,13 +22,20 @@ router.patch("/", (req, res) => {
         let idUser = idByToken(tokenPeticion);
         keyCloakClient.usuario(idUser).then(ok => {
 
-           let regACambiar = req.body.regName;
-           let datosAGuardar = ok.attributes;
+            let regACambiar = req.body.regName;
+            let datosAGuardar = ok.attributes;
+            console.log(req.body)
+            console.log(datosAGuardar)
+            let elReg = datosAGuardar[regACambiar];
+            elReg.regName = req.body.regNameValue;
+            elReg.marca = req.body.marca;
+            elReg.modelo = req.body.modelo;
+            elReg.tipoCombustible = req.body.tipoCombustible;
 
-           console.log(datosAGuardar)
-           console.log(regACambiar)
-
-
+            console.log(datosAGuardar)
+            console.log(elReg)
+            datosAGuardar[regACambiar] = elReg;
+            console.log(datosAGuardar)
 
 
         })
@@ -51,13 +58,13 @@ router.delete("/", (req, res) => {
             delete datosParaGuardar[nombre];
             console.log(nombre);
             console.log(datosParaGuardar);
-           let data = {
-              attributes:datosParaGuardar
-           };
+            let data = {
+                attributes: datosParaGuardar
+            };
 
-           keyCloakClient.updateUser(idUser,data).then(()=>{
-              JSONResponse.OK(res, datosParaGuardar)
-           });
+            keyCloakClient.updateUser(idUser, data).then(() => {
+                JSONResponse.OK(res, datosParaGuardar)
+            });
 
         })
 
