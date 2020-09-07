@@ -42,6 +42,16 @@ router.patch("/",(req,res)=>{
 });
 
 router.delete("/",(req,res)=>{
+   let tokenPeticion = tokenByReq(req,res);
+   if(tokenPeticion){
+      let idUser = idByToken(tokenPeticion);
+      keyCloakClient.usuario(idUser).then(ok=>{
+         JSONResponse.OK(res,ok.attributes)
+      })
+
+   }else{
+      JSONResponse.ERROR(res,"error token")
+   }
    console.log("Borrando")
 });
 
