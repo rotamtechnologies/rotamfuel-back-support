@@ -49,7 +49,7 @@ router.delete("/", (req, res) => {
             let datosParaGuardar = ok.attributes;
             console.log(datosParaGuardar);
             console.log(req.headers)
-            let nombre = req.headers.carName;
+            let nombre = req.headers.carname;
             delete datosParaGuardar[nombre];
             console.log(nombre);
             console.log(datosParaGuardar);
