@@ -25,18 +25,20 @@ router.patch("/", (req, res) => {
             let regACambiar = req.body.regName;
             let datosAGuardar = ok.attributes;
             console.log(req.body)
-            console.log(datosAGuardar)
             let elReg = datosAGuardar[regACambiar];
             elReg[0] = req.body.regNameValue;
             elReg[2] = req.body.marca;
             elReg[3] = req.body.modelo;
             elReg[4] = req.body.tipoCombustible;
-
             console.log(datosAGuardar)
-            console.log(elReg)
             datosAGuardar[regACambiar] = elReg;
-            console.log(datosAGuardar)
-
+            let data = {
+                attributes: datosAGuardar
+            };
+            console.log(data)
+            keyCloakClient.updateUser(idUser, data).then(dataOk => {
+                console.log(dataOk)
+            })
 
         })
 
