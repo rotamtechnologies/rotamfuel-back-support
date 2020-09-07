@@ -29,6 +29,7 @@ router.patch("/",(req,res)=>{
             let datosAGuardar = ok.attributes[req.body.name];
             console.log(ok.attributes)
             let keyANum = req.body.dato.key ==="regNameValue" ? 0: req.body.dato.key ==="VIN" ? 1: req.body.dato.key ==="marca" ? 2: req.body.dato.key ==="modelo" ? 3: req.body.dato.key ==="tipoCombustible" ? 4:null;
+            console.log()
             datosAGuardar[keyANum] = req.body.dato.value
             console.log(datosAGuardar)
          }
@@ -39,6 +40,11 @@ router.patch("/",(req,res)=>{
    }
 
 });
+
+router.delete("/",(req,res)=>{
+   console.log("Borrando")
+});
+
 
 router.get("/",(req,res)=>{
    let tokenPeticion = tokenByReq(req,res);
