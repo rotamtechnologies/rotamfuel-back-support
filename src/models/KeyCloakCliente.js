@@ -92,7 +92,7 @@ class KeyCloakCliente {
     async usuario(id) {
         try{
             let infoUser = await kcAdminClient.users.findOne({id});
-            return infoUser.attributes;
+            return {attributes:infoUser.attributes};
 
         }
         catch (e) {
