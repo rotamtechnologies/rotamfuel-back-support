@@ -27,15 +27,14 @@ router.patch("/", (req, res) => {
             console.log(req.body)
             console.log(datosAGuardar)
             console.log(regACambiar)
+            let auxReg = datosAGuardar[regACambiar];
+            delete datosAGuardar[regACambiar];
 
-            let elReg = datosAGuardar[regACambiar];
-           console.log(elReg)
-
-           elReg[0] = req.body.regNameValue;
-            elReg[2] = req.body.marca;
-            elReg[3] = req.body.modelo;
-            elReg[4] = req.body.tipoCombustible;
-            datosAGuardar[regACambiar] = elReg;
+            datosAGuardar[req.body.regNameValue][0] = req.body.regNameValue;
+            datosAGuardar[req.body.regNameValue][1] = auxReg[1];
+            datosAGuardar[req.body.regNameValue][2] = req.body.marca;
+            datosAGuardar[req.body.regNameValue][3] = req.body.modelo;
+            datosAGuardar[req.body.regNameValue][4] = req.body.tipoCombustible;
             let data = {
                 attributes: datosAGuardar
             };
