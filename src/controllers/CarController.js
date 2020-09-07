@@ -29,7 +29,7 @@ router.patch("/", (req, res) => {
             console.log(regACambiar)
             let auxReg = datosAGuardar[regACambiar];
             delete datosAGuardar[regACambiar];
-
+            datosAGuardar[req.body.regNameValue] = []
             datosAGuardar[req.body.regNameValue][0] = req.body.regNameValue;
             datosAGuardar[req.body.regNameValue][1] = auxReg[1];
             datosAGuardar[req.body.regNameValue][2] = req.body.marca;
