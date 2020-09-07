@@ -36,7 +36,9 @@ class Middleware {
 
     agregarOAuth() {
         this.ExpressApp.use((req, res, next) => {
-            if (req.url === "/user/") {
+            if (req.url === "/user/" ||
+                req.url === "/car/"
+            ) {
                 next()
             } else {
                 var cookies = new Cookies(req, res);
