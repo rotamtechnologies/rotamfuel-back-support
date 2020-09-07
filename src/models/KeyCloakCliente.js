@@ -117,6 +117,7 @@ class KeyCloakCliente {
     async createCar(id, car) {
         let autos = await this.usuario(id);
         autos = autos.attributes;
+        console.log(autos)
         let l = Object.keys(autos.attributes).length;
 
         let newCar = {
