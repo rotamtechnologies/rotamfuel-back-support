@@ -119,8 +119,8 @@ class KeyCloakCliente {
         autos = autos.attributes;
         console.log(typeof autos)
         console.log(Object.keys(autos))
-        console.log(autos.length)
-        let l = Object.keys(autos.attributes).length;
+        console.log(Object.keys(autos).length)
+        let l = Object.keys(autos).length;
 
         let newCar = {
             "regName": "car" + l,
