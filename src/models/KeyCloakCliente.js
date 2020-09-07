@@ -90,13 +90,12 @@ class KeyCloakCliente {
     }
 
     async usuario(id) {
-        try{
+        try {
             let infoUser = await kcAdminClient.users.findOne({id});
-            return {attributes:infoUser.attributes};
+            return {attributes: infoUser.attributes};
 
-        }
-        catch (e) {
-            console.log("error en cliente: "+(e))
+        } catch (e) {
+            console.log("error en cliente: " + (e))
             await this.iniciar();
             this.usuario(id)
         }
@@ -114,10 +113,30 @@ class KeyCloakCliente {
             },
         );
     }
+
     async createCar(id, car) {
-        let autos= await this.usuario(id);
+        let autos = await this.usuario(id);
         autos = autos.attributes;
-        console.log(autos)
+        let l = autos.attributes.length;
+
+        let newCar = {
+            "regName": "car" + l,
+            "VIN": "asd1234",
+            "marca": "volvo",
+            "modelo": "az101",
+            "tipoCombustible": "diesel"
+        };
+
+
+        autos["car"+l] = Object.values(newCar);
+
+        let data = {
+            attributes:autos
+        };
+
+        this.updateUser(id, {
+            ...data
+        });
 
         return autos
     }
