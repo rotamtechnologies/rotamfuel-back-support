@@ -46,13 +46,15 @@ router.delete("/",(req,res)=>{
    if(tokenPeticion){
       let idUser = idByToken(tokenPeticion);
       keyCloakClient.usuario(idUser).then(ok=>{
-         JSONResponse.OK(res,ok.attributes)
+         let datosParaGuardar = ok.attributes;
+         let nombre = req.headers.carName;
+         datosParaGuardar = delete ok.attributes[nombre];
+         JSONResponse.OK(res,datosParaGuardar)
       })
 
    }else{
       JSONResponse.ERROR(res,"error token")
    }
-   console.log("Borrando")
 });
 
 
