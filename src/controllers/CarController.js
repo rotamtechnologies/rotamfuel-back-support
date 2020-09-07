@@ -16,6 +16,7 @@ router.post("/",(req,res)=>{
 
 });
 router.patch("/",(req,res)=>{
+   console.log(req.headers)
    console.log(req.body)
    console.log("asd")
 
