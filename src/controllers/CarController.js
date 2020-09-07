@@ -1,6 +1,18 @@
 const router = require("express").Router();
+require("../models/KeyCloakCliente");
+require("../util/JSONResponse")
 router.post("/",(req,res)=>{
-   console.log(req.body);
-   res.send("HOLA")
+   let tokenPeticion = tokenByReq(req,res);
+   if(tokenPeticion){
+      let idUser = idByToken(tokenPeticion);
+      keyCloakClient.createCar().then(ok=>{
+         console.log(ok)
+         JSONResponse.OK(res,ok)
+      })
+
+   }else{
+      JSONResponse.ERROR(res,"error token")
+   }
+
 });
 global.CarController = router;
