@@ -21,18 +21,10 @@ router.patch("/", (req, res) => {
     if (tokenPeticion) {
         let idUser = idByToken(tokenPeticion);
         keyCloakClient.usuario(idUser).then(ok => {
-            console.log(req.body.name)
-            console.log(req.body.dato.key)
-            console.log(req.body.dato.value)
 
-            if (ok.attributes[req.body.name]) {
-                let datosAGuardar = ok.attributes[req.body.name];
-                console.log(ok.attributes)
-                let keyANum = req.body.dato.key === "regNameValue" ? 0 : req.body.dato.key === "VIN" ? 1 : req.body.dato.key === "marca" ? 2 : req.body.dato.key === "modelo" ? 3 : req.body.dato.key === "tipoCombustible" ? 4 : null;
-                console.log()
-                datosAGuardar[keyANum] = req.body.dato.value
-                console.log(datosAGuardar)
-            }
+           console.log(req.body)
+
+
         })
 
     } else {
