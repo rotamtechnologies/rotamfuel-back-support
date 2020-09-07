@@ -53,7 +53,14 @@ router.delete("/", (req, res) => {
             delete datosParaGuardar[nombre];
             console.log(nombre);
             console.log(datosParaGuardar);
-            JSONResponse.OK(res, datosParaGuardar)
+           let data = {
+              attributes:datosParaGuardar
+           };
+
+           keyCloakClient.updateUser(idUser,data).then(()=>{
+              JSONResponse.OK(res, datosParaGuardar)
+           });
+
         })
 
     } else {
