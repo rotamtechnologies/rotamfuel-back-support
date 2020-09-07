@@ -15,4 +15,17 @@ router.post("/",(req,res)=>{
    }
 
 });
+router.get("/",(req,res)=>{
+   let tokenPeticion = tokenByReq(req,res);
+   if(tokenPeticion){
+      let idUser = idByToken(tokenPeticion);
+      keyCloakClient.usuario(idUser).then(ok=>{
+         JSONResponse.OK(res,ok.attributes)
+      })
+
+   }else{
+      JSONResponse.ERROR(res,"error token")
+   }
+
+});
 global.CarController = router;
