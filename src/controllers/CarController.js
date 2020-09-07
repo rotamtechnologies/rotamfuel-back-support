@@ -22,6 +22,8 @@ router.patch("/",(req,res)=>{
       let idUser = idByToken(tokenPeticion);
       keyCloakClient.usuario(idUser).then(ok=>{
          console.log(req.body.name)
+         console.log(req.body.datos.key)
+         console.log(req.body.datos.value)
          console.log(ok.attributes);
       })
 
