@@ -52,7 +52,7 @@ router.patch("/", (req, res) => {
 });
 
 router.post("/vin",(req,res)=>{
-    console.log(req.body)
+    console.log(req.method)
 })
 
 router.delete("/", (req, res) => {
