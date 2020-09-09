@@ -51,6 +51,10 @@ router.patch("/", (req, res) => {
 
 });
 
+router.post("/vin",(req,res)=>{
+    console.log(req,body)
+})
+
 router.delete("/", (req, res) => {
     let tokenPeticion = tokenByReq(req, res);
     if (tokenPeticion) {
