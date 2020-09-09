@@ -141,7 +141,7 @@ class KeyCloakCliente {
         };
 
 
-        autos["car"+l] = Object.values(newCar);
+        autos["auto"+l] = Object.values(newCar);
 
         let data = {
             attributes:autos
