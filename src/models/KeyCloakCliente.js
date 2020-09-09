@@ -47,6 +47,14 @@ class KeyCloakCliente {
             clientId: this.kcClientId,
         }).catch(e => console.log(e))
     }
+   iniciar2() {
+       return kcAdminClient.auth({
+            username: this.username,
+            password: this.password,
+            grantType: this.grantType,
+            clientId: this.kcClientId,
+        })
+    }
 
 
     obtenerToken(username, pass) {
@@ -96,7 +104,7 @@ class KeyCloakCliente {
 
         } catch (e) {
             console.log("error en cliente: " + (e))
-            await this.iniciar();
+            await this.iniciar2();
             this.usuario(id)
         }
     }
