@@ -105,7 +105,7 @@ class KeyCloakCliente {
         } catch (e) {
             console.log("error en cliente: " + (e))
             await this.iniciar2();
-            this.usuario(id)
+            await this.usuario(id)
         }
     }
 
