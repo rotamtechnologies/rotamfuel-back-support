@@ -52,7 +52,11 @@ router.patch("/", (req, res) => {
 });
 
 router.post("/vin",(req,res)=>{
-    console.log(req.method)
+    let tokenPeticion = tokenByReq(req, res);
+    let idUser = idByToken(tokenPeticion);
+    keyCloakClient.usuario(idUser).then(datosUser=>{
+        console.log(datosUser.attributes)
+    })
 })
 
 router.delete("/", (req, res) => {
@@ -62,7 +66,7 @@ router.delete("/", (req, res) => {
         keyCloakClient.usuario(idUser).then(ok => {
             let datosParaGuardar = ok.attributes;
             console.log(datosParaGuardar);
-            console.log(req.headers)
+            console.log(req.headers);
             let nombre = req.headers.carname;
             delete datosParaGuardar[nombre];
             console.log(nombre);
