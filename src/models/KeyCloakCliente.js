@@ -129,6 +129,7 @@ class KeyCloakCliente {
         if(autos){
             l = Object.keys(autos).length;
         }else {
+            autos={}
             l = 0
         }
         let newCar = {
