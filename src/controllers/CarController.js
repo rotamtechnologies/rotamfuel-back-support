@@ -54,8 +54,15 @@ router.patch("/", (req, res) => {
 router.post("/vin",(req,res)=>{
     let tokenPeticion = tokenByReq(req, res);
     let idUser = idByToken(tokenPeticion);
+    let nombreAuto = req.body.regName;
+    let vinNuevo = req.body.vinNuevo;
+    let datosAntiguos = []
     keyCloakClient.usuario(idUser).then(datosUser=>{
-        console.log(datosUser.attributes)
+        datosAntiguos = datosUser.attributes;
+        if(datosUser.attributes[nombreAuto]){
+            datosAntiguos.attributes[nombreAuto][1] = vinNuevo
+        }
+        console.log(datosAntiguos)
     })
 })
 
