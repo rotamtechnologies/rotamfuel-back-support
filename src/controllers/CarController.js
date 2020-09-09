@@ -61,8 +61,9 @@ router.post("/vin",(req,res)=>{
         datosAntiguos = datosUser.attributes;
         if(datosUser[nombreAuto]){
             datosAntiguos[nombreAuto][1] = vinNuevo
+            console.log(datosAntiguos)
+
         }
-        console.log(datosAntiguos)
     })
 })
 
