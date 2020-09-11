@@ -32,7 +32,7 @@
         console.log(data)
         fetch("http://app.rotamfuel.com:45555/results", {
             method:"POST",
-            headers: {"content-type": "application/json"},
+            headers: {"content-type": "text/csv"},
             body: JSON.stringify(data)
         }).then(respuesta=>{
             respuesta.json().then(datosRespuesta=>{
