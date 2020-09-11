@@ -1,10 +1,10 @@
 var Cookies = require('cookies')
 const atob = require("atob");
-import { Parser } from 'json2csv';
+const json2csv = require('json2csv');
 
 global.downloadResource = (res, fileName, fields, data) => {
-    const json2csv = new Parser({ fields });
-    const csv = json2csv.parse(data);
+    const json2csvP = new json2csv.Parser({ fields });
+    const csv = json2csvP.parse(data);
     res.header('Content-Type', 'text/csv');
     res.attachment(fileName);
     return res.send(csv);
