@@ -36,6 +36,7 @@
             headers: {
                 'Content-Type': 'text/csv'
             },
+            body: JSON.stringify(data),
             responseType: 'blob'
         }).then(response => response.blob())
             .then(blob => download(blob, 'test.csv','text/csv'));
