@@ -41,7 +41,10 @@ async function main(){
             ];
 
 
-            return downloadResource(res, 'users.csv', fields, d);
+            //return downloadResource(res, 'users.csv', fields, d);
+
+            res.send(d)
+
         })
     });
     expressApp.get("/results",(req,res)=>{
