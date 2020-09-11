@@ -21,10 +21,29 @@ async function main(){
 
     expressApp.post("/results", (req, res) => {
         db.results(req.body.desde,req.body.hasta).then(d => {
-            res.send({
-                d
-            })
+            const fields = [
+                {
+                    label: 'First Name',
+                    value: 'first_name'
+                },
+                {
+                    label: 'Last Name',
+                    value: 'last_name'
+                },
+                {
+                    label: 'Email Address',
+                    value: 'email_address'
+                },
+                {
+                    label: 'recursos',
+                    value: 'resources'
+                }
+            ];
+
+
+            return downloadResource(res, 'users.csv', fields, d);
         })
+
     });
     expressApp.listen(CONFIG.PORTEXPRESSAPP);
 }
