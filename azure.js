@@ -26,7 +26,6 @@ kcAdminClient.auth({
     kcAdminClient.users.find().then(d => {
         console.log(d)
     })
-
 });
 
 server.listen(port, function () {

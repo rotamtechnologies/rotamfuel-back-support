@@ -30,7 +30,7 @@
 
         let data = {desde, hasta}
         console.log(data)
-        fetch("http://localhost:3000/results", {
+        fetch("http://app.rotamfuel.com:45555/results", {
             method:"POST",
             headers: {"content-type": "application/json"},
             body: JSON.stringify(data)
