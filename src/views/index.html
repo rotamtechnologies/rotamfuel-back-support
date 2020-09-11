@@ -14,7 +14,7 @@
 
 <p><span id="numero">x</span> registros</p>
 <button onclick="ObtenerDatos()">Descargar</button>
-
+<script src="FileSaver.min.js"></script>
 <script>
     var date = new Date(); // Or the date you'd like converted.
     var isoDateTime = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString();
@@ -30,15 +30,15 @@
 
         let data = {desde, hasta}
         console.log(data)
+
         fetch("http://app.rotamfuel.com:45555/results", {
             method:"POST",
-            headers: {"content-type": "text/csv"},
-            body: JSON.stringify(data)
-        }).then(respuesta=>{
-            respuesta.json().then(datosRespuesta=>{
-                console.log(datosRespuesta)
-            })
-        })
+            headers: {
+                'Content-Type': 'text/csv'
+            },
+            responseType: 'blob'
+        }).then(response => response.blob())
+            .then(blob => FileSaver.saveAs(blob, 'test.csv'));
 
 
     }
