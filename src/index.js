@@ -20,7 +20,6 @@ async function main(){
     expressApp.use("/car", CarController);
 
     expressApp.post("/results", (req, res) => {
-        console.log(req.body)
         db.results(req.body.desde,req.body.hasta).then(d => {
             const fields = [
                 {
@@ -36,16 +35,13 @@ async function main(){
                     value: 'email_address'
                 },
                 {
-                    label: 'recursos',
-                    value: 'resources'
+                    label: 'tem',
+                    value: 'temperature'
                 }
             ];
 
 
-            //return downloadResource(res, 'users.csv', fields, d);
-            console.log(d)
-
-            res.send(d)
+            return downloadResource(res, 'users.csv', fields, d.resources);
 
         })
     });
