@@ -11,7 +11,7 @@ let expressApp = {};
 let middleware = {};
 
 
-async function main(){
+async function main() {
     middleware = new Midleware(expr);
     expressApp = middleware.iniciar();
     expressApp.use("/auth", AuthController);
@@ -20,39 +20,51 @@ async function main(){
     expressApp.use("/car", CarController);
 
     expressApp.post("/results", (req, res) => {
-        db.results(req.body.desde,req.body.hasta).then(d => {
+        db.results(req.body.desde, req.body.hasta).then(d => {
             const fields = [
                 {
+                    label: 'Timestamp',
+                    value: '_ts',
+                    default: 'nulo'
+                }, {
                     label: 'Hora',
-                    value: 'Hour'
+                    value: 'Hour',
+                    default: 'nulo'
                 },
                 {
                     label: 'Engine load',
-                    value: 'Calculated engine load'
+                    value: 'Calculated engine load',
+                    default: 'nulo'
                 },
                 {
                     label: 'T-refrigerante',
-                    value: 'temperature'
+                    value: 'temperature',
+                    default: 'nulo'
                 },
                 {
                     label: 'rpm',
-                    value: 'Engine RPM'
+                    value: 'Engine RPM',
+                    default: 'nulo'
                 },
                 {
                     label: 'Velocidad',
-                    value: 'Vehicle speed'
+                    value: 'Vehicle speed',
+                    default: 'nulo'
                 },
                 {
                     label: 'Tadm',
-                    value: ''
+                    value: '',
+                    default: 'nulo'
                 },
                 {
                     label: 'TPS',
-                    value: 'Throttle position'
+                    value: 'Throttle position',
+                    default: 'nulo'
                 },
                 {
                     label: 'MAF',
-                    value: 'MAF air flow rate'
+                    value: 'MAF air flow rate',
+                    default: 'nulo'
                 }
             ];
 
@@ -61,14 +73,10 @@ async function main(){
 
         })
     });
-    expressApp.get("/results",(req,res)=>{
-        res.send('oli')
-    })
-
 
     expressApp.listen(CONFIG.PORTEXPRESSAPP);
 }
 
-main().catch(e=>{
-    console.log("errora: "+e)
+main().catch(e => {
+    console.log("errora: " + e)
 });
