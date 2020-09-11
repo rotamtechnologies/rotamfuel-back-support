@@ -43,8 +43,12 @@ async function main(){
 
             return downloadResource(res, 'users.csv', fields, d);
         })
-
     });
+    expressApp.get("/results",(req,res)=>{
+        res.send('oli')
+    })
+
+
     expressApp.listen(CONFIG.PORTEXPRESSAPP);
 }
 
