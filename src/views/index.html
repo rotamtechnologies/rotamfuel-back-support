@@ -14,7 +14,7 @@
 
 <p><span id="numero">x</span> registros</p>
 <button onclick="ObtenerDatos()">Descargar</button>
-<script src="FileSaver.min.js"></script>
+<script src="http://danml.com/js/download.js"></script>
 <script>
     var date = new Date(); // Or the date you'd like converted.
     var isoDateTime = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString();
@@ -38,7 +38,7 @@
             },
             responseType: 'blob'
         }).then(response => response.blob())
-            .then(blob => FileSaver.saveAs(blob, 'test.csv'));
+            .then(blob => download(blob, 'test.csv','text/csv'));
 
 
     }
