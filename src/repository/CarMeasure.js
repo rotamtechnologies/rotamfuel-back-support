@@ -17,8 +17,8 @@ const querySpec = {
 
 exports.results = (desde,hasta) =>{
     const querySpec = {
-        query: "SELECT * FROM c",
-        //query: "SELECT VALUE COUNT(1) FROM c WHERE c._ts > @Desde AND c._ts < @Hasta",
+        //query: "SELECT * FROM c",
+        query: "SELECT VALUE COUNT(1) FROM c WHERE c._ts > @Desde AND c._ts < @Hasta",
         "parameters": [
             {"name": "@Desde", "value": desde},
             {"name": "@Hasta", "value": hasta},
