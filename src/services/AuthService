@@ -1,5 +1,6 @@
 require('../models/KeyCloakCliente');
 require("../util/Utils")
+var Cookies = require('cookies')
 global.obtenerToken = (req, res) => {
     try {
         let user = req.body.user;
@@ -7,6 +8,8 @@ global.obtenerToken = (req, res) => {
         keyCloakClient.obtenerToken(user, pass).then(tokens => {
             tokens = JSON.parse(tokens);
             if (tokens.access_token) {
+                var cookies = new Cookies(req, res)
+                cookies.set('RTM_FL-tkn', tokens.access_token,{path:"/"} )
                 JSONResponse.OK(res, {tkn: tokens.access_token, rsh: tokens.refresh_token})
             } else {
                 JSONResponse.ERROR(res, tokens)
