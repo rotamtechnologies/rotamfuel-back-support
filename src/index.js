@@ -23,20 +23,36 @@ async function main(){
         db.results(req.body.desde,req.body.hasta).then(d => {
             const fields = [
                 {
-                    label: 'First Name',
-                    value: 'first_name'
+                    label: 'Hora',
+                    value: 'Hour'
                 },
                 {
-                    label: 'Last Name',
-                    value: 'last_name'
+                    label: 'Engine load',
+                    value: 'Calculated engine load'
                 },
                 {
-                    label: 'Email Address',
-                    value: 'email_address'
-                },
-                {
-                    label: 'tem',
+                    label: 'T-refrigerante',
                     value: 'temperature'
+                },
+                {
+                    label: 'rpm',
+                    value: 'Engine RPM'
+                },
+                {
+                    label: 'Velocidad',
+                    value: 'Vehicle speed'
+                },
+                {
+                    label: 'Tadm',
+                    value: ''
+                },
+                {
+                    label: 'TPS',
+                    value: 'Throttle position'
+                },
+                {
+                    label: 'MAF',
+                    value: 'MAF air flow rate'
                 }
             ];
 
