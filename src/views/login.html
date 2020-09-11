@@ -47,7 +47,6 @@
             <img src="logoTexto.png" alt="">
         </div>
         <div class="formulario">
-<p>asd</p>
             <div class="item">
                 <label position="floating">Usuario</label>
                 <input type="text" id="user" >
@@ -72,6 +71,7 @@
         fetch("http://app.rotamfuel.com:45555/auth/token",{method:"POST",body:`{"user":"${user}","pass":"${pass}"}`,headers:{"content-type":"application/json"}}).then(response=>{
             response.json().then(datos=>{
                 console.log(datos)
+                location.href = '/user/descargar/datos'
             })
         })
     }
