@@ -34,7 +34,7 @@
         fetch("http://app.rotamfuel.com:45555/results", {
             method:"POST",
             headers: {
-                'Content-Type': 'text/csv'
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(data),
             responseType: 'blob'
