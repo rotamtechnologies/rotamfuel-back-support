@@ -2,6 +2,7 @@ process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 require('./constants/config');
 require('./controllers/UserController');
 require('./controllers/CarController');
+require('./controllers/ThingsController');
 require('./controllers/AuthController');
 require('./middleware/Middleware');
 const db = require("./repository/CarMeasure");
@@ -17,6 +18,7 @@ async function main() {
     expressApp.use("/auth", AuthController);
     expressApp = middleware.agregarOAuth();
     expressApp.use("/user", UserController);
+    expressApp.use("/things", UserController);
     expressApp.use("/car", CarController);
 
     expressApp.post("/results", (req, res) => {
