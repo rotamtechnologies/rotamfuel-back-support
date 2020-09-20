@@ -1,7 +1,7 @@
 require("../util/httpRequester");
-let url ="";
+let url ="http://mockbin.org/request";
 
-global.agregarDispositivo = ()=>{
-    HttpRequester.makePOST()
+global.agregarDispositivo = (data)=>{
+    return HttpRequester.makePOST(url,data)
 };
 
