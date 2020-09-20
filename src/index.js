@@ -18,7 +18,7 @@ async function main() {
     expressApp.use("/auth", AuthController);
     expressApp = middleware.agregarOAuth();
     expressApp.use("/user", UserController);
-    expressApp.use("/things", UserController);
+    expressApp.use("/things", ThingsController);
     expressApp.use("/car", CarController);
 
     expressApp.post("/results", (req, res) => {
