@@ -54,6 +54,7 @@ router.patch("/", (req, res) => {
 router.post("/vin",(req,res)=>{
     let tokenPeticion = tokenByReq(req, res);
     let idUser = idByToken(tokenPeticion);
+    console.log(req.body)
     let nombreAuto = req.body.regName;
     let vinNuevo = req.body.vinNuevo;
     let datosAntiguos = []
