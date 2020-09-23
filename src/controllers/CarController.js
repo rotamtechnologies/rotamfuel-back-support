@@ -63,6 +63,8 @@ router.post("/vin",(req,res)=>{
         if(datosUser.attributes[nombreAuto]){
             datosAntiguos[nombreAuto][1] = vinNuevo
             console.log(datosAntiguos)
+
+
             JSONResponse.OK(res)
 
         }

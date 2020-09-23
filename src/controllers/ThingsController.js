@@ -1,9 +1,7 @@
 const router = require("express").Router();
 require("../services/ThingsService")
 router.post("/",(req,res)=>{
-    agregarDispositivo({body:'ola',headers:{
-        head1:'val1'
-        }}).then(ok=>{
+    agregarDispositivo(req.body.vin).then(ok=>{
         res.send(ok)
     })
 });
