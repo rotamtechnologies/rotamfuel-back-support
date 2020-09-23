@@ -1,4 +1,5 @@
 require("../util/httpRequester");
+require ("../constants/config")
 let url = "http://23.98.131.148:8080/api/device";
 
 global.agregarDispositivo = (data) => {
@@ -19,4 +20,9 @@ global.agregarDispositivo = (data) => {
         body: datosJSON
     })
 };
+
+function obtenerTokenThings(){
+    let datos =`{"username":"${CONFIG.THINGSUSER}", "password":"${CONFIG.THINGSPASSWORD}"`
+    return HttpRequester.makePOST(urlToken,{headers:{},body:datos})
+}
 

@@ -13,6 +13,8 @@ global.CONFIG = {
     KCREALMURL:process.env.KCREALMURL,
     KCINTROSPECTURL:process.env.KCINTROSPECTURL,
     KCTOKENURL:process.env.KCTOKENURL,
+    THINGSUSER:process.env.THINGSUSER,
+    THINGSPASSWORD:process.env.THINGSPASSWORD,
     DB:{
         DATABASE:process.env.COSMOSDB_db,
         CONTAINER:process.env.COSMOSDB_container,
