@@ -29,6 +29,8 @@ global.agregarDispositivo = async (data) => {
 function obtenerTokenThings(){
     let datos =`{"username":"${CONFIG.THINGSUSER}", "password":"${CONFIG.THINGSPASSWORD}"`
     console.log(datos)
-    return HttpRequester.makePOST(urlToken,{body:datos})
+    HttpRequester.makePOST(urlToken,{body:datos}).then(ok=>{
+        console.log(ok);
+    })
 }
 
