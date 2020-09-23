@@ -16,9 +16,8 @@ global.agregarDispositivo = async (data) => {
 }
 `;
     let token = await obtenerTokenThings()
-    console.log(token.token)
-    console.log("token")
-
+    token = JSON.parse(token).token
+    console.log(token)
 
     return HttpRequester.makePOST(url, {
         headers: {"content-type": "application/json"},
