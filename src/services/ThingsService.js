@@ -16,7 +16,7 @@ global.agregarDispositivo = async (data) => {
 }
 `;
     let token = await obtenerTokenThings()
-    console.log(token)
+    console.log(token.token)
     console.log("token")
 
 
