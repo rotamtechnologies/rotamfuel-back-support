@@ -6,6 +6,8 @@ router.post("/",(req,res)=>{
     })
 });
 router.get("/token/:vin",(req,res)=>{
+    console.log(req.params)
+    console.log(req.query)
     res.send(req.params.vin)
 });
 
