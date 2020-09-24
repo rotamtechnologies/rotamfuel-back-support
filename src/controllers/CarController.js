@@ -1,6 +1,7 @@
 const router = require("express").Router();
 require("../models/KeyCloakCliente");
 require("../util/JSONResponse")
+require("../services/ThingsService")
 router.post("/", (req, res) => {
     let tokenPeticion = tokenByReq(req, res);
     if (tokenPeticion) {
@@ -67,10 +68,15 @@ router.post("/vin",(req,res)=>{
                 attributes: datosAntiguos
             };
             console.log(data)
-            keyCloakClient.updateUser(idUser, data).then(dataOk => {
-                console.log(dataOk)
-                JSONResponse.OK(res,dataOk)
+            agregarDispositivo(vinNuevo).then(ok=>{
+                let token = JSON.parse(ok).credentialsId
+                keyCloakClient.updateUser(idUser, data).then(dataOk => {
+                    console.log(dataOk)
+                    JSONResponse.OK(res,dataOk)
+                })
             })
+
+
 
         }
     })
