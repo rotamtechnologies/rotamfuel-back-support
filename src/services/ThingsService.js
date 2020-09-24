@@ -26,16 +26,17 @@ global.agregarDispositivo = async (data) => {
     });
 
     if (JSON.parse(dispositivo).message === "Device with such name already exists!") {
-        dispositivo = await HttpRequester.makeGET(urlBuscarIdDispositivo+data, {
+        dispositivo = await HttpRequester.makeGET(urlBuscarIdDispositivo + data, {
             headers: {"content-type": "application/json", "X-Authorization": "Bearer " + token}
         })
     }
     let idDispositivo = JSON.parse(dispositivo).id.id
     console.log(idDispositivo)
-    /*
 
-        let accessToken = await HttpRequester.makeGET(urlDispositivo + dispositivo + "/credentials")
-        console.log(accessToken)*/
+    return HttpRequester.makeGET(urlDispositivo + idDispositivo + "/credentials", {
+        headers: {"content-type": "application/json", "X-Authorization": "Bearer " + token}
+    })
+
 
 };
 
