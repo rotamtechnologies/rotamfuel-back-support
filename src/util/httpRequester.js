@@ -12,9 +12,9 @@ global.HttpRequester = {
             })
         })
     },
-    makeGET: (url) => {
+    makeGET: (url,opt) => {
         return new Promise((ok, nulo) => {
-            request.get(url, (error, response, body) => {
+            request.get(url,opt, (error, response, body) => {
                 if (error != null)
                     nulo(error)
                 else
