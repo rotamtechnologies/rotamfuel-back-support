@@ -63,9 +63,14 @@ router.post("/vin",(req,res)=>{
         if(datosUser.attributes[nombreAuto]){
             datosAntiguos[nombreAuto][1] = vinNuevo
             console.log(datosAntiguos)
-
-
-            JSONResponse.OK(res)
+            let data = {
+                attributes: datosAntiguosg
+            };
+            console.log(data)
+            keyCloakClient.updateUser(idUser, data).then(dataOk => {
+                console.log(dataOk)
+                JSONResponse.OK(dataOk)
+            })
 
         }
     })
