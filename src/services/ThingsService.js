@@ -27,7 +27,7 @@ global.agregarDispositivo = async (data) => {
     });
 
     if (JSON.parse(dispositivo).message === "Device with such name already exists!") {
-        dispositivo = await HttpRequester.makeGET(urlBuscarIdDispositivo, {
+        dispositivo = await HttpRequester.makeGET(urlBuscarIdDispositivo+data, {
             headers: {"content-type": "application/json", "X-Authorization": "Bearer " + token}
         })
     }
