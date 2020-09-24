@@ -4,6 +4,7 @@ require('./controllers/UserController');
 require('./controllers/CarController');
 require('./controllers/ThingsController');
 require('./controllers/AuthController');
+require('./controllers/AzureController');
 require('./middleware/Middleware');
 const db = require("./repository/CarMeasure");
 const path = require('path');
@@ -19,6 +20,7 @@ async function main() {
     expressApp = middleware.agregarOAuth();
     expressApp.use("/user", UserController);
     expressApp.use("/things", ThingsController);
+    expressApp.use("/azure", AzureController);
     expressApp.use("/car", CarController);
 
     expressApp.post("/results", (req, res) => {
