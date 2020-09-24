@@ -69,7 +69,7 @@ router.post("/vin",(req,res)=>{
             console.log(data)
             keyCloakClient.updateUser(idUser, data).then(dataOk => {
                 console.log(dataOk)
-                JSONResponse.OK(dataOk)
+                JSONResponse.OK(res,dataOk)
             })
 
         }
