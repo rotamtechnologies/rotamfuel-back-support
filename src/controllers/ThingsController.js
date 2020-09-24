@@ -5,4 +5,10 @@ router.post("/",(req,res)=>{
         res.send(ok)
     })
 });
+router.get("/token/:vin",(req,res)=>{
+    res.send(req.params.vin)
+});
+
+
+
 global.ThingsController = router;
