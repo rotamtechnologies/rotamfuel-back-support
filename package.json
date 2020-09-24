@@ -19,6 +19,8 @@
     "kafka-node": "^5.0.0",
     "keycloak-admin": "^1.13.0",
     "request": "^2.88.2",
-    "socket.io": "^2.3.0"
+    "socket.io": "^2.3.0",
+    "azure-iot-device": "^1.7.1",
+    "azure-iot-device-mqtt": "^1.7.1"
   }
 }

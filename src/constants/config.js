@@ -15,6 +15,7 @@ global.CONFIG = {
     KCTOKENURL:process.env.KCTOKENURL,
     THINGSUSER:process.env.THINGSUSER,
     THINGSPASSWORD:process.env.THINGSPASSWORD,
+    AZURECS:process.env.AZURECS,
     DB:{
         DATABASE:process.env.COSMOSDB_db,
         CONTAINER:process.env.COSMOSDB_container,

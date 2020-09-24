@@ -1,7 +1,8 @@
 const router = require("express").Router();
-
+require("../services/AzureService")
 router.post("/",(req,res)=>{
-   res.send({ok:"ok"})
+   enviarDatosIOTHUB(req.body);
+   res.send({ok:"ok"});
 
 });
 
