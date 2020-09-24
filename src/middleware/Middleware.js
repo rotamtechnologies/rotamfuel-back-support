@@ -36,6 +36,7 @@ class Middleware {
 
     agregarOAuth() {
         this.ExpressApp.use((req, res, next) => {
+            console.log(req.uri)
             if (req.method==="OPTIONS" || req.uri ==="/things/"
             ) {
                 next()
