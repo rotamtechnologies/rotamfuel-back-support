@@ -2,7 +2,8 @@ const router = require("express").Router();
 require("../services/ThingsService")
 router.post("/",(req,res)=>{
     agregarDispositivo(req.body.vin).then(ok=>{
-        res.send(ok)
+        let token = JSON.parse(ok).credentialsId
+        res.send(token)
     })
 });
 router.get("/token/:vin",(req,res)=>{
