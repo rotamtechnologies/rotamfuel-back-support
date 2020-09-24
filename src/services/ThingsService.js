@@ -26,7 +26,7 @@ global.agregarDispositivo = async (data) => {
         body: datosJSON
     })
 
-    console.log(JSON.parse(dispositivo).status)
+    console.log(JSON.parse(dispositivo).message === "Device with such name already exists!")
 
     let idDispositivo = JSON.parse(dispositivo).id.id
 
