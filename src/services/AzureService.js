@@ -5,8 +5,13 @@ let DeviceClient = require('azure-iot-device').Client;
 let Message = require('azure-iot-device').Message;
 
 global.enviarDatosIOTHUB = (data) => {
-    var message = new Message(JSON.stringify(data))
+    console.log(cs)
+    let message = new Message(JSON.stringify(data))
     let client = DeviceClient.fromConnectionString(cs, Mqtt);
+
+    console.log("enviando mensaje"+data)
+    console.log(message)
+
     client.sendEvent(message, function (err) {
         if (err) {
             console.error('send error: ' + err.toString());
