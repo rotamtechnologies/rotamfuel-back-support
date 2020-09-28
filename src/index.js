@@ -27,6 +27,11 @@ async function main() {
         db.results(req.body.desde, req.body.hasta).then(d => {
             const fields = [
                 {
+                    label: 'ID',
+                    value: 'token',
+                    default: 'nulo'
+                },
+                {
                     label: 'Timestamp',
                     value: '_ts',
                     default: 'nulo'
