@@ -48,7 +48,7 @@ async function main() {
                 },
                 {
                     label: 'T-refrigerante',
-                    value: 'temperature',
+                    value: 'Intake air temperature',
                     default: 'nulo'
                 },
                 {
