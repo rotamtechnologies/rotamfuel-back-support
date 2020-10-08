@@ -40,6 +40,14 @@ async function main() {
                     label: 'Hora',
                     value: 'Hour',
                     default: 'nulo'
+                }, {
+                    label: 'Latitude',
+                    value: 'Latitude',
+                    default: 'nulo'
+                }, {
+                    label: 'Longitude',
+                    value: 'Longitude',
+                    default: 'nulo'
                 },
                 {
                     label: 'Engine load',
@@ -61,11 +69,7 @@ async function main() {
                     value: 'Vehicle speed',
                     default: 'nulo'
                 },
-                {
-                    label: 'Tadm',
-                    value: '',
-                    default: 'nulo'
-                },
+
                 {
                     label: 'TPS',
                     value: 'Throttle position',
