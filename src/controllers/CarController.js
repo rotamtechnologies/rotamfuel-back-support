@@ -32,7 +32,8 @@ router.patch("/", (req, res) => {
             delete datosAGuardar[regACambiar];
             datosAGuardar[req.body.regNameValue] = []
             datosAGuardar[req.body.regNameValue][0] = req.body.regNameValue;
-            datosAGuardar[req.body.regNameValue][1] = auxReg[1];
+            //datosAGuardar[req.body.regNameValue][1] = auxReg[1];
+            datosAGuardar[req.body.regNameValue][1] = req.body.VIN;
             datosAGuardar[req.body.regNameValue][2] = req.body.marca;
             datosAGuardar[req.body.regNameValue][3] = req.body.modelo;
             datosAGuardar[req.body.regNameValue][4] = req.body.tipoCombustible;
