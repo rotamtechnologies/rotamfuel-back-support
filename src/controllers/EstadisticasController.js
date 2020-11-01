@@ -1,6 +1,8 @@
 const router = require("express").Router();
 require("../services/EstadisticasService")
 router.post("/",(req,res)=>{
+
+   obtenerPromedioVelocidad(req.body.desde,req.body.hasta)
    res.send("ok")
 });
 

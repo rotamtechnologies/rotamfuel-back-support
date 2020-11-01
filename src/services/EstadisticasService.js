@@ -1,3 +1,3 @@
-global.obtenerPromedioVelocidad= () =>{
-
+global.obtenerPromedioVelocidad = (desde, hasta) => {
+    console.log(desde, hasta)
 }
