@@ -5,6 +5,7 @@ require('./controllers/CarController');
 require('./controllers/ThingsController');
 require('./controllers/AuthController');
 require('./controllers/AzureController');
+require('./controllers/EstadisticasController');
 require('./middleware/Middleware');
 const db = require("./repository/CarMeasure");
 const path = require('path');
@@ -22,6 +23,7 @@ async function main() {
     expressApp.use("/things", ThingsController);
     expressApp.use("/azure", AzureController);
     expressApp.use("/car", CarController);
+    expressApp.use("/estadisticas", EstadisticasController);
 
     expressApp.post("/results", (req, res) => {
         console.log(req.body)
