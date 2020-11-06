@@ -81,6 +81,21 @@ async function main() {
                     label: 'MAF',
                     value: 'MAF air flow rate',
                     default: 'nulo'
+                },
+                {
+                    label: 'DeltaTime',
+                    value: 'DeltaTime',
+                    default: 'nulo'
+                },
+                {
+                    label: 'CumulativeTime',
+                    value: 'CumulativeTime',
+                    default: 'nulo'
+                },
+                {
+                    label: 'Numero de evento',
+                    value: 'Event',
+                    default: 'nulo'
                 }
             ];
 
