@@ -1,23 +1,23 @@
-const k = require('keycloak-admin');
+const KeycloakAdminClient = require('keycloak-admin').default;
 require("../util/httpRequester");
 require("../util/Utils")
 const btoa = require('btoa');
-const kcAdminClient = new k.default({
-    baseUrl: 'https://app.rotamfuel.com/auth',
-    realmName: 'rotamrealm',
-    requestConfig: {}
-});
 
 class KeyCloakCliente {
-    constructor(username, password, introspectCredentials) {
-        this.url = CONFIG.KCREALMURL;
-        this.username = username;
-        this.introspectCredentials = introspectCredentials;
-        this.password = password;
+    constructor() {
+        this.username = CONFIG.KCUSERNAME;
+        this.introspectCredentials = CONFIG.INTROSPECT_CREDENTIALS;
+        this.password = CONFIG.KCPASSWORD;
         this.grantType = CONFIG.KCGRANTTYPE;
         this.kcClientId = CONFIG.KCCLIENTID;
-        this.iniciar();
+        this.kAuthClient = new KeycloakAdminClient({
+            baseUrl: CONFIG.KCHOST,
+            realmName: 'master',
+            requestConfig: {}
+        });
+
     }
+
 
     /*
     * introspectToken(token: string)
@@ -39,16 +39,17 @@ class KeyCloakCliente {
         return HttpRequester.makePOST(url, data)
     }
 
-    iniciar() {
-        kcAdminClient.auth({
+    async iniciar() {
+        await this.kAuthClient.auth({
             username: this.username,
             password: this.password,
             grantType: this.grantType,
             clientId: this.kcClientId,
-        }).catch(e => console.log(e))
+        })
     }
-   iniciar2() {
-       return kcAdminClient.auth({
+
+    iniciar2() {
+        return this.kAuthClient.auth({
             username: this.username,
             password: this.password,
             grantType: this.grantType,
@@ -70,6 +71,19 @@ class KeyCloakCliente {
         return HttpRequester.makePOST(url, data)
     }
 
+    static obtenerToken2(username, pass) {
+        let url = CONFIG.KCTOKENURL;
+        let data = {
+            form: {
+                username: username,
+                password: pass,
+                grant_type: "password",
+                client_id: "admin-cli"
+            }
+        };
+        return HttpRequester.makePOST(url, data)
+    }
+
     refrescarToken(token) {
         let url = CONFIG.KCTOKENURL;
         let data = {
@@ -84,57 +98,83 @@ class KeyCloakCliente {
 
 
     async crearUsuario(usuario, pass, email, firstName, lastName) {
-        await this.iniciar();
-        return kcAdminClient.users.create({
-            username: usuario,
-            enabled: true,
-            firstName,
-            lastName,
 
-            email: email,
-            emailVerified: true,
-            credentials: [{"type": "password", "value": pass, "temporary": false}]
-        })
+        try {
+
+            /*   await this.kAuthClient.auth({
+                   username: this.username,
+                   password: this.password,
+                   grantType: this.grantType,
+                   clientId: this.kcClientId,
+               })
+   */
+
+            await this.iniciar();
+
+            let okCreate = await this.kAuthClient.users.create({
+                username: usuario,
+                enabled: true,
+                firstName,
+                lastName,
+                realm: "rotamrealm",
+                email: email,
+                emailVerified: true,
+                credentials: [{"type": "password", "value": pass, "temporary": false}]
+            })
+
+        } catch (e) {
+            console.log(`error al procesar crear usuario:${e}`);
+        }
     }
 
     async usuario(id) {
         try {
-            await this.iniciar2();
-            let infoUser = await kcAdminClient.users.findOne({id});
-            return {attributes: infoUser.attributes};
+            await this.iniciar();
+            let infoUser = await this.kAuthClient.users.findOne({id,realm:"rotamrealm"});
+            return {attributes: {...infoUser}};
 
         } catch (e) {
             console.log("error en cliente: " + (e))
-            await this.iniciar2();
-            await this.usuario(id)
+            return e
         }
     }
 
-    updateUser(id, user) {
-        return kcAdminClient.users.update(
-            {id},
-            {
-                ...user
-                /* firstName: 'william',
-                 lastName: 'chang',
-                 requiredActions: [RequiredActionAlias.UPDATE_PASSWORD],
-                 emailVerified: true,*/
-            },
-        );
+    async updateUser(id, user) {
+        let updateUser = null
+        try{
+
+            await this.iniciar();
+
+            updateUser = await this.kAuthClient.users.update(
+                {id,realm:"rotamrealm"},
+                {
+                    ...user
+                    /* firstName: 'william',
+                     lastName: 'chang',
+                     requiredActions: [RequiredActionAlias.UPDATE_PASSWORD],
+                     emailVerified: true,*/
+                },
+            );
+            console.log(updateUser);
+
+        }catch (e) {
+            console.log(e);
+        }
+        return updateUser
     }
 
     async createCar(id, car) {
         let autos = await this.usuario(id);
         autos = autos.attributes;
         let l;
-        if(autos){
+        if (autos) {
             l = Object.keys(autos).length;
-        }else {
-            autos={}
+        } else {
+            autos = {}
             l = 0
         }
         let newCar = {
-            "regName": "auto" + l+Math.floor(Math.random() * (9999 - 1000)) + 1000,
+            "regName": "auto" + l + Math.floor(Math.random() * (9999 - 1000)) + 1000,
             "VIN": "none",
             "marca": "",
             "modelo": "",
@@ -142,10 +182,10 @@ class KeyCloakCliente {
         };
 
 
-        autos["auto"+l] = Object.values(newCar);
+        autos["auto" + l] = Object.values(newCar);
 
         let data = {
-            attributes:autos
+            attributes: autos
         };
 
         this.updateUser(id, {
@@ -158,6 +198,6 @@ class KeyCloakCliente {
 
 }
 
-let keyCloakClient = new KeyCloakCliente(CONFIG.KCUSERNAME, CONFIG.KCPASSWORD, CONFIG.INTROSPECT_CREDENTIALS);
+//let keyCloakClient = new KeyCloakCliente(CONFIG.KCUSERNAME, CONFIG.KCPASSWORD, CONFIG.INTROSPECT_CREDENTIALS);
 
-global.keyCloakClient = keyCloakClient
+exports.KeyCloakCliente = KeyCloakCliente

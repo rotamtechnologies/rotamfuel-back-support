@@ -1,3 +1,4 @@
+
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 require('./constants/config');
 require('./controllers/UserController');
@@ -7,14 +8,17 @@ require('./controllers/AuthController');
 require('./controllers/AzureController');
 require('./controllers/EstadisticasController');
 require('./middleware/Middleware');
+const KeyCloakClient = require("./models/KeyCloakCliente")
+
 const db = require("./repository/CarMeasure");
 const path = require('path');
 const expr = require("express");
 let expressApp = {};
 let middleware = {};
-
+let keyCloakClient = {};
 
 async function main() {
+
     middleware = new Midleware(expr);
     expressApp = middleware.iniciar();
     expressApp.use("/auth", AuthController);
@@ -24,6 +28,7 @@ async function main() {
     expressApp.use("/azure", AzureController);
     expressApp.use("/car", CarController);
     expressApp.use("/estadisticas", EstadisticasController);
+
 
     expressApp.post("/results", (req, res) => {
         console.log(req.body)
@@ -99,15 +104,12 @@ async function main() {
                 }
             ];
 
-
             return downloadResource(res, 'users.csv', fields, d.resources);
 
         })
     });
 
-    expressApp.listen(CONFIG.PORTEXPRESSAPP);
+    expressApp.listen(CONFIG.PORTEXPRESSAPP,ok=>console.log("listen in "+CONFIG.PORTEXPRESSAPP))
 }
 
-main().catch(e => {
-    console.log("errora: " + e)
-});
+main()

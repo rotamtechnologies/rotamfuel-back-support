@@ -1,7 +1,18 @@
 const CosmosClient = require("@azure/cosmos").CosmosClient;
-const client = new CosmosClient({endpoint: CONFIG.DB.ENDPOINT, key:CONFIG.DB.KEY });
-const database = client.database(CONFIG.DB.DATABASE);
-const container = database.container(CONFIG.DB.CONTAINER);
+let client = {};
+let database = {};
+let container = {};
+try{
+
+    client = new CosmosClient({endpoint: CONFIG.DB.ENDPOINT, key:CONFIG.DB.KEY });
+    database = client.database(CONFIG.DB.DATABASE);
+    container = database.container(CONFIG.DB.CONTAINER);
+
+}catch (e) {
+    console.log(`error al cargar ${__filename.slice(__dirname.length + 1)}`);
+
+}
+
 /*
 const querySpec = {
     //query: "SELECT * from c"
