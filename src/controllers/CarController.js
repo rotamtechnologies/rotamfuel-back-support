@@ -1,5 +1,5 @@
 const router = require("express").Router();
-require("../models/KeyCloakCliente");
+const KeyCloakCliente = require("../models/KeyCloakCliente").KeyCloakCliente
 require("../util/JSONResponse")
 require("../services/ThingsService")
 router.post("/", (req, res) => {
@@ -7,6 +7,7 @@ router.post("/", (req, res) => {
     if (tokenPeticion) {
         let idUser = idByToken(tokenPeticion);
         let car = {};
+        let keyCloakClient = new KeyCloakCliente();
         keyCloakClient.createCar(idUser, car).then(ok => {
             JSONResponse.OK(res, ok)
         })
@@ -81,7 +82,7 @@ router.post("/vin",(req,res)=>{
 
         }
     })
-})
+});
 
 router.delete("/", (req, res) => {
     let tokenPeticion = tokenByReq(req, res);
@@ -114,8 +115,12 @@ router.get("/", (req, res) => {
     let tokenPeticion = tokenByReq(req, res);
     if (tokenPeticion) {
         let idUser = idByToken(tokenPeticion);
+        let keyCloakClient = new KeyCloakCliente();
         keyCloakClient.usuario(idUser).then(ok => {
+            console.log({attributes:ok.attributes.attributes});
             JSONResponse.OK(res, ok.attributes)
+
+
         })
 
     } else {
@@ -123,4 +128,8 @@ router.get("/", (req, res) => {
     }
 
 });
+
+
+
+
 global.CarController = router;

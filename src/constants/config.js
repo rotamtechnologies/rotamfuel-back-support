@@ -1,36 +1,34 @@
 require('dotenv').config();
 
 global.CONFIG = {
-    PORTEXPRESSAPP:process.env.PORT || 3000 ,
+    PORTEXPRESSAPP: process.env.PORT || 45555,
 
-    KEYNODE:process.env.KEYNODE,
-    CERTNODE:process.env.CERTNODE,
-    PASSPHNODE:process.env.PASSPHRASE,
+    KEYNODE: process.env.KEYNODE,
+    CERTNODE: process.env.CERTNODE,
+    PASSPHNODE: process.env.PASSPHRASE,
 
-    KCHOST:process.env.KCHOST || 'http://localhost:8081/auth',
-    KCTOKENURL: this.KCHOST + process.env.KCTOKENURL || "http://localhost:8081/auth/realms/rotamrealm/protocol/openid-connect/token",
-    KCBASEURL:process.env.KCBASEURL  || 'http://localhost:8081/auth',
-    KCINTROSPECTURL:process.env.KCINTROSPECTURL || "http://localhost:8081/auth/realms/rotamrealm/protocol/openid-connect/token/introspect/",
+    KCHOST: process.env.KCHOST || "http://localhost:8080/auth",
 
-    INTROSPECT_CREDENTIALS:process.env.KCINTROSPECTCREDENTIALS || "account:bb7e955e-7f75-4ac6-a659-9dc1a7512471e",
+    INTROSPECT_CREDENTIALS: process.env.KCINTROSPECTCREDENTIALS,
 
-    KCUSERNAME:process.env.nodeKEYCLOAK_user || "admin",
-    KCPASSWORD:process.env.nodeKEYCLOAK_password || "rootela",
-    KCRALMNAME:process.env.KCREALMNAME || "rotamrealm",
-    KCGRANTTYPE:process.env.nodeKEYCLOAK_grantType || "password",
-    KCCLIENTID:process.env.nodeKEYCLOAK_clientId || "admin-cli",
+    KCUSERNAME: process.env.nodeKEYCLOAK_user,
+    KCPASSWORD: process.env.nodeKEYCLOAK_password,
+    KCRALMNAME: process.env.KCREALMNAME,
+    KCGRANTTYPE: process.env.nodeKEYCLOAK_grantType,
+    KCCLIENTID: process.env.nodeKEYCLOAK_clientId,
 
 
-    THINGSUSER:process.env.THINGSUSER,
-    THINGSPASSWORD:process.env.THINGSPASSWORD,
+    THINGSUSER: process.env.THINGSUSER,
+    THINGSPASSWORD: process.env.THINGSPASSWORD,
+    THINGSURL: process.env.THINGSURL || "http://localhost:9090",
 
-    AZURECS:process.env.AZURECS,
+    AZURECS: process.env.AZURECS,
 
-    DB:{
-        DATABASE:process.env.COSMOSDB_db,
-        CONTAINER:process.env.COSMOSDB_container,
-        ENDPOINT:process.env.COSMOSDB_endpoint,
-        KEY:process.env.COSMOSDB_key
+    DB: {
+        DATABASE: process.env.COSMOSDB_db,
+        CONTAINER: process.env.COSMOSDB_container,
+        ENDPOINT: process.env.COSMOSDB_endpoint,
+        KEY: process.env.COSMOSDB_key
     }
 }
 

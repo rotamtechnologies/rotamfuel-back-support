@@ -1,6 +1,6 @@
 const KeycloakAdminClient = require('keycloak-admin').default;
 require("../util/httpRequester");
-require("../util/Utils")
+require("../util/Utils");
 const btoa = require('btoa');
 
 class KeyCloakCliente {
@@ -27,7 +27,7 @@ class KeyCloakCliente {
     * @return response: string
     * */
     introspectToken(token) {
-        let url = CONFIG.KCINTROSPECTURL;
+        let url = CONFIG.KCHOST + "/realms/rotamrealm/protocol/openid-connect/token/introspect/";
         let data = {
             form: {
                 token_type_hint: "access_token",
@@ -59,7 +59,7 @@ class KeyCloakCliente {
 
 
     obtenerToken(username, pass) {
-        let url = CONFIG.KCTOKENURL;
+        let url = CONFIG.KCHOST + "/realms/rotamrealm/protocol/openid-connect/token";
         let data = {
             form: {
                 username: username,
@@ -72,7 +72,7 @@ class KeyCloakCliente {
     }
 
     static obtenerToken2(username, pass) {
-        let url = CONFIG.KCTOKENURL;
+        let url = CONFIG.KCHOST + "/realms/rotamrealm/protocol/openid-connect/token";
         let data = {
             form: {
                 username: username,
@@ -85,7 +85,7 @@ class KeyCloakCliente {
     }
 
     refrescarToken(token) {
-        let url = CONFIG.KCTOKENURL;
+        let url = CONFIG.KCHOST + "/realms/rotamrealm/protocol/openid-connect/token";
         let data = {
             form: {
                 refresh_token: token,
@@ -130,23 +130,23 @@ class KeyCloakCliente {
     async usuario(id) {
         try {
             await this.iniciar();
-            let infoUser = await this.kAuthClient.users.findOne({id,realm:"rotamrealm"});
-            return {attributes: {...infoUser}};
+            let infoUser = await this.kAuthClient.users.findOne({id, realm: "rotamrealm"});
+            return {...infoUser};
 
         } catch (e) {
-            console.log("error en cliente: " + (e))
+            console.log("error en cliente: " + (e));
             return e
         }
     }
 
     async updateUser(id, user) {
-        let updateUser = null
-        try{
+        let updateUser = null;
+        try {
 
             await this.iniciar();
 
             updateUser = await this.kAuthClient.users.update(
-                {id,realm:"rotamrealm"},
+                {id, realm: "rotamrealm"},
                 {
                     ...user
                     /* firstName: 'william',
@@ -157,7 +157,7 @@ class KeyCloakCliente {
             );
             console.log(updateUser);
 
-        }catch (e) {
+        } catch (e) {
             console.log(e);
         }
         return updateUser
@@ -170,7 +170,7 @@ class KeyCloakCliente {
         if (autos) {
             l = Object.keys(autos).length;
         } else {
-            autos = {}
+            autos = {};
             l = 0
         }
         let newCar = {
@@ -191,6 +191,7 @@ class KeyCloakCliente {
         this.updateUser(id, {
             ...data
         });
+        console.log(Object.keys(autos).filter(auto=>auto.includes("auto")).map(o=>{ return {[o]:autos[o]}} ));
 
         return autos
     }
@@ -200,4 +201,4 @@ class KeyCloakCliente {
 
 //let keyCloakClient = new KeyCloakCliente(CONFIG.KCUSERNAME, CONFIG.KCPASSWORD, CONFIG.INTROSPECT_CREDENTIALS);
 
-exports.KeyCloakCliente = KeyCloakCliente
+exports.KeyCloakCliente = KeyCloakCliente;
