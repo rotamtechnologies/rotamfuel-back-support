@@ -5,7 +5,7 @@ require('./controllers/UserController');
 require('./controllers/CarController');
 require('./controllers/ThingsController');
 require('./controllers/AuthController');
-require('./controllers/AzureController');
+require('./controllers/ActiveMQController');
 require('./controllers/EstadisticasController');
 require('./middleware/Middleware');
 const KeyCloakClient = require("./models/KeyCloakCliente")
@@ -25,7 +25,7 @@ async function main() {
     expressApp = middleware.agregarOAuth();
     expressApp.use("/user", UserController);
     expressApp.use("/things", ThingsController);
-    expressApp.use("/azure", AzureController);
+    expressApp.use("/mq", ActiveMQController);
     expressApp.use("/car", CarController);
     expressApp.use("/estadisticas", EstadisticasController);
 

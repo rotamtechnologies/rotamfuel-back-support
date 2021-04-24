@@ -3,7 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/../../KafkaPublisher/.idea/KafkaPublisher.iml" filepath="$PROJECT_DIR$/../../KafkaPublisher/.idea/KafkaPublisher.iml" />
-      <module fileurl="file://$USER_HOME$/activeMQNodeJS/.idea/activeMQNodeJS.iml" filepath="$USER_HOME$/activeMQNodeJS/.idea/activeMQNodeJS.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../activeMQNodeJS/.idea/activeMQNodeJS.iml" filepath="$PROJECT_DIR$/../activeMQNodeJS/.idea/activeMQNodeJS.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../mongoDBNodeJS/.idea/mongoDBNodeJS.iml" filepath="$PROJECT_DIR$/../mongoDBNodeJS/.idea/mongoDBNodeJS.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/websocketServer.iml" filepath="$PROJECT_DIR$/.idea/websocketServer.iml" />
     </modules>
   </component>

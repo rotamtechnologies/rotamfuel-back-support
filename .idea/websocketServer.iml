@@ -6,5 +6,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="KafkaPublisher" />
     <orderEntry type="module" module-name="activeMQNodeJS" />
+    <orderEntry type="module" module-name="mongoDBNodeJS" />
   </component>
 </module>

@@ -22,7 +22,9 @@ global.CONFIG = {
     THINGSPASSWORD: process.env.THINGSPASSWORD,
     THINGSURL: process.env.THINGSURL || "http://localhost:9090",
 
-    AZURECS: process.env.AZURECS,
+
+    ACTIVEMQHOST: process.env.ACTIVEMQHOST || "127.0.0.1",
+    ACTIVEMQPORT: process.env.ACTIVEMQPORT || "61613",
 
     DB: {
         DATABASE: process.env.COSMOSDB_db,

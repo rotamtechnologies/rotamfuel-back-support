@@ -166,6 +166,7 @@ class KeyCloakCliente {
     async createCar(id, car) {
         let autos = await this.usuario(id);
         autos = autos.attributes;
+        console.log(autos);
         let l;
         if (autos) {
             l = Object.keys(autos).length;
@@ -173,8 +174,14 @@ class KeyCloakCliente {
             autos = {};
             l = 0
         }
+        let cod = ()=>{return Math.floor(Math.random() * 10).toString()
+            + Math.floor(Math.random() * 10).toString()
+            + Math.floor(Math.random() * 10).toString()
+            + Math.floor(Math.random() * 10).toString()
+            + Math.floor(Math.random() * 10).toString()};
+
         let newCar = {
-            "regName": "auto" + l + Math.floor(Math.random() * (9999 - 1000)) + 1000,
+            "regName": "auto" + cod(),
             "VIN": "none",
             "marca": "",
             "modelo": "",
@@ -182,7 +189,7 @@ class KeyCloakCliente {
         };
 
 
-        autos["auto" + l] = Object.values(newCar);
+        autos["auto" + cod()] = Object.values(newCar);
 
         let data = {
             attributes: autos
@@ -191,7 +198,10 @@ class KeyCloakCliente {
         this.updateUser(id, {
             ...data
         });
-        console.log(Object.keys(autos).filter(auto=>auto.includes("auto")).map(o=>{ return {[o]:autos[o]}} ));
+      /*  console.log(Object.keys(autos).filter(auto => auto.includes("auto")).map(o => {
+            return {[o]: autos[o]}
+        }));*/
+
 
         return autos
     }
