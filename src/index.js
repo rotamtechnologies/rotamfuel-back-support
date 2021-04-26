@@ -33,6 +33,7 @@ async function main() {
     expressApp.post("/results", (req, res) => {
         console.log(req.body)
         db.results(req.body.desde, req.body.hasta).then(d => {
+            console.log(d[0]);
             const fields = [
                 {
                     label: 'ID',
@@ -104,7 +105,7 @@ async function main() {
                 }
             ];
 
-            return downloadResource(res, 'users.csv', fields, d.resources);
+            return downloadResource(res, 'users.csv', fields, d);
 
         })
     });
