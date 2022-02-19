@@ -1,5 +1,4 @@
 const KeyCloakClient = require("../models/KeyCloakCliente").KeyCloakCliente
-
 require("../util/Utils")
 
 var Cookies = require('cookies')
@@ -8,8 +7,12 @@ global.obtenerToken = (req, res) => {
         let user = req.body.user;
         let pass = req.body.pass;
         let keyCloakCliente = new KeyCloakClient()
+
+
         keyCloakCliente.obtenerToken(user, pass).then(tokens => {
             tokens = JSON.parse(tokens);
+            console.log(tokens);
+            console.log(tokens);
             if (tokens.access_token) {
                 console.log("token");
 

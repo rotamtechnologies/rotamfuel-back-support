@@ -9,7 +9,7 @@ router.post("/",(req,res)=>{
 
    dataAPersistir._ts = new Date().getTime();
 
-   save(dataAPersistir)
+   //save(dataAPersistir)
    enviarDatosToQueue(JSON.stringify(dataAPersistir));
    res.send({ok:"ok"});
 

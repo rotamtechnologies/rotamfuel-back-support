@@ -16,7 +16,6 @@ router.get("/", async (req, res) => {
             let idUser = idByToken(tokenPeticion);
             let keyCloakClient = new KeyCloakClient();
             let infoUsuario = await keyCloakClient.usuario(idUser);
-
             JSONResponse.OK(res, {id: idUser, datos: infoUsuario});
 
         } else {

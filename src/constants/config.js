@@ -7,7 +7,7 @@ global.CONFIG = {
     CERTNODE: process.env.CERTNODE,
     PASSPHNODE: process.env.PASSPHRASE,
 
-    KCHOST: process.env.KCHOST || "http://localhost:8080/auth",
+    KCHOST: process.env.KCHOST || "http://localhost:8082/auth",
 
     INTROSPECT_CREDENTIALS: process.env.KCINTROSPECTCREDENTIALS,
 
@@ -20,7 +20,7 @@ global.CONFIG = {
 
     THINGSUSER: process.env.THINGSUSER,
     THINGSPASSWORD: process.env.THINGSPASSWORD,
-    THINGSURL: process.env.THINGSURL || "http://localhost:9090",
+    THINGSURL: process.env.THINGSURL || "http://localhost:8080",
 
 
     ACTIVEMQHOST: process.env.ACTIVEMQHOST || "127.0.0.1",
