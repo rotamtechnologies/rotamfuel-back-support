@@ -43,6 +43,7 @@ class Middleware {
                 let token = req.headers.authorization ? req.headers.authorization.substring("Bearer ".length, req.headers.authorization.length) : cookies.get("RTM_FL-tkn");
                 if (token) {
                     keyCloakClient.introspectToken(token).then(datosToken =>{
+                        console.log(datosToken);
                         if (JSON.parse(datosToken).active) {
                             next()
                         } else {

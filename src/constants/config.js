@@ -10,14 +10,14 @@ global.CONFIG = {
     KCHOST: process.env.KCHOST || "http://localhost:8082/auth",
 
     INTROSPECT_CREDENTIALS: process.env.KCINTROSPECTCREDENTIALS,
+    INTROSPECT_CREDENTIALSPORSCHE: process.env.KCINTROSPECTCREDENTIALSPORSCHE,
 
     KCUSERNAME: process.env.nodeKEYCLOAK_user,
     KCPASSWORD: process.env.nodeKEYCLOAK_password,
     KCRALMNAME: process.env.KCREALMNAME,
     KCGRANTTYPE: process.env.nodeKEYCLOAK_grantType,
     KCCLIENTID: process.env.nodeKEYCLOAK_clientId,
-
-
+    KCPORSCHEID:process.env.KCPORSCHEID,
     THINGSUSER: process.env.THINGSUSER,
     THINGSPASSWORD: process.env.THINGSPASSWORD,
     THINGSURL: process.env.THINGSURL || "http://localhost:8080",

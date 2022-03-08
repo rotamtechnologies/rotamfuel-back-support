@@ -14,18 +14,18 @@ module.exports = {
             const queryApi = client.getQueryApi(org)
 
             // const query = `from(bucket: "iot2") |> range(start: -${dataReq?.relativeTime})`
-            const query = `from(bucket: "iot3")
+            const query = `from(bucket: "iot4")
   |> range(start: -${dataReq?.relativeTime})
-  |> filter(fn: (r) => r["_measurement"] == "car")
-  |> filter(fn: (r) => r["MAC"] == "00:1D:A5:68:98:8B")
-  |> filter(fn: (r) => r["_field"] == "engine rpm")
+  |> filter(fn: (r) => r["_measurement"] == "${dataReq?.username}")
+  |> filter(fn: (r) => r["patente"] == "${dataReq?.patente}")
+  |> filter(fn: (r) => r["_field"] == "${dataReq?.dato}")
   |> aggregateWindow(every: ${dataReq?.relativeTime}, fn: mean, createEmpty: false)
   |> yield(name: "mean")`
             let data = []
             queryApi.queryRows(query, {
                 next(row, tableMeta) {
                     const o = tableMeta.toObject(row)
-                    data.push(row)
+                    data.push(o)
                 },
                 error(error) {
                     nok(error)
@@ -33,7 +33,6 @@ module.exports = {
                 },
                 complete() {
                     ok(data)
-
                 }
             })
         })

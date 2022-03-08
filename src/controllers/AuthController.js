@@ -13,6 +13,10 @@ router.use(express.static('public'));
 router.post("/token", (req, res) => {
     obtenerToken(req,res);
 });
+//Obtencion de token customrealm
+router.post("/token/realm", (req, res) => {
+    obtenerTokenByRealm(req,res);
+});
 //Rrefrescar Token
 router.get("/token", (req, res) => {
     refrescarToken(req,res);
@@ -23,6 +27,14 @@ router.post("/register", (req, res) => {
     let keyCloakCliente = new KeyCloakClient.KeyCloakCliente();
     console.log(req.body);
     keyCloakCliente.crearUsuario(req.body.user, req.body.pass, req.body.email, req.body.firstName, req.body.lastName).then(tokens => {
+        console.log(tokens);
+        res.json(tokens)
+    })
+});
+router.post("/register/realm", (req, res) => {
+    let keyCloakCliente = new KeyCloakClient.KeyCloakCliente();
+    console.log(req.body);
+    keyCloakCliente.crearUsuarioCustomRealm(req.body.user, req.body.pass, req.body.email, req.body.firstName, req.body.lastName,req.body.realm,req.body.roleName).then(tokens => {
         console.log(tokens);
         res.json(tokens)
     })

@@ -7,8 +7,10 @@ require('./controllers/ThingsController');
 require('./controllers/AuthController');
 require('./controllers/ActiveMQController');
 require('./controllers/EstadisticasController');
+require('./controllers/EmpresaMongoController');
 require('./controllers/iotInfluxController');
 require('./controllers/UserMongoController');
+require('./controllers/CarMongoController');
 require('./middleware/Middleware');
 const KeyCloakClient = require("./models/KeyCloakCliente")
 
@@ -32,6 +34,8 @@ async function main() {
     expressApp.use("/estadisticas", EstadisticasController);
     expressApp.use("/influx/iot", IotInfluxController);
     expressApp.use("/mongo/user", MongoUserController);
+    expressApp.use("/mongo/car", MongoCarController);
+    expressApp.use("/mongo/empresa", MongoEmpresaController);
 
 
     expressApp.post("/results", (req, res) => {
