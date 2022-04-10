@@ -1,7 +1,10 @@
 const {getByUsername, getAllUsername,deleteUsername,update,getById} = require("../repository/UserMongoDB")
 const {KeyCloakCliente: KeyCloakClient} = require("../models/KeyCloakCliente");
 module.exports = {
+    getById:async  id =>{
+        return await getById(id)
 
+    },
     obtenerUsuarioMongo : async  (data) =>{
         return await getByUsername(data)
     },

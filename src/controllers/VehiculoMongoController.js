@@ -1,11 +1,10 @@
 const router = require("express").Router();
-const {getById, save,deleteOne,update,get} = require("../services/EmpresaMongoService");
+const {getById, save, deleteOne, update, get} = require("../services/VehiculoMongoService");
 
 router.get("/", async (req, res) => {
     let datos = await get()
     console.log("datoss");
     res.send({datos});
-
 });
 router.get("/:id", async (req, res) => {
     let datos = await getById(req.params.id)
@@ -22,12 +21,13 @@ router.delete("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
 
     let reqData = {
-        nombre: req.body.nombre,
-        nit: req.body.nit,
-        realm: req.body.realm,
-        usuario: req.body.usuario,
-        clave: req.body.clave,
-        correo: req.body.correo
+        patente: req.body.patente,
+        year: req.body.year,
+        modelo: req.body.modelo,
+        marca: req.body.marca,
+        tipoCombustible: req.body.tipoCombustible,
+        alias: req.body.alias,
+        chofer: req.body.chofer
     };
     let datos = await save(reqData)
     console.log(datos);
@@ -39,37 +39,40 @@ router.patch("/:id", async (req, res) => {
 //validar user id proveniente para impedir modificaciones ajenas
 
     let reqData = {
-        nombre: req.body.nombre,
-        nit: req.body.nit,
-        realm: req.body.realm,
-        usuario: req.body.usuario,
-        clave: req.body.clave,
-        correo: req.body.correo
+        patente: req.body.patente,
+        year: req.body.year,
+        modelo: req.body.modelo,
+        marca: req.body.marca,
+        tipoCombustible: req.body.tipoCombustible,
+        alias: req.body.alias,
+        chofer: req.body.chofer
     };
     let objId = req.params.id
-    let datos = await update(reqData,objId)
+    let datos = await update(reqData, objId)
     console.log(datos);
 
     res.send({datos});
 
 });
+
 router.put("/", async (req, res) => {
 //validar user id proveniente para impedir modificaciones ajenas
 
     let reqData = {
-        nombre: req.body.nombre,
-        nit: req.body.nit,
-        realm: req.body.realm,
-        usuario: req.body.usuario,
-        clave: req.body.clave,
-        correo: req.body.correo
+        patente: req.body.patente,
+        year: req.body.year,
+        modelo: req.body.modelo,
+        marca: req.body.marca,
+        tipoCombustible: req.body.tipoCombustible,
+        alias: req.body.alias,
+        chofer: req.body.chofer
     };
     let objId = req.body._id
-    let datos = await update(reqData,objId)
+    let datos = await update(reqData, objId)
     console.log(datos);
 
     res.send({datos});
 
 });
 
-global.MongoEmpresaController = router;
+global.MongoVehiculoController = router;

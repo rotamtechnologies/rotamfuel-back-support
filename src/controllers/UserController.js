@@ -1,6 +1,7 @@
 const router = require("express").Router()
 const path = require("path");
 const KeyCloakClient = require("../models/KeyCloakCliente").KeyCloakCliente
+const userMongoService = require("../services/UserMongoService")
 require("../util/Utils");
 require("../util/JSONResponse");
 router.get('/descargar/datos', function (req, res) {
@@ -16,7 +17,8 @@ router.get("/", async (req, res) => {
             let idUser = idByToken(tokenPeticion);
             let keyCloakClient = new KeyCloakClient();
             let infoUsuario = await keyCloakClient.usuario(idUser);
-            JSONResponse.OK(res, {id: idUser, datos: infoUsuario});
+            let userMongo = await userMongoService.obtenerUsuarioMongo(infoUsuario.username);
+            JSONResponse.OK(res, {id: idUser, datos: infoUsuario,userdb:userMongo});
 
         } else {
             JSONResponse.ERROR(res, "error token")

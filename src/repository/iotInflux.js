@@ -17,10 +17,14 @@ module.exports = {
             const query = `from(bucket: "iot4")
   |> range(start: -${dataReq?.relativeTime})
   |> filter(fn: (r) => r["_measurement"] == "${dataReq?.username}")
+  |> filter(fn: (r) => r["viajeMongo"] == "${dataReq?.viaje}")`
+            /*            const query = `from(bucket: "iot4")
+  |> range(start: -${dataReq?.relativeTime})
+  |> filter(fn: (r) => r["_measurement"] == "${dataReq?.username}")
   |> filter(fn: (r) => r["patente"] == "${dataReq?.patente}")
   |> filter(fn: (r) => r["_field"] == "${dataReq?.dato}")
   |> aggregateWindow(every: ${dataReq?.relativeTime}, fn: mean, createEmpty: false)
-  |> yield(name: "mean")`
+  |> yield(name: "mean")`*/
             let data = []
             queryApi.queryRows(query, {
                 next(row, tableMeta) {

@@ -1,78 +1,71 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
-let userScheme = new Schema({
-
-    username: {type: String},
-    KCname: {type: String},
-    KCId: {type: String},
-    apellido: {type: String},
-    nombre: {type: String},
-    correo: {type: String},
-    deleted: {type: Boolean}
-
-
+let dbScheme = new Schema({
+    MAC: {type: String},
+    quienRegistra: {type: Schema.ObjectId, ref: 'user'},
+    fecha: {type: String}
 });
-
-let userMongo = mongoose.model('user', userScheme)
-
-
+let entityMongo = mongoose.model('dispositivo', dbScheme)
 module.exports = {
-    getAllUsername: async () => {
-        let result = []
-        try {
-            result = await userMongo.find()
-        } catch (e) {
-            console.log(e);
-        }
-        return result
-    },
+    dispositivo: entityMongo,
     getById: async id => {
+        console.log("obteniendo " + id)
         let result = []
         try {
-            result = await userMongo.findOne({"_id": id})
+            result = await entityMongo.find({"_id": id})
         } catch (e) {
             console.log(e);
         }
         return result
     },
-    getByUsername: async username => {
-        console.log("obteniendo " + username)
+    getByMAC: async mac => {
+        console.log("obteniendo " + mac)
         let result = []
         try {
-            result = await userMongo.findOne({username: username})
+            result = await entityMongo.find({"MAC": mac})
         } catch (e) {
             console.log(e);
         }
         return result
     },
-    saveUsername: async data => {
+    get: async () => {
+        console.log("obteniendo todo")
+        let result = []
+        try {
+            result = await entityMongo.find()
+        } catch (e) {
+            console.log(e);
+        }
+        return result
+    },
+    save: async data => {
         console.log("guardando " + data)
+        let result = {}
         try {
-            let result = await userMongo.create(data)
+            result = await entityMongo.create(data)
             console.log(result);
         } catch (e) {
+            result.error = e
             console.log(e);
-
         }
+        return result
     },
     update: async (data, id) => {
         console.log("guardando " + data)
         data = JSON.parse(JSON.stringify(data))
+
         try {
-            let result = await userMongo.updateOne({"_id": id}, {
-                $set: data
-            })
+            let result = await entityMongo.updateOne({"_id": id}, {$set: data})
             console.log(result);
         } catch (e) {
             console.log(e);
 
         }
     },
-    deleteUsername: async id => {
+    deleteOne: async id => {
         console.log("guardando " + id)
         try {
-            let result = await userMongo.deleteOne({"_id": id})
+            let result = await entityMongo.deleteOne({"_id": id})
             console.log(result);
         } catch (e) {
             console.log(e);

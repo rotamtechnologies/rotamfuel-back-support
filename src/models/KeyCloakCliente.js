@@ -42,6 +42,18 @@ class KeyCloakCliente {
         };
         return HttpRequester.makePOST(url, data)
     }
+    introspectTokenRTM(token) {
+        let url = CONFIG.KCHOST + "/realms/rotamrealm/protocol/openid-connect/token/introspect/";
+        let data = {
+            form: {
+                token_type_hint: "access_token",
+                token: token,
+            }, headers: {
+                Authorization: "Basic " + btoa(this.introspectCredentials)
+            }
+        };
+        return HttpRequester.makePOST(url, data)
+    }
 
     introspectTokenCustomRealm(token, realm) {
         let url = CONFIG.KCHOST + "/realms/" + realm + "/protocol/openid-connect/token/introspect/";
@@ -229,7 +241,7 @@ class KeyCloakCliente {
     async usuario(id) {
         try {
             await this.iniciar();
-            let infoUser = await this.kAuthClient.users.findOne({id, realm: "rotamrealm"});
+            let infoUser = await this.kAuthClient.users.findOne({id, realm: "porsche"});
             return {...infoUser};
 
         } catch (e) {

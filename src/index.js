@@ -8,9 +8,15 @@ require('./controllers/AuthController');
 require('./controllers/ActiveMQController');
 require('./controllers/EstadisticasController');
 require('./controllers/EmpresaMongoController');
+require('./controllers/VehiculoMongoController');
+require('./controllers/FlotaMongoController');
 require('./controllers/iotInfluxController');
 require('./controllers/UserMongoController');
 require('./controllers/CarMongoController');
+require('./controllers/DataUsersMongoController');
+require('./controllers/ViajesMongoController');
+require('./controllers/DispositivosMongoController');
+require('./controllers/LocalizacionMongoController');
 require('./middleware/Middleware');
 const KeyCloakClient = require("./models/KeyCloakCliente")
 
@@ -28,7 +34,7 @@ async function main() {
     expressApp.use("/auth", AuthController);
     expressApp = middleware.agregarOAuth();
     expressApp.use("/user", UserController);
-    expressApp.use("/things", ThingsController);
+    //expressApp.use("/things", ThingsController);
     expressApp.use("/mq", ActiveMQController);
     expressApp.use("/car", CarController);
     expressApp.use("/estadisticas", EstadisticasController);
@@ -36,6 +42,12 @@ async function main() {
     expressApp.use("/mongo/user", MongoUserController);
     expressApp.use("/mongo/car", MongoCarController);
     expressApp.use("/mongo/empresa", MongoEmpresaController);
+    expressApp.use("/mongo/vehiculo", MongoVehiculoController);
+    expressApp.use("/mongo/dispositivo", MongoDispositivoController);
+    expressApp.use("/mongo/flota", MongoFlotaController);
+    expressApp.use("/mongo/data", DataUsersMongoController);
+    expressApp.use("/mongo/viajes", ViajesMongoController);
+    expressApp.use("/mongo/localizacion", LocalizacionMongoController);
 
 
     expressApp.post("/results", (req, res) => {

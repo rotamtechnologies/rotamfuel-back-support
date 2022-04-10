@@ -7,7 +7,7 @@ let kcClientId = CONFIG.KCCLIENTID;
 module.exports = {
     getToken: () => {
         return new Promise((ok, nok) => {
-            request.post("http://localhost:8082/auth/realms/master/protocol/openid-connect/token", {
+            request.post(CONFIG.KCHOST+"/auth/realms/master/protocol/openid-connect/token", {
                 form: {
                     username,
                     password,
@@ -26,7 +26,7 @@ module.exports = {
             let tkAdm = await module.exports.getToken()
             tkAdm = JSON.parse(tkAdm)
             request.post({
-                url: `http://localhost:8082/auth/admin/realms/porsche/users/${userId}/role-mappings/realm`,
+                url: `${CONFIG.KCHOST}/auth/admin/realms/porsche/users/${userId}/role-mappings/realm`,
                 json: [{id: role.id, name: role.name}],
                 headers: {
                     "Authorization": "Bearer " + tkAdm.access_token

@@ -38,7 +38,24 @@ class Middleware {
             if (req.method==="OPTIONS" || req.url ==="/things/" || req.url ==="/azure/"
             ) {
                 next()
-            } else {
+            } else  if (req.url.includes("/mongo/empresa/")
+            ){
+                var cookies = new Cookies(req, res);
+                let token = req.headers.authorization ? req.headers.authorization.substring("Bearer ".length, req.headers.authorization.length) : cookies.get("RTM_FL-tkn");
+                if (token) {
+                    keyCloakClient.introspectTokenRTM(token).then(datosToken =>{
+                        console.log(datosToken);
+                        if (JSON.parse(datosToken).active) {
+                            next()
+                        } else {
+                            res.status(401).send("Unauthorized")
+                        }
+                    });
+
+                } else {
+                    res.status(401).send("Unauthorized")
+                }
+            }else{
                 var cookies = new Cookies(req, res);
                 let token = req.headers.authorization ? req.headers.authorization.substring("Bearer ".length, req.headers.authorization.length) : cookies.get("RTM_FL-tkn");
                 if (token) {

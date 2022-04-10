@@ -1,22 +1,15 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
 let dbScheme = new Schema({
-
-    nombre: {type: String},
-    nit: {type: String},
-    realm: {type: String},
-    usuario: {type: String},
-    clave: {type: String},
-    correo: {type: String}
-
-
+    dispositivo: {type: Schema.ObjectId, ref: 'dispositivo'},
+    vehiculo: {type: Schema.ObjectId, ref: 'vehiculo'},
+    chofer: {type: Schema.ObjectId, ref: 'user'},
+    fecha: {type: String},
 });
-
-let entityMongo = mongoose.model('empresa', dbScheme)
-
+let entityMongo = mongoose.model('viaje', dbScheme)
 
 module.exports = {
+    viaje: entityMongo,
     getById: async id => {
         console.log("obteniendo " + id)
         let result = []
@@ -39,13 +32,16 @@ module.exports = {
     },
     save: async data => {
         console.log("guardando " + data)
+        data.fecha = Date.now()
+        let result = {}
         try {
-            let result = await entityMongo.create(data)
+            result = await entityMongo.create(data)
             console.log(result);
         } catch (e) {
+            result.error = e
             console.log(e);
-
         }
+        return result
     },
     update: async (data, id) => {
         console.log("guardando " + data)
