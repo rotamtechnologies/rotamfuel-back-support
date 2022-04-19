@@ -35,7 +35,7 @@ class Middleware {
     agregarOAuth() {
         let keyCloakClient = new KeyCloakClient.KeyCloakCliente()
         this.ExpressApp.use((req, res, next) => {
-            if (req.method==="OPTIONS" || req.url ==="/things/" || req.url ==="/azure/"
+            if (req.method==="OPTIONS" || req.url ==="/things/" || req.url ==="/azure/" || req.url.includes("influx/iot/viaje/descargar")
             ) {
                 next()
             } else  if (req.url.includes("/mongo/empresa/")
