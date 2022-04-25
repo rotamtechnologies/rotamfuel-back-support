@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const {obtenerIotData,descargarIotData} =require("../services/InfluxService");
 const {KeyCloakCliente: KeyCloakClient} = require("../models/KeyCloakCliente");
+const metricsFunctions = require('../metrics/getMetrics');
 const {Parser: CsvParser} = require("json2csv");
 
 router.get("/",async (req,res)=>{
@@ -62,5 +63,21 @@ router.get("/viaje/descargar",async (req,res)=>{
    res.status(200).end(csvData);
 
 });
+
+router.post("/viaje/metricas/:trip", async (req, res) => {
+   const { trip } = req.params;
+   const params = {
+       trip,
+       ...req.body,
+   };
+
+   try {
+       const results = await metricsFunctions.getMetrics(params);
+       return res.status(200).send(results);
+   } catch (error) {
+       return res.status(400).send(error.toString());
+   }
+
+ });
 
 global.IotInfluxController = router;
