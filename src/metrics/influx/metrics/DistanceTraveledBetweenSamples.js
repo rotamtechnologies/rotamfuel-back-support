@@ -8,7 +8,7 @@ class DistanceTraveledBetweenSamplesMetric extends InfluxBaseMetric {
 
   buildMetricParams() {
     return {
-      _fields: ["vehicle speed", "DeltaTime"],
+      _measurements: ["vehicle_speed", "deltatime"],
     };
   }
 

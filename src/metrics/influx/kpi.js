@@ -14,12 +14,12 @@ const calculateCTC = (datapoints) => {
 
       for (let aD of datoF) {
         obj['time'] = aD._time;
-        obj[aD._field] = aD._value;
+        obj[aD._measurement] = aD._value;
       }
-      let MAF = obj["MAF air flow rate"];
+      let MAF = obj["maf_air_flows_rate"];
 
       let AFR = 14.5; // para diesel
-      let DeltaTime = obj["DeltaTime"] / 1000;
+      let DeltaTime = obj["deltatime"] / 1000;
 
       let MFF = MAF / AFR;
       MIC = MFF * DeltaTime;
@@ -38,8 +38,8 @@ const calculateCTC = (datapoints) => {
 };
 
 const calculateDistance = (datapoints) => {
-    const deltaTime = datapoints.filter(datapoint => datapoint._field == 'DeltaTime');
-    const vehicleSpeed = datapoints.filter(datapoint => datapoint._field == 'vehicle speed');
+    const deltaTime = datapoints.filter(datapoint => datapoint._measurement == 'deltatime');
+    const vehicleSpeed = datapoints.filter(datapoint => datapoint._measurement == 'vehicle_speed');
 
     const time = [];
     const speed = [];

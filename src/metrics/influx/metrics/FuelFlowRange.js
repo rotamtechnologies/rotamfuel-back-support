@@ -7,7 +7,7 @@ class FuelFlowRangeMetric extends InfluxBaseMetric {
 
   buildMetricParams() {
     return {
-      _fields: ["MAF air flow rate"],
+      _measurements: ["maf_air_flows_rate"],
     };
   }
 
