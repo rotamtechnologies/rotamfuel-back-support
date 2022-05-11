@@ -16,7 +16,26 @@ module.exports = {
         console.log("obteniendo " + id)
         let result = []
         try {
-            result = await entityMongo.find({"_id": id})
+            //result = await entityMongo.find({"_id": id})
+            result = await entityMongo.aggregate([
+                {
+                    $match: {
+                        _id: mongoose.Types.ObjectId(id)
+                    }
+                },
+                {
+                    "$lookup": {
+                        "from": "users",
+                        "localField": "chofer",
+                        "foreignField": "_id",
+                        "as": "chofer"
+                    },
+
+                },
+                {$unwind: '$chofer'},
+            ])
+
+
         } catch (e) {
             console.log(e);
         }

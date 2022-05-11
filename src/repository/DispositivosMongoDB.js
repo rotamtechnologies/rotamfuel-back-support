@@ -12,7 +12,23 @@ module.exports = {
         console.log("obteniendo " + id)
         let result = []
         try {
-            result = await entityMongo.find({"_id": id})
+            result = await entityMongo.aggregate([
+                {
+                    $match: {
+                        _id: mongoose.Types.ObjectId(id)
+                    }
+                },
+                {
+                    "$lookup": {
+                        "from": "users",
+                        "localField": "quienRegistra",
+                        "foreignField": "_id",
+                        "as": "quienRegistra"
+                    },
+
+                },
+                {$unwind: '$chofer'},
+            ])
         } catch (e) {
             console.log(e);
         }
@@ -32,7 +48,18 @@ module.exports = {
         console.log("obteniendo todo")
         let result = []
         try {
-            result = await entityMongo.find()
+            result = await entityMongo.aggregate([
+                {
+                    "$lookup": {
+                        "from": "users",
+                        "localField": "quienRegistra",
+                        "foreignField": "_id",
+                        "as": "quienRegistra"
+                    },
+
+                },
+                {$unwind: '$chofer'},
+            ])
         } catch (e) {
             console.log(e);
         }
