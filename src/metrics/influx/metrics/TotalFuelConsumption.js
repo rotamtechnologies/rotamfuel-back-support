@@ -8,7 +8,7 @@ class TotalFuelConsumptionMetric extends InfluxBaseMetric {
 
   buildMetricParams() {
     return {
-      _fields: ["MAF air flow rate", "DeltaTime"],
+      _measurements: ["maf_air_flows_rate", "deltatime"],
     };
   }
 

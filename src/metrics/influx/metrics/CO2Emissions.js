@@ -8,7 +8,7 @@ class CO2EmissionsMetric extends InfluxBaseMetric {
 
   buildMetricParams() {
     return {
-      _fields: ["MAF air flow rate", "vehicle speed", "DeltaTime"],
+      _measurements: ["maf_air_flows_rate", "vehicle_speed", "deltatime"],
     };
   }
 

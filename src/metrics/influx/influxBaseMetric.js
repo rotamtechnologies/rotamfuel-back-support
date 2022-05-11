@@ -17,7 +17,6 @@ class InfluxBaseMetric extends BaseMetric {
             token: process.env.INFLUX_TOKEN || 'jzGeZqdyFRblCyitjRoETcMHtIAqtJfHlt3LjVMEZZ-QlTF6HxAoDMpShCvXsVOwRPYQlxLln38UX8oeAuVwbA==',
         }).getQueryApi(process.env.INFLUX_ORG || 'rotam');
         this.measurements = [];
-        this.fields = [];
         this.id = id;
         this.query = query;
         this.trip = trip;
@@ -27,13 +26,12 @@ class InfluxBaseMetric extends BaseMetric {
 
     buildMetricParams(
         {
-            viajeMongo, measurements, fields,
+            viajeMongo, measurements,
         },
     ) {
         return {
             _viajeMongo: viajeMongo,
             _measurements: measurements,
-            _fields: fields,
         };
     }
 
@@ -41,19 +39,13 @@ class InfluxBaseMetric extends BaseMetric {
         const {
             bucket,
             period,
-            params,
         } = this.query;
 
         const {
-            measurements
-        } = params;
-
-        const {
-            _fields,
+            _measurements,
         } = this.buildMetricParams();
 
-        this.measurements = measurements;
-        this.fields = _fields;
+        this.measurements = _measurements;
 
         if (!this.trip) {
             return null;
@@ -66,7 +58,6 @@ class InfluxBaseMetric extends BaseMetric {
         const bucketQuery = `from(bucket: "${_bucket}")`;
         const rangeQuery = `|> range(start: ${parsedStart}, stop:  ${parsedStop})`;
         const tripQuery = `|> filter(fn: (r) => r["viajeMongo"] == "${this.trip}") `;
-        const fieldsQuery = this.fields ? `${buildFilters(this.fields, '_field')})` : '';
         const measurementsQuery = this.measurements && this.measurements.length ? `${buildFilters(this.measurements, '_measurement')})` : '';
         const periodQuery = period ? `|> aggregateWindow(every: ${period}s, fn: mean, createEmpty: false)` : '';
 
@@ -76,7 +67,6 @@ class InfluxBaseMetric extends BaseMetric {
             ${bucketQuery}
             ${rangeQuery}
             ${tripQuery}
-            ${fieldsQuery}
             ${measurementsQuery}
             ${periodQuery}
             ${yieldQuery}
