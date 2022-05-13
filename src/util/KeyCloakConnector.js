@@ -27,7 +27,7 @@ module.exports = {
             tkAdm = JSON.parse(tkAdm)
             request.post({
                 url: `${CONFIG.KCHOST}/auth/admin/realms/porsche/users/${userId}/role-mappings/realm`,
-                json: [{id: role.id, name: role.name}],
+                json: [{id: role?.id, name: role?.name}],
                 headers: {
                     "Authorization": "Bearer " + tkAdm.access_token
                 }

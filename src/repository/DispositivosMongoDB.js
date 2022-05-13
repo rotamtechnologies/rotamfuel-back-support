@@ -27,7 +27,7 @@ module.exports = {
                     },
 
                 },
-                {$unwind: '$chofer'},
+                {$unwind: '$quienRegistra'},
             ])
         } catch (e) {
             console.log(e);
@@ -46,6 +46,8 @@ module.exports = {
     },
     get: async () => {
         console.log("obteniendo todo")
+        console.log("obteniendo todo")
+        console.log("obteniendo todo")
         let result = []
         try {
             result = await entityMongo.aggregate([
@@ -58,7 +60,7 @@ module.exports = {
                     },
 
                 },
-                {$unwind: '$chofer'},
+                {$unwind: '$quienRegistra'},
             ])
         } catch (e) {
             console.log(e);

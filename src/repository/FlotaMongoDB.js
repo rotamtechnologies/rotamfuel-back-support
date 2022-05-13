@@ -45,6 +45,9 @@ module.exports = {
         try {
             result = await entityMongo.aggregate([
                 {
+                    $unwind: "$listaVehiculos"
+                },
+                {
                     "$lookup": {
                         "from": "vehiculos",
                         "localField": "listaVehiculos",
@@ -52,13 +55,40 @@ module.exports = {
                         "as": "listaVehiculos"
                     }
 
-                },])
-            for (let r of result) {
+                },
+                {
+                    $unwind: "$listaVehiculos"
+                },
+                {
+                    "$lookup": {
+                        "from": "users",
+                        "localField": "listaVehiculos.chofer",
+                        "foreignField": "_id",
+                        "as": "listaVehiculos.choferData"
+                    }
+
+                },
+                {$unwind: '$listaVehiculos.choferData'},
+                {
+                    $group: {
+                        _id: "$_id",
+                        name: {
+                            $first: "$nombre"
+                        },
+                        listaVehiculos: {
+                            $push: "$listaVehiculos"
+                        }
+                    }
+                }
+
+
+            ])
+            /*for (let r of result) {
                 for (let v of r.listaVehiculos) {
                     v.choferData = await usersRepository.getById(v.chofer.toString())
 
                 }
-            }
+            }*/
         } catch (e) {
             console.log(e);
         }
