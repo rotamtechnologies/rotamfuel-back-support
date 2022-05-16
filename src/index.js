@@ -13,6 +13,7 @@ require('./controllers/FlotaMongoController');
 require('./controllers/iotInfluxController');
 require('./controllers/UserMongoController');
 require('./controllers/CarMongoController');
+require('./controllers/EstadoUltimoMongoController');
 require('./controllers/DataUsersMongoController');
 require('./controllers/ViajesMongoController');
 require('./controllers/DispositivosMongoController');
@@ -42,6 +43,7 @@ async function main() {
     expressApp.use("/mongo/user", MongoUserController);
     expressApp.use("/mongo/car", MongoCarController);
     expressApp.use("/mongo/empresa", MongoEmpresaController);
+    expressApp.use("/mongo/estado/ultimo", MongoEstadoUltimoController);
     expressApp.use("/mongo/vehiculo", MongoVehiculoController);
     expressApp.use("/mongo/dispositivo", MongoDispositivoController);
     expressApp.use("/mongo/flota", MongoFlotaController);

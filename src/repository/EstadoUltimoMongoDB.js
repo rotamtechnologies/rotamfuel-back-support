@@ -1,13 +1,17 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 let dbScheme = new Schema({
-    dispositivo: {type: Schema.ObjectId, ref: 'dispositivo'},
     vehiculo: {type: Schema.ObjectId, ref: 'vehiculo'},
-    chofer: {type: Schema.ObjectId, ref: 'user'},
-    fecha: {type: String},
-    fechaFin: {type: String},
+    viaje: {type: Schema.ObjectId, ref: 'viaje'},
+    latitude: {type: String},
+    longitude: {type: String},
+    estado: {type: String},
+    ultimaVelocidad: {type: String},
+    chofer: {type: String},
+}, {
+    versionKey: false // You should be aware of the outcome after set to false
 });
-let entityMongo = mongoose.model('viaje', dbScheme)
+let entityMongo = mongoose.model('ultimoEstado', dbScheme)
 
 module.exports = {
     viaje: entityMongo,
@@ -15,6 +19,7 @@ module.exports = {
         console.log("obteniendo " + id)
         let result = []
         try {
+
             result = await entityMongo.aggregate([
                 {
                     $match: {
@@ -44,18 +49,6 @@ module.exports = {
                 {$unwind: '$vehiculo'},
 
 
-                {
-                    "$lookup": {
-                        "from": "users",
-                        "localField": "chofer",
-                        "foreignField": "_id",
-                        "as": "chofer"
-                    },
-
-                },
-                {$unwind: '$chofer'},
-
-
             ])
         } catch (e) {
             console.log(e);
@@ -64,24 +57,10 @@ module.exports = {
     },
     get: async () => {
         console.log("obteniendo todo")
+
         let result = []
         try {
             result = await entityMongo.aggregate([
-                /* {
-                     $match: {
-                         _id: mongoose.Types.ObjectId(id)
-                     }
-                 },*/
-                {
-                    "$lookup": {
-                        "from": "dispositivos",
-                        "localField": "dispositivo",
-                        "foreignField": "_id",
-                        "as": "dispositivo"
-                    },
-
-                },
-                {$unwind: '$dispositivo'},
 
                 {
                     "$lookup": {
@@ -93,18 +72,8 @@ module.exports = {
 
                 },
                 {$unwind: '$vehiculo'},
+                ...addRel("viaje")
 
-
-                {
-                    "$lookup": {
-                        "from": "users",
-                        "localField": "chofer",
-                        "foreignField": "_id",
-                        "as": "chofer"
-                    },
-
-                },
-                {$unwind: '$chofer'},
 
 
             ])

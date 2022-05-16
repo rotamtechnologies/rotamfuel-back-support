@@ -12,6 +12,7 @@ router.post("/", (req, res) => {
         viaje: dataAPersistir?.viajeMongo?._id,
         latitude: dataAPersistir?.Latitude,
         longitude: dataAPersistir?.Longitude,
+
     }
     localizacionMongoService.save(dataLocalizacion).then(ok => {
         console.log(ok)

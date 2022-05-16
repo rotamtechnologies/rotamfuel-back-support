@@ -5,6 +5,7 @@ let dbScheme = new Schema({
     latitude: {type: String},
     longitude: {type: String},
     viaje: {type: Schema.ObjectId, ref: 'viaje'},
+    ts: {type: String},
 });
 let entityMongo = mongoose.model('localizacion', dbScheme)
 

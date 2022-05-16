@@ -11,6 +11,12 @@ router.get("/", async (req, res) => {
     res.send({datos});
 });
 
+router.get("/:id", async (req, res) => {
+    let datos = await getById(req.params.id)
+    console.log("datos");
+    res.send({datos});
+
+});
 router.post("/", async (req, res) => {
     let reqData = {
         "dispositivo": req.body.dispositivo,
@@ -21,7 +27,22 @@ router.post("/", async (req, res) => {
     console.log(datos);
     res.send({datos});
 });
+router.patch("/:id", async (req, res) => {
+//validar user id proveniente para impedir modificaciones ajenas
 
+    let reqData = {
+        "dispositivo": req.body.dispositivo,
+        "vehiculo": req.body.vehiculo,
+        "chofer": req.body.chofer,
+        "fechaFin": req.body.fechaFin
+    };
+    let objId = req.params.id
+    let datos = await update(reqData, objId)
+    console.log(datos);
+
+    res.send({datos});
+
+});
 
 
 /*
@@ -39,25 +60,7 @@ router.delete("/:id", async (req, res) => {
 });
 
 
-router.patch("/:id", async (req, res) => {
-//validar user id proveniente para impedir modificaciones ajenas
 
-    let reqData = {
-        patente: req.body.patente,
-        year: req.body.year,
-        modelo: req.body.modelo,
-        marca: req.body.marca,
-        tipoCombustible: req.body.tipoCombustible,
-        alias: req.body.alias,
-        chofer: req.body.chofer
-    };
-    let objId = req.params.id
-    let datos = await update(reqData, objId)
-    console.log(datos);
-
-    res.send({datos});
-
-});
 
 router.put("/", async (req, res) => {
 //validar user id proveniente para impedir modificaciones ajenas
