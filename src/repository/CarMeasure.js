@@ -1,7 +1,18 @@
-const CosmosClient = require("@azure/cosmos").CosmosClient;
-const client = new CosmosClient({endpoint: CONFIG.DB.ENDPOINT, key:CONFIG.DB.KEY });
-const database = client.database(CONFIG.DB.DATABASE);
-const container = database.container(CONFIG.DB.CONTAINER);
+
+let client = {};
+let database = {};
+let container = {};
+try{
+
+   /* client = new CosmosClient({endpoint: CONFIG.DB.ENDPOINT, key:CONFIG.DB.KEY });
+    database = client.database(CONFIG.DB.DATABASE);
+    container = database.container(CONFIG.DB.CONTAINER);*/
+
+}catch (e) {
+    console.log(`error al cargar ${__filename.slice(__dirname.length + 1)}`);
+
+}
+
 /*
 const querySpec = {
     //query: "SELECT * from c"
@@ -15,7 +26,16 @@ const querySpec = {
 };
 */
 
-exports.results = (desde,hasta) =>{
+exports.results = async (desde,hasta) =>{
+
+    let results = await get({desde,hasta})
+
+    return results
+
+}
+
+
+/*exports.promedioVelocidad =(desde,hasta) =>{
     const querySpec = {
         //query: "SELECT * FROM c",
         //query: "SELECT VALUE COUNT(1) FROM c WHERE c._ts > @Desde AND c._ts < @Hasta",
@@ -29,20 +49,5 @@ exports.results = (desde,hasta) =>{
         .query(querySpec)
         .fetchAll()
 
-}
-exports.promedioVelocidad =(desde,hasta) =>{
-    const querySpec = {
-        //query: "SELECT * FROM c",
-        //query: "SELECT VALUE COUNT(1) FROM c WHERE c._ts > @Desde AND c._ts < @Hasta",
-        query: "SELECT * FROM c WHERE c._ts > @Desde AND c._ts < @Hasta",
-        "parameters": [
-            {"name": "@Desde", "value": desde},
-            {"name": "@Hasta", "value": hasta},
-        ]
-    };
-    return container.items
-        .query(querySpec)
-        .fetchAll()
-
-}
+}*/
 

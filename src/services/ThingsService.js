@@ -1,9 +1,9 @@
 require("../util/httpRequester");
 require("../constants/config")
-let url = "http://23.98.131.148:8080/api/device";
-let urlToken = "http://23.98.131.148:8080/api/auth/login";
-let urlDispositivo = "http://23.98.131.148:8080/api/device/";
-let urlBuscarIdDispositivo = "http://23.98.131.148:8080/api/tenant/devices?deviceName=";
+let url = CONFIG.THINGSURL + "/api/device";
+let urlToken = CONFIG.THINGSURL + "/api/auth/login";
+let urlDispositivo = CONFIG.THINGSURL + "/api/device/";
+let urlBuscarIdDispositivo = CONFIG.THINGSURL + "/api/tenant/devices?deviceName=";
 
 global.agregarDispositivo = async (data) => {
     let datosJSON = `

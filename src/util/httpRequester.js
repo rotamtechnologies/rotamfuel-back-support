@@ -5,16 +5,17 @@ global.HttpRequester = {
     makePOST: (url, data) => {
         return new Promise((ok, nulo) => {
             request.post(url, data, (error, response, body) => {
-                if (error != null)
+                if (error != null) {
                     nulo(error)
-                else
-                    ok(body)
+
+                } else
+                ok(body)
             })
         })
     },
-    makeGET: (url,opt) => {
+    makeGET: (url, opt) => {
         return new Promise((ok, nulo) => {
-            request.get(url,opt, (error, response, body) => {
+            request.get(url, opt, (error, response, body) => {
                 if (error != null)
                     nulo(error)
                 else

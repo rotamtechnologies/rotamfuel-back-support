@@ -1,5 +1,5 @@
 const router = require("express").Router();
-require("../models/KeyCloakCliente");
+const KeyCloakCliente = require("../models/KeyCloakCliente").KeyCloakCliente
 require("../util/JSONResponse")
 require("../services/ThingsService")
 router.post("/", (req, res) => {
@@ -7,6 +7,7 @@ router.post("/", (req, res) => {
     if (tokenPeticion) {
         let idUser = idByToken(tokenPeticion);
         let car = {};
+        let keyCloakClient = new KeyCloakCliente();
         keyCloakClient.createCar(idUser, car).then(ok => {
             JSONResponse.OK(res, ok)
         })
@@ -21,13 +22,11 @@ router.patch("/", (req, res) => {
     let tokenPeticion = tokenByReq(req, res);
     if (tokenPeticion) {
         let idUser = idByToken(tokenPeticion);
+        let keyCloakClient = new KeyCloakCliente();
         keyCloakClient.usuario(idUser).then(ok => {
 
             let regACambiar = req.body.regName;
             let datosAGuardar = ok.attributes;
-            console.log(req.body)
-            console.log(datosAGuardar)
-            console.log(regACambiar)
             let auxReg = datosAGuardar[regACambiar];
             delete datosAGuardar[regACambiar];
             datosAGuardar[req.body.regNameValue] = []
@@ -40,9 +39,10 @@ router.patch("/", (req, res) => {
             let data = {
                 attributes: datosAGuardar
             };
-            console.log(data)
             keyCloakClient.updateUser(idUser, data).then(dataOk => {
                 console.log(dataOk)
+                JSONResponse.OK(res,dataOk)
+
             })
 
         })
@@ -60,6 +60,8 @@ router.post("/vin",(req,res)=>{
     let nombreAuto = req.body.regName;
     let vinNuevo = req.body.vinNuevo;
     let datosAntiguos = []
+    let keyCloakClient = new KeyCloakCliente();
+
     keyCloakClient.usuario(idUser).then(datosUser=>{
         datosAntiguos = datosUser.attributes;
         if(datosUser.attributes[nombreAuto]){
@@ -79,14 +81,17 @@ router.post("/vin",(req,res)=>{
 
 
 
+        }else{
+            JSONResponse.ERROR(res,"error")
         }
     })
-})
+});
 
 router.delete("/", (req, res) => {
     let tokenPeticion = tokenByReq(req, res);
     if (tokenPeticion) {
         let idUser = idByToken(tokenPeticion);
+        let keyCloakClient = new KeyCloakCliente();
         keyCloakClient.usuario(idUser).then(ok => {
             let datosParaGuardar = ok.attributes;
             console.log(datosParaGuardar);
@@ -114,8 +119,12 @@ router.get("/", (req, res) => {
     let tokenPeticion = tokenByReq(req, res);
     if (tokenPeticion) {
         let idUser = idByToken(tokenPeticion);
+        let keyCloakClient = new KeyCloakCliente();
         keyCloakClient.usuario(idUser).then(ok => {
+            console.log({attributes:ok.attributes.attributes});
             JSONResponse.OK(res, ok.attributes)
+
+
         })
 
     } else {
@@ -123,4 +132,8 @@ router.get("/", (req, res) => {
     }
 
 });
+
+
+
+
 global.CarController = router;

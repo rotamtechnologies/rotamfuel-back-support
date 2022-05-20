@@ -1,11 +1,9 @@
 const bodyParser = require("body-parser");
 const express = require("express");
-require('../models/KeyCloakCliente');
+const KeyCloakClient  = require('../models/KeyCloakCliente');
 const Cookies = require('cookies');
 
 class Middleware {
-    ExpressApp = {};
-
     constructor(ExpressApp) {
         this.ExpressApp = ExpressApp();
     }
@@ -35,15 +33,32 @@ class Middleware {
     }
 
     agregarOAuth() {
+        let keyCloakClient = new KeyCloakClient.KeyCloakCliente()
         this.ExpressApp.use((req, res, next) => {
-            if (req.method==="OPTIONS" || req.url ==="/things/" || req.url ==="/azure/"
+            if (req.method==="OPTIONS" || req.url ==="/things/" || req.url ==="/azure/" || req.url.includes("influx/iot/viaje/descargar")
             ) {
                 next()
-            } else {
+            } else  if (req.url.includes("/mongo/empresa/")
+            ){
                 var cookies = new Cookies(req, res);
                 let token = req.headers.authorization ? req.headers.authorization.substring("Bearer ".length, req.headers.authorization.length) : cookies.get("RTM_FL-tkn");
                 if (token) {
-                    keyCloakClient.introspectToken(token).then(datosToken => {
+                    keyCloakClient.introspectTokenRTM(token).then(datosToken =>{
+                        if (JSON.parse(datosToken).active) {
+                            next()
+                        } else {
+                            res.status(401).send("Unauthorized")
+                        }
+                    });
+
+                } else {
+                    res.status(401).send("Unauthorized")
+                }
+            }else{
+                var cookies = new Cookies(req, res);
+                let token = req.headers.authorization ? req.headers.authorization.substring("Bearer ".length, req.headers.authorization.length) : cookies.get("RTM_FL-tkn");
+                if (token) {
+                    keyCloakClient.introspectToken(token).then(datosToken =>{
                         if (JSON.parse(datosToken).active) {
                             next()
                         } else {
