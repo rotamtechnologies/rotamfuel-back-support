@@ -54,7 +54,7 @@ router.get("/viaje/descargar",async (req,res)=>{
    const csvParser = new CsvParser({csvFields});
    const csvData = csvParser.parse(datosIot);
    res.setHeader("Content-Type", "text/csv");
-   res.setHeader("Content-Disposition", "attachment; filename=iotdata.csv");
+   res.setHeader("Content-Disposition", "attachment; filename="+req.query.viaje+".csv");
    res.status(200).end(csvData);
 
 });
