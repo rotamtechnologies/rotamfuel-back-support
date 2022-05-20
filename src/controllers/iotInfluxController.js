@@ -42,19 +42,14 @@ router.get("/viaje/descargar",async (req,res)=>{
 
    let datosIot = await descargarIotData(reqData)
    const csvFields = [
-      'Calculated engine load',
-      "CumulativeTime",
-      "Date",
-      "DeltaTime",
-      "Event",
-      "Hour",
-      "Intake manifold absolute pressure",
-      "MAF air flow rate",
-      "Throttle position",
-      "Throttle position",
-      "engine rpm",
-      "estado",
-      "vehicle speed",
+      "events",
+      'calculated_engine_load',
+      "cumulativetime",
+      "deltatime",
+      "engine_rpm",
+      "maf_air_flows_rate",
+      "throttle_position",
+      "vehicle_speed",
    ];
    const csvParser = new CsvParser({csvFields});
    const csvData = csvParser.parse(datosIot);

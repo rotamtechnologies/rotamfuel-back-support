@@ -6,6 +6,9 @@ let dbScheme = new Schema({
     longitude: {type: String},
     viaje: {type: Schema.ObjectId, ref: 'viaje'},
     ts: {type: String},
+}, {
+    versionKey: false // You should be aware of the outcome after set to false
+
 });
 let entityMongo = mongoose.model('localizacion', dbScheme)
 
@@ -27,6 +30,14 @@ module.exports = {
         let result = []
         try {
             result = await entityMongo.find({"viaje": id})
+            /* result = await entityMongo.aggregate([
+                 {
+                     $match: {
+                         viaje: mongoose.Types.ObjectId(id)
+                     }
+                 },
+                 ...addRel("viaje"),
+             ])*/
         } catch (e) {
             console.log(e);
         }
@@ -43,11 +54,9 @@ module.exports = {
         return result
     },
     save: async data => {
-        console.log("guardando " + data)
         let result = {}
         try {
             result = await entityMongo.create(data)
-            console.log(result);
         } catch (e) {
             result.error = e
             console.log(e);
@@ -55,9 +64,10 @@ module.exports = {
         return result
     },
     update: async (data, id) => {
-        console.log("guardando " + data)
+        console.log("update ")
+        console.log(data)
         data = JSON.parse(JSON.stringify(data))
-
+        console.log(data);
         try {
             let result = await entityMongo.updateOne({"_id": id}, {$set: data})
             console.log(result);

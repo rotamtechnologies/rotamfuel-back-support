@@ -21,17 +21,17 @@ global.tokenByReq = (req, res) => {
 };
 
 
-global.addRel = (ent) => {
+global.addRel = (ent, collection = null) => {
     let obj = {
         "$lookup": {
-            "from": ent + "s",
+            "from": collection || ent + "s",
             "localField": ent,
             "foreignField": "_id",
             "as": ent
         },
     }
     let unw = {$unwind: '$' + ent}
-    return [obj,unw]
+    return [obj, unw]
 
 };
 

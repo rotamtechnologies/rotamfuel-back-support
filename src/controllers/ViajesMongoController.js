@@ -24,7 +24,6 @@ router.post("/", async (req, res) => {
         "chofer": req.body.chofer
     }
     let datos = await save(reqData)
-    console.log(datos);
     res.send({datos});
 });
 router.patch("/:id", async (req, res) => {

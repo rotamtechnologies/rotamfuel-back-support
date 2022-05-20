@@ -13,7 +13,7 @@ module.exports = {
     deleteOne : async  (id) =>{
         return await deleteOne(id)
     },
-    update : async (data,id) => {
-        return await update(data,id)
+    update : async (data) => {
+        return await update(data)
     }
 }

@@ -7,7 +7,8 @@ let dbScheme = new Schema({
     longitude: {type: String},
     estado: {type: String},
     ultimaVelocidad: {type: String},
-    chofer: {type: String},
+    chofer: {type: Schema.ObjectId, ref: 'user'},
+    lastConnection: {type: String},
 }, {
     versionKey: false // You should be aware of the outcome after set to false
 });
@@ -57,38 +58,30 @@ module.exports = {
     },
     get: async () => {
         console.log("obteniendo todo")
-
         let result = []
         try {
             result = await entityMongo.aggregate([
-
-                {
-                    "$lookup": {
-                        "from": "vehiculos",
-                        "localField": "vehiculo",
-                        "foreignField": "_id",
-                        "as": "vehiculo"
-                    },
-
-                },
-                {$unwind: '$vehiculo'},
-                ...addRel("viaje")
-
-
-
+                ...addRel("vehiculo"),
+                ...addRel("viaje"),
+                ...addRel("chofer", "users"),
             ])
-
         } catch (e) {
             console.log(e);
         }
         return result
     },
     save: async data => {
-        console.log("guardando " + data)
-        data.fecha = Date.now()
+        console.log("guardando estado ultimo")
+        console.log(data)
+
         let result = {}
         try {
-            result = await entityMongo.create(data)
+            let existentRecord = await entityMongo.findOne({"vehiculo": data.vehiculo})
+            if (existentRecord) {
+                result = await entityMongo.updateOne({"vehiculo": data.vehiculo}, {$set: data})
+            } else {
+                result = await entityMongo.create(data)
+            }
             console.log(result);
         } catch (e) {
             result.error = e
@@ -96,12 +89,12 @@ module.exports = {
         }
         return result
     },
-    update: async (data, id) => {
-        console.log("guardando " + data)
+    update: async (data) => {
+        console.log("updating last state " + data)
         data = JSON.parse(JSON.stringify(data))
 
         try {
-            let result = await entityMongo.updateOne({"_id": id}, {$set: data})
+            let result = await entityMongo.updateOne({"vehiculo": data.vehiculo}, {$set: data})
             console.log(result);
         } catch (e) {
             console.log(e);

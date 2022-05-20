@@ -27,7 +27,8 @@ router.post("/", async (req, res) => {
         longitude: req.body.longitude,
         estado: req.body.estado,
         ultimaVelocidad: req.body.ultimaVelocidad,
-        chofer: req.body.chofer
+        chofer: req.body.chofer,
+        lastConnection: req.body.lastConnection
     };
     let datos = await save(reqData)
     console.log(datos);
@@ -35,7 +36,7 @@ router.post("/", async (req, res) => {
 
 });
 
-router.patch("/:id", async (req, res) => {
+router.patch("/", async (req, res) => {
 //validar user id proveniente para impedir modificaciones ajenas
 
     let reqData = {
@@ -45,10 +46,11 @@ router.patch("/:id", async (req, res) => {
         longitude: req.body.longitude,
         estado: req.body.estado,
         ultimaVelocidad: req.body.ultimaVelocidad,
-        chofer: req.body.chofer
+        chofer: req.body.chofer,
+        lastConnection: req.body.lastConnection,
     };
-    let objId = req.params.id
-    let datos = await update(reqData, objId)
+    //let objId = req.params.id
+    let datos = await update(reqData)
     console.log(datos);
 
     res.send({datos});

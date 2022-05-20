@@ -115,12 +115,10 @@ module.exports = {
         return result
     },
     save: async data => {
-        console.log("guardando " + data)
         data.fecha = Date.now()
         let result = {}
         try {
             result = await entityMongo.create(data)
-            console.log(result);
         } catch (e) {
             result.error = e
             console.log(e);
@@ -128,7 +126,8 @@ module.exports = {
         return result
     },
     update: async (data, id) => {
-        console.log("guardando " + data)
+        console.log("actualizando " + id)
+        console.log(data);
         data = JSON.parse(JSON.stringify(data))
 
         try {

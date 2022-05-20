@@ -28,9 +28,7 @@ let MQ = new MessageProducer();
 MQ.init();
 global.enviarDatosToQueue = (data) => {
 
-    console.log("enviando mensaje " + data)
     MQ.sendMessage(data)
-    console.log("INICIADO");
 }
 
 
