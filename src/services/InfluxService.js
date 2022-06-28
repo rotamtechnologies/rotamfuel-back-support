@@ -1,6 +1,6 @@
 const {getIotData} = require("../repository/iotInflux")
 const CsvParser = require("json2csv").Parser;
-
+const {getByTsAndViaje} = require("../services/LocalizacionMongoService")
 module.exports = {
     obtenerIotData: async (data) => {
 
@@ -72,11 +72,15 @@ module.exports = {
             let obj = {}
             for (let aD of datoF) {
                 obj[aD._measurement] = aD._value
+                obj.ts = aD._time
             }
-
             datosFiltradosObjetos.push(obj)
         }
-        console.log(datosFiltradosObjetos)
+        for(let dataObj of datosFiltradosObjetos){
+            let latLng = await getByTsAndViaje(new Date(dataObj.ts).getTime(),data.viaje)
+            dataObj.lat = latLng?.latitude
+            dataObj.lng = latLng?.longitude
+        }
 
         return datosFiltradosObjetos
     }

@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const {KeyCloakCliente: KeyCloakClient} = require("../models/KeyCloakCliente");
-const {getById, save, deleteOne, update, get,getByViaje} = require("../services/LocalizacionMongoService");
+const {getById, save, deleteOne, update, get,getByViaje,getByTsAndViaje} = require("../services/LocalizacionMongoService");
 
 router.get("/", async (req, res) => {
     let tokenPeticion = tokenByReq(req, res);
@@ -12,6 +12,11 @@ router.get("/", async (req, res) => {
 });
 router.get("/viaje/:viaje/", async (req, res) => {
     let datos = await getByViaje(req.params.viaje);
+    res.send({datos});
+});
+
+router.get("/ts/viaje/:viaje/:ts", async (req, res) => {
+    let datos = await getByTsAndViaje(req.params.ts,req.params.viaje);
     res.send({datos});
 });
 

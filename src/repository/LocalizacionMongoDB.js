@@ -25,6 +25,15 @@ module.exports = {
         }
         return result
     },
+    getByTsAndViaje: async (ts,idViaje) => {
+        let result = []
+        try {
+            result = await entityMongo.findOne({"ts": ts,"viaje":idViaje})
+        } catch (e) {
+            console.log(e);
+        }
+        return result
+    },
     getByViaje: async id => {
         console.log("obteniendo " + id)
         let result = []

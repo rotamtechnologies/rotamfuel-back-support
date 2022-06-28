@@ -41,6 +41,7 @@ router.get("/viaje/descargar",async (req,res)=>{
    };
 
    let datosIot = await descargarIotData(reqData)
+
    const csvFields = [
       "events",
       'calculated_engine_load',

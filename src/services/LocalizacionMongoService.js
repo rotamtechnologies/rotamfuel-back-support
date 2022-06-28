@@ -1,4 +1,4 @@
-const {getById, save, deleteOne, update, get,getByViaje} = require("../repository/LocalizacionMongoDB")
+const {getById, save, deleteOne, update, get,getByViaje,getByTsAndViaje} = require("../repository/LocalizacionMongoDB")
 
 module.exports = {
     getByViaje: async id => {
@@ -6,6 +6,9 @@ module.exports = {
     },
     getById: async id => {
         return await getById(id)
+    },
+    getByTsAndViaje: async (ts,viaje) => {
+        return await getByTsAndViaje(ts,viaje)
     },
     get: async () => {
         return await get()

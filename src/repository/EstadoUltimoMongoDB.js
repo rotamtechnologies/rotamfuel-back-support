@@ -78,6 +78,7 @@ module.exports = {
         try {
             let existentRecord = await entityMongo.findOne({"vehiculo": data.vehiculo})
             if (existentRecord) {
+                console.log("existe ");
                 result = await entityMongo.updateOne({"vehiculo": data.vehiculo}, {$set: data})
             } else {
                 result = await entityMongo.create(data)

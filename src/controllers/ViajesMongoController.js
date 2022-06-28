@@ -21,7 +21,8 @@ router.post("/", async (req, res) => {
     let reqData = {
         "dispositivo": req.body.dispositivo,
         "vehiculo": req.body.vehiculo,
-        "chofer": req.body.chofer
+        "chofer": req.body.chofer,
+        "fecha": req.body.fecha,
     }
     let datos = await save(reqData)
     res.send({datos});
