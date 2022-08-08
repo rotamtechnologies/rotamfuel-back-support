@@ -10,6 +10,7 @@ class InfluxBaseMetric extends BaseMetric {
         trip,
         start,
         stop,
+        type,
     }) {
         super();
         this.source = new InfluxDB({
@@ -22,6 +23,7 @@ class InfluxBaseMetric extends BaseMetric {
         this.trip = trip;
         this.start = start;
         this.stop = stop;
+        this.type = type;
     }
 
     buildMetricParams(
@@ -51,13 +53,28 @@ class InfluxBaseMetric extends BaseMetric {
             return null;
         }
 
+        let tripQuery = null;
+
         const parsedStart = parseTimestampToIso(this.start);
         const parsedStop = parseTimestampToIso(this.stop);
 
         const _bucket = bucket || process.env.INFLUX_BUCKET;
         const bucketQuery = `from(bucket: "${_bucket}")`;
         const rangeQuery = `|> range(start: ${parsedStart}, stop:  ${parsedStop})`;
-        const tripQuery = `|> filter(fn: (r) => r["viajeMongo"] == "${this.trip}") `;
+
+        switch (this.type) {
+            case 'trip':
+                tripQuery = `|> filter(fn: (r) => r["viajeMongo"] == "${this.trip}") `;    
+            break;
+
+            case 'vehicle':
+                tripQuery = `|> filter(fn: (r) => r["vehiculo"] == "${this.trip}") `;    
+            break;
+        
+            default:
+                tripQuery = `|> filter(fn: (r) => r["viajeMongo"] == "${this.trip}") `; 
+        }
+
         const measurementsQuery = this.measurements && this.measurements.length ? `${buildFilters(this.measurements, '_measurement')})` : '';
         const periodQuery = period ? `|> aggregateWindow(every: ${period}s, fn: mean, createEmpty: false)` : '';
 

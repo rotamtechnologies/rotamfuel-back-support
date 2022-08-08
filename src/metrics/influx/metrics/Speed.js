@@ -15,12 +15,10 @@ class SpeedMetric extends InfluxBaseMetric {
     let speedData = [];
     datapoints.forEach(datapoint => {
       // TODO - Francisco must validate this values
-      if (datapoint._value < 100) {
-        speedData.push({
-          x: datapoint._time,
-          y: datapoint._value
-        });
-      }
+      speedData.push({
+        x: datapoint._time,
+        y: datapoint._value
+      });
     });
 
     return super.buildMetricResponse(speedData);
