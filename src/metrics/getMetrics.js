@@ -9,6 +9,7 @@ const getMetricClass = ({
     trip,
     start,
     stop,
+    type,
 }) => {
     const MetricClass = getMetric(metricType);
 
@@ -22,6 +23,7 @@ const getMetricClass = ({
         trip,
         start,
         stop,
+        type,
     });
 };
 
@@ -29,6 +31,7 @@ const getMetrics = async ({
     trip,
     start,
     stop,
+    type,
     queries,
 }) => {
     const results = [];
@@ -43,6 +46,7 @@ const getMetrics = async ({
                 trip,
                 start,
                 stop,
+                type,
             });
             const datapoints = await metric.getResponse({ results, trip });
             if (datapoints) {
