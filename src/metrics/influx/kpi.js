@@ -43,16 +43,15 @@ const calculateDistance = (datapoints) => {
 
     const time = [];
     const speed = [];
-    const accumDistance = [{
-      x: '',
-      y: 0,
-    }];
+    const accumDistance = [];
     let tmpTimeHour = 0;
 
     for (let index = 0; index < deltaTime.length; index ++) {
-      tmpTimeHour += (deltaTime[index]._value) / 3600;
-      speed.push(vehicleSpeed[index]._value);
-      time.push(tmpTimeHour);
+      if (deltaTime[index] && vehicleSpeed[index] && deltaTime[index]._value && vehicleSpeed[index]._value) {
+        tmpTimeHour += (deltaTime[index]._value) / 3600;
+        speed.push(vehicleSpeed[index]._value);
+        time.push(tmpTimeHour);
+      }
     }
 
     for (let index = 0; index < deltaTime.length; index ++) {
