@@ -19,11 +19,13 @@ class CO2EmissionsMetric extends InfluxBaseMetric {
     const EM_GAL = 8.870;
 
     for (let index = 0; index < datapointsCTC.length; index ++) {
-      const emKm = EM_GAL * (datapointsCTC[index].CTC / datapointsDistance[index].distance);
-      co2Emissions.push({
-        x: datapointsCTC[index].time,
-        y: emKm
-      });
+      if (datapointsCTC[index] && datapointsCTC[index].CTC && datapointsDistance[index] && datapointsDistance[index].distance) {
+        const emKm = EM_GAL * (datapointsCTC[index].CTC / datapointsDistance[index].distance);
+        co2Emissions.push({
+          x: datapointsCTC[index].time,
+          y: emKm
+        });
+      }
     }
 
     return super.buildMetricResponse(co2Emissions);
