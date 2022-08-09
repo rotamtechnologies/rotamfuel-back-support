@@ -27,28 +27,26 @@ module.exports = {
                         _id: mongoose.Types.ObjectId(id)
                     }
                 },
+                ...addRel("vehiculo"),
+
+            ])
+        } catch (e) {
+            console.log(e);
+        }
+        return result
+    },
+    getByVehiculo: async id => {
+        console.log("obteniendo " + id)
+        let result = []
+        try {
+
+            result = await entityMongo.aggregate([
                 {
-                    "$lookup": {
-                        "from": "dispositivos",
-                        "localField": "dispositivo",
-                        "foreignField": "_id",
-                        "as": "dispositivo"
-                    },
-
+                    $match: {
+                        vehiculo: mongoose.Types.ObjectId(id)
+                    }
                 },
-                {$unwind: '$dispositivo'},
-
-                {
-                    "$lookup": {
-                        "from": "vehiculos",
-                        "localField": "vehiculo",
-                        "foreignField": "_id",
-                        "as": "vehiculo"
-                    },
-
-                },
-                {$unwind: '$vehiculo'},
-
+                ...addRel("vehiculo"),
 
             ])
         } catch (e) {

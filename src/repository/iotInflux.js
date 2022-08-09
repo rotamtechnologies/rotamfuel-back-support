@@ -10,7 +10,7 @@ const bucket = 'datahistory'
 module.exports = {
     getIotData: (dataReq = {}) => {
         return new Promise((ok, nok) => {
-            const client = new InfluxDB({url: 'http://44.200.220.115:8086', token: token})
+            const client = new InfluxDB({url: 'https://rotamfuel.com:8086', token: token})
             console.log(dataReq);
             const queryApi = client.getQueryApi(org)
 

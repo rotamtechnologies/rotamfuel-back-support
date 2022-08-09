@@ -14,7 +14,7 @@ class InfluxBaseMetric extends BaseMetric {
     }) {
         super();
         this.source = new InfluxDB({
-            url: process.env.INFLUX_URL || 'http://44.200.220.115:8086',
+            url: process.env.INFLUX_URL || 'https://rotamfuel.com:8086',
             token: process.env.INFLUX_TOKEN || 'jzGeZqdyFRblCyitjRoETcMHtIAqtJfHlt3LjVMEZZ-QlTF6HxAoDMpShCvXsVOwRPYQlxLln38UX8oeAuVwbA==',
         }).getQueryApi(process.env.INFLUX_ORG || 'rotam');
         this.measurements = [];

@@ -43,18 +43,18 @@ router.patch("/:id", async (req, res) => {
     res.send({datos});
 
 });
+router.delete("/:id", async (req, res) => {
+    let datos = await deleteOne(req.params.id)
+    console.log(datos);
+    res.send({datos});
+
+});
 
 
 /*
 router.get("/:id", async (req, res) => {
     let datos = await getById(req.params.id)
     console.log("datos");
-    res.send({datos});
-
-});
-router.delete("/:id", async (req, res) => {
-    let datos = await deleteOne(req.params.id)
-    console.log(datos);
     res.send({datos});
 
 });
