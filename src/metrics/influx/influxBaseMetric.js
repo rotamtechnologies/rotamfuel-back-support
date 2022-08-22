@@ -41,6 +41,7 @@ class InfluxBaseMetric extends BaseMetric {
         const {
             bucket,
             period,
+            params,
         } = this.query;
 
         const {
@@ -69,6 +70,19 @@ class InfluxBaseMetric extends BaseMetric {
 
             case 'vehicle':
                 tripQuery = `|> filter(fn: (r) => r["vehiculo"] == "${this.trip}") `;    
+            break;
+
+            case 'fleet':
+                const { vehicles } = params;
+                let vehiclesQuery = '';
+                vehicles.forEach((vehicle, index) => {
+                    if (index == 0) {
+                        vehiclesQuery += `r["vehiculo"] == "${vehicle}"`
+                    } else {
+                        vehiclesQuery += ` or r["vehiculo"] == "${vehicle}"`
+                    }
+                })
+                tripQuery = `|> filter(fn: (r) => ${vehiclesQuery} )`;
             break;
         
             default:
