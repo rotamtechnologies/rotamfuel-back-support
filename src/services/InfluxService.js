@@ -1,4 +1,4 @@
-const {getIotData} = require("../repository/iotInflux")
+const {getIotData,getIotData2} = require("../repository/iotInflux")
 const CsvParser = require("json2csv").Parser;
 const {getByTsAndViaje} = require("../services/LocalizacionMongoService")
 module.exports = {
@@ -59,7 +59,8 @@ module.exports = {
     },
     descargarIotData: async (data) => {
 
-        let dataInflux = await getIotData(data)
+
+        let dataInflux = await getIotData2(data)
 
         let soloFechas = dataInflux.map(o => o._time)
         soloFechas = Array.from(new Set(soloFechas))
