@@ -27,7 +27,8 @@ router.post("/", async (req, res) => {
         realm: req.body.realm,
         usuario: req.body.usuario,
         clave: req.body.clave,
-        correo: req.body.correo
+        correo: req.body.correo,
+        KC_key: req.body.KC_key
     };
     let datos = await save(reqData)
     console.log(datos);

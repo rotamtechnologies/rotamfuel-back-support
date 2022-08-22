@@ -4,6 +4,7 @@ require("../util/Utils");
 const btoa = require('btoa');
 const kcConecctor = require("../util/KeyCloakConnector")
 const userMongo = require("../repository/UserMongoDB");
+const empresaMongo = require("../repository/EmpresaMongoDB");
 
 class KeyCloakCliente {
     constructor() {
@@ -100,15 +101,17 @@ class KeyCloakCliente {
         return HttpRequester.makePOST(url, data)
     }
 
-    obtenerTokenCustomRealm(username, pass, realm) {
+    async obtenerTokenCustomRealm(username, pass, realm) {
         let url = CONFIG.KCHOST + "/realms/" + realm + "/protocol/openid-connect/token";
+        let empresaData = await empresaMongo.getByRealm(realm);
+        console.log(empresaData);
         let data = {
             form: {
                 username: username,
                 password: pass,
                 grant_type: this.grantType,
                 client_id: "loginapp",
-                client_secret: CONFIG.KCPORSCHEID
+                client_secret: empresaData[0].KC_key
             }
         };
         console.log(data);
