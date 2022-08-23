@@ -56,14 +56,16 @@ class KeyCloakCliente {
         return HttpRequester.makePOST(url, data)
     }
 
-    introspectTokenCustomRealm(token, realm) {
+    async introspectTokenCustomRealm(token, realm) {
         let url = CONFIG.KCHOST + "/realms/" + realm + "/protocol/openid-connect/token/introspect/";
+        let empresaData = await empresaMongo.getByRealm(realm);
+
         let data = {
             form: {
                 token_type_hint: "access_token",
                 token: token
             }, headers: {
-                Authorization: "Basic " + btoa(realm == "porsche" ? CONFIG.INTROSPECT_CREDENTIALSPORSCHE : realm)
+                Authorization: "Basic " + btoa("loginapp:"+empresaData[0].KC_key)
             }
         };
         return HttpRequester.makePOST(url, data)

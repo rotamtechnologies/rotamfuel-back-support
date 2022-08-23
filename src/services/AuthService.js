@@ -69,7 +69,7 @@ global.obtenerTokenByRealm = (req, res) => {
                     let dataT = JSON.parse(datosToken)
                     console.log(dataT);
                     console.log(dataT.username);
-                    userMongo.getByUsername(dataT.username).then(okUserMongo=>{
+                    /*userMongo.getByUsername(dataT.username).then(okUserMongo=>{
                         console.log(okUserMongo);
                         if(!okUserMongo){
                             console.log("persistir");
@@ -85,7 +85,7 @@ global.obtenerTokenByRealm = (req, res) => {
                         }else{
                             console.log("no persistir")
                         }
-                    })
+                    })*/
                 })
 
                 var cookies = new Cookies(req, res)
