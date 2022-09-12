@@ -82,7 +82,11 @@ module.exports = {
             dataObj.lat = latLng?.latitude
             dataObj.lng = latLng?.longitude
         }
+        const sortedAsc = datosFiltradosObjetos.sort(
+            (objA, objB) => Number(new Date(parseInt(objA.ts))) - Number(new Date(parseInt(objB.ts))),
+        );
 
-        return datosFiltradosObjetos
+
+        return sortedAsc
     }
 }

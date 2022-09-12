@@ -28,7 +28,8 @@ router.post("/", async (req, res) => {
         usuario: req.body.usuario,
         clave: req.body.clave,
         correo: req.body.correo,
-        KC_key: req.body.KC_key
+        KC_key: req.body.KC_key,
+        url: req.body.url,
     };
     let datos = await save(reqData)
     console.log(datos);

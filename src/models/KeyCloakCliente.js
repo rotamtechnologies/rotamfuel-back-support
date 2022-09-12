@@ -117,7 +117,9 @@ class KeyCloakCliente {
             }
         };
         console.log(data);
-        return HttpRequester.makePOST(url, data)
+        let tokenKeyCloak = await HttpRequester.makePOST(url, data);
+        tokenKeyCloak = JSON.parse(tokenKeyCloak);
+        return {...tokenKeyCloak,url:empresaData[0].url}
     }
 
 

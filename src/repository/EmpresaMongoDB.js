@@ -9,9 +9,8 @@ let dbScheme = new Schema({
     usuario: {type: String},
     clave: {type: String},
     KC_key: {type: String},
+    url: {type: String},
     correo: {type: String}
-
-
 });
 
 let entityMongo = mongoose.model('empresa', dbScheme)

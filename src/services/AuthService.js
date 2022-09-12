@@ -60,8 +60,6 @@ global.obtenerTokenByRealm = (req, res) => {
 
 
         keyCloakCliente.obtenerTokenCustomRealm(user, pass,idRealm).then(tokens => {
-            tokens = JSON.parse(tokens);
-            console.log(tokens);
             console.log(tokens);
             if (tokens.access_token) {
                 console.log("token");
@@ -90,7 +88,7 @@ global.obtenerTokenByRealm = (req, res) => {
 
                 var cookies = new Cookies(req, res)
                 cookies.set('RTM_FL-tkn', tokens.access_token, {path: "/"})
-                JSONResponse.OK(res, {tkn: tokens.access_token, rsh: tokens.refresh_token})
+                JSONResponse.OK(res, {tkn: tokens.access_token, rsh: tokens.refresh_token,url:tokens.url})
             } else {
                 console.log("tokeno");
                 console.log(tokens);
