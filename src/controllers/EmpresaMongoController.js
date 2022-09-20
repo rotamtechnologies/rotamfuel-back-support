@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const {getById, save,deleteOne,update,get} = require("../services/EmpresaMongoService");
+const {getById, save, deleteOne, update, get} = require("../services/EmpresaMongoService");
 
 router.get("/", async (req, res) => {
     let datos = await get()
@@ -46,10 +46,12 @@ router.patch("/:id", async (req, res) => {
         realm: req.body.realm,
         usuario: req.body.usuario,
         clave: req.body.clave,
-        correo: req.body.correo
+        correo: req.body.correo,
+        url: req.body.url,
+
     };
     let objId = req.params.id
-    let datos = await update(reqData,objId)
+    let datos = await update(reqData, objId)
     console.log(datos);
 
     res.send({datos});
@@ -67,7 +69,7 @@ router.put("/", async (req, res) => {
         correo: req.body.correo
     };
     let objId = req.body._id
-    let datos = await update(reqData,objId)
+    let datos = await update(reqData, objId)
     console.log(datos);
 
     res.send({datos});

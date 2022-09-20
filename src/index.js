@@ -12,6 +12,7 @@ require('./controllers/FlotaMongoController');
 require('./controllers/iotInfluxController');
 require('./controllers/UserMongoController');
 require('./controllers/CarMongoController');
+require('./controllers/FreeMaticsController');
 require('./controllers/EstadoUltimoMongoController');
 require('./controllers/DataUsersMongoController');
 require('./controllers/ViajesMongoController');
@@ -50,6 +51,7 @@ async function main() {
     expressApp.use("/mongo/dispositivo", MongoDispositivoController);
     expressApp.use("/mongo/flota", MongoFlotaController);
     expressApp.use("/mongo/data", DataUsersMongoController);
+    expressApp.use("/mongo/freematics", FreeMaticsController);
     expressApp.use("/mongo/viajes", ViajesMongoController);
     expressApp.use("/mongo/localizacion", LocalizacionMongoController);
 

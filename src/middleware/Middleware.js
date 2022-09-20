@@ -35,6 +35,7 @@ class Middleware {
     agregarOAuth() {
         let keyCloakClient = new KeyCloakClient.KeyCloakCliente()
         this.ExpressApp.use((req, res, next) => {
+
             if (req.method === "OPTIONS" || req.url === "/things/" ||
                 req.url === "/azure/" ||
                 req.url.includes("influx/iot/viaje/descargar") ||
@@ -42,8 +43,8 @@ class Middleware {
 
             ) {
                 next()
-            } else if (req.url.includes("/mongo/empresa/")
-            ) {
+            } else if (req.url.includes("/mongo/empresa/") || req.url.includes("/freematics")) {
+
                 var cookies = new Cookies(req, res);
                 let token = req.headers.authorization ? req.headers.authorization.substring("Bearer ".length, req.headers.authorization.length) : cookies.get("RTM_FL-tkn");
                 if (token) {
@@ -51,12 +52,12 @@ class Middleware {
                         if (JSON.parse(datosToken).active) {
                             next()
                         } else {
-                            res.status(401).send("Unauthorized"+req.url)
+                            res.status(401).send("Unauthorized" + req.url)
                         }
                     });
 
                 } else {
-                    res.status(401).send("Unauthorized"+req.url)
+                    res.status(401).send("Unauthorized" + req.url)
                 }
             } else {
                 var cookies = new Cookies(req, res);
@@ -66,12 +67,12 @@ class Middleware {
                         if (JSON.parse(datosToken).active) {
                             next()
                         } else {
-                            res.status(401).send("Unauthorized"+req.url)
+                            res.status(401).send("Unauthorized" + req.url)
                         }
                     });
 
                 } else {
-                    res.status(401).send("Unauthorized"+req.url)
+                    res.status(401).send("Unauthorized" + req.url)
                 }
             }
         });
