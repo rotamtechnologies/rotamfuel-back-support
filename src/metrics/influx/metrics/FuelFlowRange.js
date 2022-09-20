@@ -1,4 +1,8 @@
 const InfluxBaseMetric = require("../influxBaseMetric");
+const { 
+  filterData, 
+  calculateAccumulatedFuelMass
+} = require("../kpi");
 
 class FuelFlowRangeMetric extends InfluxBaseMetric {
   static getMetricId() {
@@ -12,26 +16,32 @@ class FuelFlowRangeMetric extends InfluxBaseMetric {
   }
 
   buildMetricResponse(datapoints) {
-    const AFR = 14.5;
-    const mffData = datapoints.map(point => {
-      
-      const mff = point._value / AFR;
-      let Ef_MFF = null;
 
-      if (mff > 0 && mff <= 0.8) {
+    const filteredData = filterData(datapoints)
+    const maf = []
+
+    filteredData.forEach(datapoint => {
+      maf.push(datapoint['maf_air_flows_rate'] || 0)
+    })
+
+    const accumulatedFuelMass = calculateAccumulatedFuelMass(maf, null);
+
+    const mffData = accumulatedFuelMass.map(point => {
+      let Ef_MFF = '';
+      if (point > 0 && point <= 0.5) {
         Ef_MFF = 'Eficiente';
       }
 
-      if (mff > 0.8 && mff <= 1.8) {
+      if (point > 0.5 && point <= 1) {
         Ef_MFF = 'Moderado';
       }
 
-      if (mff > 1.8) {
+      if (point > 1) {
         Ef_MFF = 'Ineficiente';
       }
 
       return {
-        x: point._time,
+        x: Ef_MFF,
         y: Ef_MFF
       }
     });

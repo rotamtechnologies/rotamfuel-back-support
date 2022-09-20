@@ -1,5 +1,5 @@
 const InfluxBaseMetric = require("../influxBaseMetric");
-const { calculateCTC, calculateDistance } = require("../kpi");
+const { filterData, calculateAccumulatedFuelMass } = require("../kpi");
 
 class CO2EmissionsMetric extends InfluxBaseMetric {
   static getMetricId() {
@@ -8,24 +8,48 @@ class CO2EmissionsMetric extends InfluxBaseMetric {
 
   buildMetricParams() {
     return {
-      _measurements: ["maf_air_flows_rate", "vehicle_speed", "deltatime"],
+      _measurements: ["maf_air_flows_rate", "cumulativetime"],
     };
   }
 
   buildMetricResponse(datapoints) {
-    const datapointsCTC = calculateCTC(datapoints);
-    const datapointsDistance = calculateDistance(datapoints);
-    const co2Emissions = [];
-    const EM_GAL = 8.870;
+    
+    const filteredData = filterData(datapoints)
 
-    for (let index = 0; index < datapointsCTC.length; index ++) {
-      if (datapointsCTC[index] && datapointsCTC[index].CTC && datapointsDistance[index] && datapointsDistance[index].distance) {
-        const emKm = EM_GAL * (datapointsCTC[index].CTC / datapointsDistance[index].distance);
-        co2Emissions.push({
-          x: datapointsCTC[index].time,
-          y: emKm
-        });
+    const time = []
+    const maf = []
+
+    const FACTOR_DE_EMISION_DE_CO2_EN_UNIDADES_COMUNES = 10.27650193
+    const DENSITY = 0.8607
+    const DIESEL_CONSTANT = 3.7854
+
+    filteredData.forEach(datapoint => {
+      time.push(datapoint['cumulativetime'] || 0)
+      maf.push(datapoint['maf_air_flows_rate'] || 0)
+    })
+
+    const accumulatedFuelMass = calculateAccumulatedFuelMass(maf, time);
+
+    let tmpValue = accumulatedFuelMass[0]
+    const co2Emissions = []
+
+    for(let index = 0; index < accumulatedFuelMass.length; index ++) {
+      let MCA = 0
+      if (index === 0) {
+        MCA = tmpValue
+      } else {
+        MCA = tmpValue + accumulatedFuelMass[index]
       }
+      const value = ((MCA * FACTOR_DE_EMISION_DE_CO2_EN_UNIDADES_COMUNES) / DIESEL_CONSTANT) / (DENSITY * 1000)
+
+      co2Emissions.push(
+        {
+          x: time[index],
+          y: value
+        }
+      )
+
+      tmpValue = MCA
     }
 
     return super.buildMetricResponse(co2Emissions);

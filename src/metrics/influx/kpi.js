@@ -1,3 +1,27 @@
+const filterData = (datapoints) => {
+  let soloFechas = datapoints.map(o => o._time)
+  soloFechas = Array.from(new Set(soloFechas))
+  let datosFiltrados = []
+  for (let fecha of soloFechas) {
+      datosFiltrados.push(datapoints.filter(o => o._time === fecha))
+  }
+  let datosFiltradosObjetos = []
+  for (let datoF of datosFiltrados) {
+      let obj = {}
+      for (let aD of datoF) {
+          obj[aD._measurement] = aD._value
+          obj.ts = aD._time
+      }
+      datosFiltradosObjetos.push(obj)
+  }
+  const sortedAsc = datosFiltradosObjetos.sort(
+      (objA, objB) => Number(new Date(parseInt(objA.ts))) - Number(new Date(parseInt(objB.ts))),
+  );
+
+  return sortedAsc
+}
+
+
 const calculateCTC = (datapoints) => {
     let soloFechas = datapoints.map((o) => o._time);
     soloFechas = Array.from(new Set(soloFechas));
@@ -38,7 +62,7 @@ const calculateCTC = (datapoints) => {
 };
 
 const calculateDistance = (datapoints) => {
-    const deltaTime = datapoints.filter(datapoint => datapoint._measurement == 'deltatime');
+    const cummulativeTime = datapoints.filter(datapoint => datapoint._measurement == 'cumulativetime');
     const vehicleSpeed = datapoints.filter(datapoint => datapoint._measurement == 'vehicle_speed');
 
     const time = [];
@@ -46,19 +70,21 @@ const calculateDistance = (datapoints) => {
     const accumDistance = [];
     let tmpTimeHour = 0;
 
-    for (let index = 0; index < deltaTime.length; index ++) {
-      if (deltaTime[index] && vehicleSpeed[index] && deltaTime[index]._value && vehicleSpeed[index]._value) {
-        tmpTimeHour += (deltaTime[index]._value) / 3600;
+    for (let index = 0; index < cummulativeTime.length; index ++) {
+      if (cummulativeTime[index] && vehicleSpeed[index] && cummulativeTime[index]._value && vehicleSpeed[index]._value) {
+        tmpTimeHour += (cummulativeTime[index]._value) / 3600;
         speed.push(vehicleSpeed[index]._value);
         time.push(tmpTimeHour);
       }
     }
 
-    for (let index = 0; index < deltaTime.length; index ++) {
-      const accumDistanceTmp = ((speed[index]+speed[index + 1])/2)*(time[index + 1]-time[index]);
+    console.log(speed)
+
+    for (let index = 0; index < cummulativeTime.length; index ++) {
+      const accumDistanceTmp = ((speed[index + 1] + speed[index])/2)*(time[index + 1]-time[index]);
       if (!isNaN(accumDistanceTmp)) {
         accumDistance.push({
-          time: deltaTime[index]._time,
+          time: cummulativeTime[index]._time,
           distance: accumDistanceTmp
         });
       }
@@ -67,7 +93,60 @@ const calculateDistance = (datapoints) => {
     return accumDistance;
 };
 
+const calculateDistanceWithTimeSpeed = (timeSeconds, speed) => {
+
+  let time = timeSeconds.map(time => time / 3600);
+  let distance = [];
+  for (let index = 0; index < timeSeconds.length; index ++) {
+    const accumDistanceTmp = ((speed[index + 1] + speed[index])/2)*(time[index + 1]-time[index]);
+    if (!isNaN(accumDistanceTmp)) {
+      distance.push(
+        {
+          distance: accumDistanceTmp,
+          time: time[index]
+        }
+      )
+    }
+  }
+  return distance;
+};
+
+const calculateAccumulatedFuelMass = (maf, time) => {
+  const LIGHT_DIESEL_VEHICLE_CORRECTION_FACTOR = 1.38496
+  const AIR_FUEL_RATIO = 14.5
+
+  let deltas = [];
+  let accumulatedFuelMass = []
+
+  if (time) {
+    deltas = [time[0]]
+    
+    for(let index = 0; index < time.length; index ++) {
+      deltas.push(!isNaN(time[index + 1] - time[index]) ? time[index + 1] - time[index] : 0)
+    }
+  }
+
+  const afmArray = []
+
+  maf.forEach((datapoint, index) => {
+    const AFM = datapoint / (LIGHT_DIESEL_VEHICLE_CORRECTION_FACTOR * AIR_FUEL_RATIO)
+    afmArray.push(AFM)
+    if (time) {
+      accumulatedFuelMass.push(AFM * deltas[index])
+    }
+  })
+
+  if (time) {
+    return accumulatedFuelMass
+  }
+
+  return afmArray
+}
+
 module.exports = {
     calculateCTC,
-    calculateDistance
+    calculateDistance,
+    filterData,
+    calculateDistanceWithTimeSpeed,
+    calculateAccumulatedFuelMass
 };
