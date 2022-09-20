@@ -1,5 +1,5 @@
 const InfluxBaseMetric = require("../influxBaseMetric");
-const { calculateDistance } = require("../kpi");
+const { filterData, calculateDistanceWithTimeSpeed } = require("../kpi");
 
 class DistanceTraveledBetweenSamplesMetric extends InfluxBaseMetric {
   static getMetricId() {
@@ -8,12 +8,24 @@ class DistanceTraveledBetweenSamplesMetric extends InfluxBaseMetric {
 
   buildMetricParams() {
     return {
-      _measurements: ["vehicle_speed", "deltatime"],
+      _measurements: ["vehicle_speed", "cumulativetime"],
     };
   }
 
   buildMetricResponse(datapoints) {
-    let datapointsWithTimeAndDistance = calculateDistance(datapoints);
+
+    const time = []
+    const speed = []
+
+    const filteredData = filterData(datapoints)
+
+    filteredData.forEach(datapoint => {
+      time.push(datapoint['cumulativetime'] || 0)
+      speed.push(datapoint['vehicle_speed'] || 0)
+    })
+
+    let datapointsWithTimeAndDistance = calculateDistanceWithTimeSpeed(time, speed);
+
     datapointsWithTimeAndDistance = datapointsWithTimeAndDistance.map(datapoint => ({
       x: datapoint.time,
       y: datapoint.distance

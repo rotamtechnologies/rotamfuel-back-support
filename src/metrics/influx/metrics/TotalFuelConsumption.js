@@ -1,5 +1,5 @@
 const InfluxBaseMetric = require("../influxBaseMetric");
-const { calculateCTC } = require("../kpi");
+const { filterData, calculateAccumulatedFuelMass } = require("../kpi");
 
 class TotalFuelConsumptionMetric extends InfluxBaseMetric {
   static getMetricId() {
@@ -8,19 +8,48 @@ class TotalFuelConsumptionMetric extends InfluxBaseMetric {
 
   buildMetricParams() {
     return {
-      _measurements: ["maf_air_flows_rate", "deltatime"],
+      _measurements: ["maf_air_flows_rate", "cumulativetime"],
     };
   }
 
   buildMetricResponse(datapoints) {
-    let datosFiltradosObjetos = calculateCTC(datapoints);
-    
-    datosFiltradosObjetos = datosFiltradosObjetos.map(record => ({
-      x: record.time,
-      y: record.CTC
-    }));
+    const filteredData = filterData(datapoints)
 
-    return super.buildMetricResponse(datosFiltradosObjetos);
+    const time = []
+    const maf = []
+
+    const DENSITY = 0.8607
+    const DIESEL_CONSTANT = 3.7854
+
+    filteredData.forEach(datapoint => {
+      time.push(datapoint['cumulativetime'] || 0)
+      maf.push(datapoint['maf_air_flows_rate'] || 0)
+    })
+
+    const accumulatedFuelMass = calculateAccumulatedFuelMass(maf, time);
+
+    let tmpValue = accumulatedFuelMass[0]
+    const fuelConsumption = []
+
+    for(let index = 0; index < accumulatedFuelMass.length; index ++) {
+      let MCA = 0
+      if (index === 0) {
+        MCA = tmpValue
+      } else {
+        MCA = tmpValue + accumulatedFuelMass[index]
+      }
+
+      fuelConsumption.push(
+        {
+          x: time[index],
+          y: ((MCA) / (DENSITY * DIESEL_CONSTANT)) / 1000
+        }
+      )
+
+      tmpValue = MCA
+    }
+
+    return super.buildMetricResponse(fuelConsumption);
   }
 }
 

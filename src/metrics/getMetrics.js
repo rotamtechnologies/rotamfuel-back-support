@@ -53,7 +53,7 @@ const getMetrics = async ({
                 results.push(datapoints);
             }
         } catch (error) {
-            throw new Error(`Cannot get data from metric - ${id} ${error}`);
+            throw new Error(`Cannot get data from metric - ${id} ${error.stack}`);
         }
     }
     return results;
