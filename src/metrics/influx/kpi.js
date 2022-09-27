@@ -61,54 +61,38 @@ const calculateCTC = (datapoints) => {
     return datosFiltradosObjetos;
 };
 
-const calculateDistance = (datapoints) => {
-    const cummulativeTime = datapoints.filter(datapoint => datapoint._measurement == 'cumulativetime');
-    const vehicleSpeed = datapoints.filter(datapoint => datapoint._measurement == 'vehicle_speed');
+const calculateDistance = (timeSeconds, speed, accumulated = true) => {
 
-    const time = [];
-    const speed = [];
-    const accumDistance = [];
-    let tmpTimeHour = 0;
-
-    for (let index = 0; index < cummulativeTime.length; index ++) {
-      if (cummulativeTime[index] && vehicleSpeed[index] && cummulativeTime[index]._value && vehicleSpeed[index]._value) {
-        tmpTimeHour += (cummulativeTime[index]._value) / 3600;
-        speed.push(vehicleSpeed[index]._value);
-        time.push(tmpTimeHour);
-      }
-    }
-
-    console.log(speed)
-
-    for (let index = 0; index < cummulativeTime.length; index ++) {
-      const accumDistanceTmp = ((speed[index + 1] + speed[index])/2)*(time[index + 1]-time[index]);
-      if (!isNaN(accumDistanceTmp)) {
-        accumDistance.push({
-          time: cummulativeTime[index]._time,
-          distance: accumDistanceTmp
-        });
-      }
-    }
-
-    return accumDistance;
-};
-
-const calculateDistanceWithTimeSpeed = (timeSeconds, speed) => {
-
-  let time = timeSeconds.map(time => time / 3600);
+  const time = timeSeconds.map(time => time / 3600);
   let distance = [];
   for (let index = 0; index < timeSeconds.length; index ++) {
     const accumDistanceTmp = ((speed[index + 1] + speed[index])/2)*(time[index + 1]-time[index]);
-    if (!isNaN(accumDistanceTmp)) {
-      distance.push(
-        {
-          distance: accumDistanceTmp,
-          time: time[index]
-        }
-      )
+    if (!isNaN(accumDistanceTmp) && accumDistanceTmp > 0) {
+      distance.push(accumDistanceTmp);
+    } else {
+      distance.push(0);
     }
   }
-  return distance;
+
+  if (!accumulated) {
+    return distance
+  }
+
+  let tmpValue = distance[0]
+  const accumulatedDistance = []
+
+  distance.forEach((datapoint, index) => {
+    let acDis = 0
+    if (index === 0) {
+      acDis = tmpValue
+    } else {
+      acDis = tmpValue + datapoint
+    }
+    accumulatedDistance.push(acDis)
+    tmpValue = acDis
+  });
+
+  return accumulatedDistance;
 };
 
 const calculateAccumulatedFuelMass = (maf, time) => {
@@ -147,6 +131,5 @@ module.exports = {
     calculateCTC,
     calculateDistance,
     filterData,
-    calculateDistanceWithTimeSpeed,
     calculateAccumulatedFuelMass
 };

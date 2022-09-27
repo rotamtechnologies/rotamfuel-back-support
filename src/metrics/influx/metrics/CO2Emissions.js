@@ -1,5 +1,5 @@
 const InfluxBaseMetric = require("../influxBaseMetric");
-const { filterData, calculateAccumulatedFuelMass } = require("../kpi");
+const { filterData, calculateAccumulatedFuelMass, calculateDistance } = require("../kpi");
 
 class CO2EmissionsMetric extends InfluxBaseMetric {
   static getMetricId() {
@@ -8,7 +8,7 @@ class CO2EmissionsMetric extends InfluxBaseMetric {
 
   buildMetricParams() {
     return {
-      _measurements: ["maf_air_flows_rate", "cumulativetime"],
+      _measurements: ["maf_air_flows_rate", "cumulativetime", "vehicle_speed"],
     };
   }
 
@@ -18,6 +18,7 @@ class CO2EmissionsMetric extends InfluxBaseMetric {
 
     const time = []
     const maf = []
+    const speed = []
 
     const FACTOR_DE_EMISION_DE_CO2_EN_UNIDADES_COMUNES = 10.27650193
     const DENSITY = 0.8607
@@ -26,9 +27,11 @@ class CO2EmissionsMetric extends InfluxBaseMetric {
     filteredData.forEach(datapoint => {
       time.push(datapoint['cumulativetime'] || 0)
       maf.push(datapoint['maf_air_flows_rate'] || 0)
+      speed.push(datapoint['vehicle_speed'] || 0)
     })
 
     const accumulatedFuelMass = calculateAccumulatedFuelMass(maf, time);
+    const distance = calculateDistance(time, speed);
 
     let tmpValue = accumulatedFuelMass[0]
     const co2Emissions = []
@@ -44,7 +47,7 @@ class CO2EmissionsMetric extends InfluxBaseMetric {
 
       co2Emissions.push(
         {
-          x: time[index],
+          x: distance[index],
           y: value
         }
       )
