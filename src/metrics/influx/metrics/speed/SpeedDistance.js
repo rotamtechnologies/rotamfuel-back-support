@@ -1,13 +1,13 @@
-const InfluxBaseMetric = require("../influxBaseMetric");
-const { filterData, calculateDistance } = require("../kpi");
-class EngineMetric extends InfluxBaseMetric {
+const InfluxBaseMetric = require("../../influxBaseMetric");
+const { filterData, calculateDistance } = require("../../kpi");
+class SpeedDistanceMetric extends InfluxBaseMetric {
   static getMetricId() {
-    return "engine_metric";
+    return "speed_distance_metric";
   }
 
   buildMetricParams() {
     return {
-      _measurements: ["engine_rpm", "vehicle_speed", "cumulativetime"],
+      _measurements: ["vehicle_speed", "cumulativetime"],
     };
   }
 
@@ -15,27 +15,25 @@ class EngineMetric extends InfluxBaseMetric {
 
     const timeSeconds = []
     const speed = []
-    const engineRpm = []
 
     const filteredData = filterData(datapoints)
 
     filteredData.forEach(datapoint => {
       timeSeconds.push(datapoint['cumulativetime'] || 0)
       speed.push(datapoint['vehicle_speed'] || 0)
-      engineRpm.push(datapoint['engine_rpm'] || 0)
     })
 
     const distance = calculateDistance(timeSeconds, speed);
 
-    const engineRpmData = engineRpm.map((datapoint, index) => {
+    const speedData = speed.map((datapoint, index) => {
       return {
         x: distance[index],
         y: datapoint
       }
     })
 
-    return super.buildMetricResponse(engineRpmData);
+    return super.buildMetricResponse(speedData);
   }
 }
 
-module.exports = EngineMetric;
+module.exports = SpeedDistanceMetric;
