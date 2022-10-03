@@ -54,6 +54,7 @@ const calculateCTC = (datapoints) => {
       } else {
         CTCglo += MIC;
       }
+
       obj["CTC"] = CTCglo;
 
       datosFiltradosObjetos.push(obj);
