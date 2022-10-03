@@ -4,9 +4,9 @@ const {
   calculateAccumulatedFuelMass
 } = require("../kpi");
 
-class FuelFlowRangeMetric extends InfluxBaseMetric {
+class EfficiencyMetric extends InfluxBaseMetric {
   static getMetricId() {
-    return "fuel_flow_range_metric";
+    return "efficiency_metric";
   }
 
   buildMetricParams() {
@@ -49,4 +49,4 @@ class FuelFlowRangeMetric extends InfluxBaseMetric {
   }
 }
 
-module.exports = FuelFlowRangeMetric;
+module.exports = EfficiencyMetric;
