@@ -1,4 +1,4 @@
-const {get,getById,save,deleteOne,update} = require("../repository/freMaticsMongoDB")
+const {get,getById,save,deleteOne,update,getNoSuscritos,suscribirEmpresa} = require("../repository/freMaticsMongoDB")
 
 module.exports = {
     getById : async  (id) =>{
@@ -15,5 +15,11 @@ module.exports = {
     },
     update : async (data,id) => {
         return await update(data,id)
-    }
+    },
+    suscribirEmpresa : async (data,id) => {
+        return await suscribirEmpresa(data,id)
+    },
+    getNoSuscritos : async () => {
+        return await getNoSuscritos()
+    },
 }

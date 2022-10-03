@@ -44,6 +44,31 @@ module.exports = {
 
         }
     },
+
+    getNoSuscritos: async () => {
+        try {
+            let result = await entityMongo.find({empresaId:{$exists:false}})
+            console.log(result);
+            return result
+        } catch (e) {
+            console.log(e);
+
+        }
+    },
+    suscribirEmpresa: async (data,id) => {
+        try {
+            let result = await entityMongo.updateOne({"_id":id},{$set: {
+                    empresaId: data.empresaId,
+                }})
+            return result
+
+            console.log(result);
+        } catch (e) {
+            console.log(e);
+
+        }
+    },
+
     update: async (data,id) => {
         console.log("guardando " + data)
         try {
