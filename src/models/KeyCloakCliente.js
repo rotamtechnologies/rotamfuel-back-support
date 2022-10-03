@@ -4,6 +4,7 @@ require("../util/Utils");
 const btoa = require('btoa');
 const kcConecctor = require("../util/KeyCloakConnector")
 const userMongo = require("../repository/UserMongoDB");
+const empresaMongo = require("../repository/EmpresaMongoDB");
 
 class KeyCloakCliente {
     constructor() {
@@ -55,14 +56,16 @@ class KeyCloakCliente {
         return HttpRequester.makePOST(url, data)
     }
 
-    introspectTokenCustomRealm(token, realm) {
+    async introspectTokenCustomRealm(token, realm) {
         let url = CONFIG.KCHOST + "/realms/" + realm + "/protocol/openid-connect/token/introspect/";
+        let empresaData = await empresaMongo.getByRealm(realm);
+
         let data = {
             form: {
                 token_type_hint: "access_token",
                 token: token
             }, headers: {
-                Authorization: "Basic " + btoa(realm == "porsche" ? CONFIG.INTROSPECT_CREDENTIALSPORSCHE : realm)
+                Authorization: "Basic " + btoa("loginapp:"+empresaData[0].KC_key)
             }
         };
         return HttpRequester.makePOST(url, data)
@@ -100,19 +103,23 @@ class KeyCloakCliente {
         return HttpRequester.makePOST(url, data)
     }
 
-    obtenerTokenCustomRealm(username, pass, realm) {
+    async obtenerTokenCustomRealm(username, pass, realm) {
         let url = CONFIG.KCHOST + "/realms/" + realm + "/protocol/openid-connect/token";
+        let empresaData = await empresaMongo.getByRealm(realm);
+        console.log(empresaData);
         let data = {
             form: {
                 username: username,
                 password: pass,
                 grant_type: this.grantType,
                 client_id: "loginapp",
-                client_secret: CONFIG.KCPORSCHEID
+                client_secret: empresaData[0].KC_key
             }
         };
         console.log(data);
-        return HttpRequester.makePOST(url, data)
+        let tokenKeyCloak = await HttpRequester.makePOST(url, data);
+        tokenKeyCloak = JSON.parse(tokenKeyCloak);
+        return {...tokenKeyCloak,url:empresaData[0].url}
     }
 
 

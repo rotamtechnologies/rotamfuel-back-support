@@ -1,6 +1,6 @@
 const bodyParser = require("body-parser");
 const express = require("express");
-const KeyCloakClient  = require('../models/KeyCloakCliente');
+const KeyCloakClient = require('../models/KeyCloakCliente');
 const Cookies = require('cookies');
 
 class Middleware {
@@ -35,39 +35,44 @@ class Middleware {
     agregarOAuth() {
         let keyCloakClient = new KeyCloakClient.KeyCloakCliente()
         this.ExpressApp.use((req, res, next) => {
-            if (req.method==="OPTIONS" || req.url ==="/things/" || req.url ==="/azure/" || req.url.includes("influx/iot/viaje/descargar")
+
+            if (req.method === "OPTIONS" || req.url === "/things/" ||
+                req.url === "/azure/" ||
+                req.url.includes("influx/iot/viaje/descargar") ||
+                req.url.includes("/static/")
+
             ) {
                 next()
-            } else  if (req.url.includes("/mongo/empresa/")
-            ){
+            } else if (req.url.includes("/mongo/empresa/") || req.url.includes("/freematics")) {
+
                 var cookies = new Cookies(req, res);
                 let token = req.headers.authorization ? req.headers.authorization.substring("Bearer ".length, req.headers.authorization.length) : cookies.get("RTM_FL-tkn");
                 if (token) {
-                    keyCloakClient.introspectTokenRTM(token).then(datosToken =>{
+                    keyCloakClient.introspectTokenRTM(token).then(datosToken => {
                         if (JSON.parse(datosToken).active) {
                             next()
                         } else {
-                            res.status(401).send("Unauthorized")
+                            res.status(401).send("Unauthorized" + req.url)
                         }
                     });
 
                 } else {
-                    res.status(401).send("Unauthorized")
+                    res.status(401).send("Unauthorized" + req.url)
                 }
-            }else{
+            } else {
                 var cookies = new Cookies(req, res);
                 let token = req.headers.authorization ? req.headers.authorization.substring("Bearer ".length, req.headers.authorization.length) : cookies.get("RTM_FL-tkn");
                 if (token) {
-                    keyCloakClient.introspectToken(token).then(datosToken =>{
+                    keyCloakClient.introspectToken(token).then(datosToken => {
                         if (JSON.parse(datosToken).active) {
                             next()
                         } else {
-                            res.status(401).send("Unauthorized")
+                            res.status(401).send("Unauthorized" + req.url)
                         }
                     });
 
                 } else {
-                    res.status(401).send("Unauthorized")
+                    res.status(401).send("Unauthorized" + req.url)
                 }
             }
         });

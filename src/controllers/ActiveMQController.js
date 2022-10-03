@@ -3,6 +3,7 @@ require("../services/ActiveMQService");
 require("../repository/MongoDB");
 const localizacionMongoService = require("../services/LocalizacionMongoService");
 const estadoUltimoMongoService = require("../services/EstadoUltimoMongoService");
+const viajeMongoService = require("../services/ViajeMongoService");
 
 router.post("/", (req, res) => {
     let dataAPersistir = req.body;
@@ -24,6 +25,9 @@ router.post("/", (req, res) => {
         lastConnection: Date.now(),
     }
     localizacionMongoService.save(dataLocalizacion).then(ok => {
+
+    })
+    viajeMongoService.update({fechaFin: Date.now()}, dataAPersistir?.viajeMongo).then(ok => {
 
     })
 

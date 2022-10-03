@@ -3,6 +3,8 @@ require('dotenv').config();
 global.CONFIG = {
     PORTEXPRESSAPP: process.env.PORT || 45555,
 
+    KC_REALMNAME: process.env.KC_REALMNAME,
+
     KEYNODE: process.env.KEYNODE,
     CERTNODE: process.env.CERTNODE,
     PASSPHNODE: process.env.PASSPHRASE,

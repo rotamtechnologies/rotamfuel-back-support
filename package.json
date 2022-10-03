@@ -19,6 +19,7 @@
     "json2csv": "^5.0.7",
     "kafka-node": "^5.0.0",
     "keycloak-admin": "^1.13.0",
+    "moment": "^2.29.4",
     "mongoose": "^5.12.5",
     "request": "^2.88.2",
     "stomp-client": "^0.9.0"

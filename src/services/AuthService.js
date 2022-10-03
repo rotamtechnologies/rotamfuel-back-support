@@ -60,8 +60,6 @@ global.obtenerTokenByRealm = (req, res) => {
 
 
         keyCloakCliente.obtenerTokenCustomRealm(user, pass,idRealm).then(tokens => {
-            tokens = JSON.parse(tokens);
-            console.log(tokens);
             console.log(tokens);
             if (tokens.access_token) {
                 console.log("token");
@@ -69,7 +67,7 @@ global.obtenerTokenByRealm = (req, res) => {
                     let dataT = JSON.parse(datosToken)
                     console.log(dataT);
                     console.log(dataT.username);
-                    userMongo.getByUsername(dataT.username).then(okUserMongo=>{
+                    /*userMongo.getByUsername(dataT.username).then(okUserMongo=>{
                         console.log(okUserMongo);
                         if(!okUserMongo){
                             console.log("persistir");
@@ -85,12 +83,12 @@ global.obtenerTokenByRealm = (req, res) => {
                         }else{
                             console.log("no persistir")
                         }
-                    })
+                    })*/
                 })
 
                 var cookies = new Cookies(req, res)
                 cookies.set('RTM_FL-tkn', tokens.access_token, {path: "/"})
-                JSONResponse.OK(res, {tkn: tokens.access_token, rsh: tokens.refresh_token})
+                JSONResponse.OK(res, {tkn: tokens.access_token, rsh: tokens.refresh_token,url:tokens.url})
             } else {
                 console.log("tokeno");
                 console.log(tokens);

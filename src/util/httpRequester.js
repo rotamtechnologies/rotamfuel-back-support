@@ -2,7 +2,7 @@ const request = require('request');
 
 global.HttpRequester = {
 
-    makePOST: (url, data) => {
+    makePOST: (url, data,headers = {}) => {
         return new Promise((ok, nulo) => {
             request.post(url, data, (error, response, body) => {
                 if (error != null) {

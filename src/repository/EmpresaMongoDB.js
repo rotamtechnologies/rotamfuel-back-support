@@ -8,9 +8,9 @@ let dbScheme = new Schema({
     realm: {type: String},
     usuario: {type: String},
     clave: {type: String},
+    KC_key: {type: String},
+    url: {type: String},
     correo: {type: String}
-
-
 });
 
 let entityMongo = mongoose.model('empresa', dbScheme)
@@ -22,6 +22,16 @@ module.exports = {
         let result = []
         try {
             result = await entityMongo.find({"_id": id})
+        } catch (e) {
+            console.log(e);
+        }
+        return result
+    },
+    getByRealm: async id => {
+        console.log("obteniendo " + id)
+        let result = []
+        try {
+            result = await entityMongo.find({"realm": id})
         } catch (e) {
             console.log(e);
         }

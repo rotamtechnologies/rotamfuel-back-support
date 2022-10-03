@@ -1,0 +1,15 @@
+export KCPORSCHEID=gjLA2qVlTnvOBcEKPbwpZnIVBVlF1pos
+export KCINTROSPECTCREDENTIALS=account:90986e65-62a6-494c-92f4-5d45ddf53987
+export KCINTROSPECTCREDENTIALSPORSCHE=loginapp:gjLA2qVlTnvOBcEKPbwpZnIVBVlF1pos
+export nodeKEYCLOAK_user=adminrotam
+export nodeKEYCLOAK_password=R0t4mFUEL
+export KCREALMNAME=rotamrealm
+export nodeKEYCLOAK_clientId=admin-cli
+export nodeKEYCLOAK_grantType=password
+export THINGSUSER=tenant@thingsboard.org
+export THINGSPASSWORD=tenant
+export KCHOST=http://localhost:8082/auth
+export MONGODB= iot
+export MONGOPASSWORD=R0t4m.FUEL.2020
+export MONGOUSERNAME=rotam
+     

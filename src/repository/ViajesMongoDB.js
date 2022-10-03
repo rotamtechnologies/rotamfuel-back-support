@@ -115,7 +115,7 @@ module.exports = {
         return result
     },
     save: async data => {
-        data.fecha = Date.now()
+        data.fecha = data.fecha ? data.fecha : Date.now()
         let result = {}
         try {
             result = await entityMongo.create(data)

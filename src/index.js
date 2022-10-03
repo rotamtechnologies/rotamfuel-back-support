@@ -1,4 +1,3 @@
-
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 require('./constants/config');
 require('./controllers/UserController');
@@ -13,6 +12,7 @@ require('./controllers/FlotaMongoController');
 require('./controllers/iotInfluxController');
 require('./controllers/UserMongoController');
 require('./controllers/CarMongoController');
+require('./controllers/FreeMaticsController');
 require('./controllers/EstadoUltimoMongoController');
 require('./controllers/DataUsersMongoController');
 require('./controllers/ViajesMongoController');
@@ -24,6 +24,8 @@ const KeyCloakClient = require("./models/KeyCloakCliente")
 const db = require("./repository/CarMeasure");
 const path = require('path');
 const expr = require("express");
+const express = require("express");
+
 let expressApp = {};
 let middleware = {};
 let keyCloakClient = {};
@@ -34,6 +36,7 @@ async function main() {
     expressApp = middleware.iniciar();
     expressApp.use("/auth", AuthController);
     expressApp = middleware.agregarOAuth();
+    expressApp.use('/static', express.static(__dirname + '/public'));
     expressApp.use("/user", UserController);
     //expressApp.use("/things", ThingsController);
     expressApp.use("/mq", ActiveMQController);
@@ -48,6 +51,7 @@ async function main() {
     expressApp.use("/mongo/dispositivo", MongoDispositivoController);
     expressApp.use("/mongo/flota", MongoFlotaController);
     expressApp.use("/mongo/data", DataUsersMongoController);
+    expressApp.use("/mongo/freematics", FreeMaticsController);
     expressApp.use("/mongo/viajes", ViajesMongoController);
     expressApp.use("/mongo/localizacion", LocalizacionMongoController);
 
@@ -132,7 +136,7 @@ async function main() {
         })
     });
 
-    expressApp.listen(CONFIG.PORTEXPRESSAPP,ok=>console.log("listen in "+CONFIG.PORTEXPRESSAPP))
+    expressApp.listen(CONFIG.PORTEXPRESSAPP, ok => console.log("listen in " + CONFIG.PORTEXPRESSAPP))
 }
 
 main()

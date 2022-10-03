@@ -9,6 +9,7 @@ const getMetricClass = ({
     trip,
     start,
     stop,
+    type,
 }) => {
     const MetricClass = getMetric(metricType);
 
@@ -22,6 +23,7 @@ const getMetricClass = ({
         trip,
         start,
         stop,
+        type,
     });
 };
 
@@ -29,6 +31,7 @@ const getMetrics = async ({
     trip,
     start,
     stop,
+    type,
     queries,
 }) => {
     const results = [];
@@ -43,13 +46,14 @@ const getMetrics = async ({
                 trip,
                 start,
                 stop,
+                type,
             });
             const datapoints = await metric.getResponse({ results, trip });
             if (datapoints) {
                 results.push(datapoints);
             }
         } catch (error) {
-            throw new Error(`Cannot get data from metric - ${id}`);
+            throw new Error(`Cannot get data from metric - ${id} ${error.stack}`);
         }
     }
     return results;

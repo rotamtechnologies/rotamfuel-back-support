@@ -8,5 +8,6 @@
     <orderEntry type="module" module-name="activeMQNodeJS" />
     <orderEntry type="module" module-name="mongoDBNodeJS" />
     <orderEntry type="module" module-name="rotam-listener-20220216T220356Z-001" />
+    <orderEntry type="module" module-name="rotam-listener" />
   </component>
 </module>

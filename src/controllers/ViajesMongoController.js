@@ -21,7 +21,8 @@ router.post("/", async (req, res) => {
     let reqData = {
         "dispositivo": req.body.dispositivo,
         "vehiculo": req.body.vehiculo,
-        "chofer": req.body.chofer
+        "chofer": req.body.chofer,
+        "fecha": req.body.fecha,
     }
     let datos = await save(reqData)
     res.send({datos});
@@ -42,18 +43,18 @@ router.patch("/:id", async (req, res) => {
     res.send({datos});
 
 });
+router.delete("/:id", async (req, res) => {
+    let datos = await deleteOne(req.params.id)
+    console.log(datos);
+    res.send({datos});
+
+});
 
 
 /*
 router.get("/:id", async (req, res) => {
     let datos = await getById(req.params.id)
     console.log("datos");
-    res.send({datos});
-
-});
-router.delete("/:id", async (req, res) => {
-    let datos = await deleteOne(req.params.id)
-    console.log(datos);
     res.send({datos});
 
 });

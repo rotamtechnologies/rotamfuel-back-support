@@ -6,7 +6,6 @@ require('../util/JSONResponse');
 const atob = require('atob');
 require("../services/AuthService");
 
-router.use(express.static('public'));
 
 
 //Obtencion de token

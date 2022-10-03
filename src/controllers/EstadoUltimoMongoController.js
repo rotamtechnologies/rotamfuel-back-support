@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const {getById, save, deleteOne, update, get} = require("../services/EstadoUltimoMongoService");
+const {getById, save, deleteOne, update, get,getByVehiculo} = require("../services/EstadoUltimoMongoService");
 
 router.get("/", async (req, res) => {
     let datos = await get()
@@ -8,6 +8,12 @@ router.get("/", async (req, res) => {
 });
 router.get("/:id", async (req, res) => {
     let datos = await getById(req.params.id)
+    console.log("datos");
+    res.send({datos});
+
+});
+router.get("/vehiculo/:id", async (req, res) => {
+    let datos = await getByVehiculo(req.params.id)
     console.log("datos");
     res.send({datos});
 
