@@ -136,6 +136,23 @@ async function main() {
         })
     });
 
+
+    expressApp.get("/the-time", async (req, res) => {
+
+
+        let auth = req.headers.authorization
+
+        if (auth == "Basic cm90YW06MTIzNA==") {
+            return res.send({time: Date.now()});
+
+
+        } else {
+            return res.status(401).send("Unauthorized")
+        }
+
+    })
+
+
     expressApp.listen(CONFIG.PORTEXPRESSAPP, ok => console.log("listen in " + CONFIG.PORTEXPRESSAPP))
 }
 

@@ -39,8 +39,8 @@ class Middleware {
             if (req.method === "OPTIONS" || req.url === "/things/" ||
                 req.url === "/azure/" ||
                 req.url.includes("influx/iot/viaje/descargar") ||
-                req.url.includes("/static/")
-
+                req.url.includes("/static/") ||
+                req.url.includes("/the-time")
             ) {
                 next()
             } else if (req.url.includes("/mongo/empresa/") || req.url.includes("/freematics")) {
