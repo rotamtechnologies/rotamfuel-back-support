@@ -137,18 +137,20 @@ async function main() {
     });
 
 
-    expressApp.get("/the-time", async (req, res) => {
+    expressApp.all("/the-time", async (req, res) => {
+        console.log(req.socket.remoteAddress)
+        console.log("entrante")
 
 
-        let auth = req.headers.authorization
+        //      let auth = req.headers.authorization
 
-        if (auth == "Basic cm90YW06MTIzNA==") {
-            return res.send({time: Date.now()});
+//        if (auth == "Basic cm90YW06MTIzNA==") {
+        return res.send({time: Date.now()});
 
 
-        } else {
-            return res.status(401).send("Unauthorized")
-        }
+        //    } else {
+        //      return res.status(401).send("Unauthorized")
+        // }
 
     })
 
